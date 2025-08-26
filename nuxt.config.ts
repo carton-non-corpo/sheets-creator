@@ -6,6 +6,15 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
 
+  runtimeConfig: {
+    // Private keys (only available on server-side)
+    googleServiceAccount: process.env.GOOGLE_SERVICE_ACCOUNT,
+    googleDriveFolderId: process.env.GOOGLE_DRIVE_FOLDER_ID,
+
+    // Public keys (exposed to client-side)
+    public: {}
+  },
+
   modules: [
     '@nuxt/content',
     '@nuxt/eslint',
