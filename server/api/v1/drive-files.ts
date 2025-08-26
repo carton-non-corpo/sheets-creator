@@ -1,21 +1,6 @@
 import { google } from 'googleapis';
 import { getServiceAccountCredentials } from '../../service-account';
-
-interface DriveFile {
-  id?: string | null;
-  name?: string | null;
-  mimeType?: string | null;
-  parents?: string[] | null;
-  thumbnailLink?: string | null;
-  webContentLink?: string | null;
-  webViewLink?: string | null;
-}
-
-interface EnhancedFile extends DriveFile {
-  imageUrl?: string | null;
-  downloadUrl?: string | null;
-  viewUrl?: string | null;
-}
+import type { DriveFile, EnhancedFile } from '~~/common/types/drive';
 
 /**
  * Create authenticated Google Drive client
@@ -67,26 +52,28 @@ function buildSearchQuery(nameFilter: string, folderIds: string[]): string {
 /**
  * Enhance file objects with additional URL properties
  */
-function enhanceFilesWithUrls(files: DriveFile[]): EnhancedFile[] {
-  return files.map(file => ({
-    ...file,
-    imageUrl: file.mimeType?.startsWith('image/') && file.id
-      ? `https://lh3.googleusercontent.com/d/${file.id}=w1000`
-      : file.thumbnailLink,
-    downloadUrl: file.webContentLink,
-    viewUrl: file.webViewLink
-  }));
+function enhanceFilesWithUrls(files: any[]): EnhancedFile[] {
+  return files.map(file => {
+    let imageUrl = null;
+
+    // Use our proxy endpoint for images
+    if (file.mimeType?.startsWith('image/') && file.id) {
+      imageUrl = `/api/v1/drive-image/${file.id}`;
+    }
+
+    return {
+      ...file,
+      imageUrl,
+      downloadUrl: file.webContentLink,
+      viewUrl: file.webViewLink
+    } as EnhancedFile;
+  });
 }
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   const nameFilter = query.name as string;
   const foldersIds = query.foldersIds as string || '';
-
-  // Validate required parameters
-  if (!nameFilter) {
-    return { error: 'Missing name parameter' };
-  }
 
   try {
     // Setup authentication and Drive client
