@@ -1,4 +1,5 @@
 import { google } from 'googleapis';
+import { getServiceAccountCredentials } from '../../service-account';
 
 interface DriveFile {
   id?: string | null;
@@ -14,25 +15,6 @@ interface EnhancedFile extends DriveFile {
   imageUrl?: string | null;
   downloadUrl?: string | null;
   viewUrl?: string | null;
-}
-
-/**
- * Parse and validate service account credentials from runtime config
- */
-function getServiceAccountCredentials(config: any) {
-  let serviceAccount: Record<string, string>;
-
-  try {
-    serviceAccount = JSON.parse(config.googleServiceAccount || '{}');
-  } catch (e) {
-    throw new Error('Invalid Google service account configuration');
-  }
-
-  if (!serviceAccount.client_email || !serviceAccount.private_key) {
-    throw new Error('Missing Google service account credentials');
-  }
-
-  return serviceAccount;
 }
 
 /**
@@ -88,8 +70,8 @@ function buildSearchQuery(nameFilter: string, folderIds: string[]): string {
 function enhanceFilesWithUrls(files: DriveFile[]): EnhancedFile[] {
   return files.map(file => ({
     ...file,
-    imageUrl: file.mimeType?.startsWith('image/')
-      ? `https://drive.google.com/uc?id=${file.id}&export=view`
+    imageUrl: file.mimeType?.startsWith('image/') && file.id
+      ? `https://lh3.googleusercontent.com/d/${file.id}=w1000`
       : file.thumbnailLink,
     downloadUrl: file.webContentLink,
     viewUrl: file.webViewLink
