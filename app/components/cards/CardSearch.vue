@@ -3,9 +3,11 @@ import { Input } from '~/components/ui/input';
 import { debounce } from 'lodash';
 import type { EnhancedFile } from '~~/common/types/drive';
 import { gameFolders } from '~~/common/utils/drives';
-import { Card, CardContent } from '~/components/ui/card';
 import { ScrollArea } from '~/components/ui/scroll-area';
 import CardSelector from '~/components/cards/CardSelector.vue';
+import { getGameDisplayName } from '~~/common/utils/games';
+import { Separator } from '~/components/ui/separator';
+import { LoaderCircle } from 'lucide-vue-next';
 
 const gameStore = useGameStore()
 const { selectedGame } = storeToRefs(gameStore)
@@ -14,8 +16,7 @@ const loading = ref(false);
 const error = ref<string | null>(null);
 const searchQuery = ref('');
 const files = ref<EnhancedFile[]>([]);
-
-const foldersIds = computed(() => gameFolders.filter(folder => folder.game === selectedGame.value).map(folder => folder.id));
+const foldersIds = ref<string[]>([]);
 
 const sortedCards = computed((): EnhancedFile[] => {
   return files.value.sort((a, b) => a.name.localeCompare(b.name));
@@ -51,8 +52,19 @@ async function fetchFiles() {
   }
 };
 
+const searchText = computed(() => {
+  if (foldersIds.value.length === 0) return 'Selectionner des catégories...'
+  if (foldersIds.value.length === 1) {
+    const folder = gameFolders.find(f => f.id === foldersIds.value[0])
+    return `Chercher dans ${folder?.name}...` || 'Erreur'
+  }
+  if (foldersIds.value.length === gameFolders.length) return `Chercher dans ${getGameDisplayName(selectedGame.value)}...` 
+  return `Chercher dans les catégories sélectionnées...`
+})
+
 onMounted(() => {
   fetchFiles();
+  foldersIds.value = gameFolders.filter(folder => folder.game === selectedGame.value).map(folder => folder.id);
 });
 
 watch(foldersIds, () => {
@@ -61,22 +73,28 @@ watch(foldersIds, () => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 p-4 h-full">
+  <div class="flex flex-col gap-2 p-4 h-full">
+    <DrivesCombobox v-model="foldersIds" :folders="gameFolders" />
+
     <Input
       v-model="searchQuery"
-      placeholder="Search for a card..."
-      class="border-b p-2"
+      :placeholder="searchText"
+      class="p-2"
       @input="debouncedFetchFiles"
     />
 
-    <ScrollArea class="h-[calc(100vh-9.5rem)]">
-      <div class="grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-3">
+    <Separator />
+
+    <ScrollArea class="h-[calc(100vh-12.5rem)]">
+      <div v-if="!loading" class="grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-3">
         <CardSelector 
           v-for="card in sortedCards" 
           :key="card.id" 
-          :image-url="card.imageUrl" 
-          :name="card.name"
+          :card="card"
         />
+      </div>
+      <div v-else class="mt-8 flex justify-center w-full">
+        <LoaderCircle class="animate-spin" />
       </div>
     </ScrollArea>
   </div>

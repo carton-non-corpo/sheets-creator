@@ -34,19 +34,30 @@ function parseFolderIds(foldersParam: string, defaultFolderId?: string): string[
 }
 
 /**
- * Build Google Drive search query for multiple folders
+ * Build Google Drive search query for a single folder
  */
-function buildSearchQuery(nameFilter: string, folderIds: string[]): string {
+function buildSearchQuery(nameFilter: string, folderId?: string): string {
   let folderQuery = '';
 
-  if (folderIds.length > 0) {
-    const folderConditions = folderIds
-      .map(folderId => `'${folderId}' in parents`)
-      .join(' OR ');
-    folderQuery = ` AND (${folderConditions})`;
+  if (folderId) {
+    folderQuery = ` AND '${folderId}' in parents`;
   }
 
   return `name contains '${nameFilter}'${folderQuery}`;
+}
+
+/**
+ * Fetch files from a single folder
+ */
+async function fetchFilesFromFolder(drive: any, nameFilter: string, folderId?: string) {
+  const searchQuery = buildSearchQuery(nameFilter, folderId);
+
+  const response = await drive.files.list({
+    q: searchQuery,
+    fields: 'files(id, name, mimeType, parents, thumbnailLink, webContentLink, webViewLink)',
+  });
+
+  return response.data.files || [];
 }
 
 /**
@@ -81,23 +92,39 @@ export default defineEventHandler(async (event) => {
     const serviceAccount = getServiceAccountCredentials(config);
     const drive = createDriveClient(serviceAccount);
 
-    // Parse folder IDs and build search query
+    // Parse folder IDs
     const folderIds = parseFolderIds(foldersIds, config.googleDriveFolderId);
-    const searchQuery = buildSearchQuery(nameFilter, folderIds);
 
-    // Execute search
-    const response = await drive.files.list({
-      q: searchQuery,
-      fields: 'files(id, name, mimeType, parents, thumbnailLink, webContentLink, webViewLink)',
-    });
+    // Fetch files from each folder separately
+    const allFiles: any[] = [];
+    const searchQueries: string[] = [];
+
+    if (folderIds.length === 0) {
+      // Search without folder restriction
+      const files = await fetchFilesFromFolder(drive, nameFilter);
+      allFiles.push(...files);
+      searchQueries.push(buildSearchQuery(nameFilter));
+    } else {
+      // Search in each folder separately
+      for (const folderId of folderIds) {
+        const files = await fetchFilesFromFolder(drive, nameFilter, folderId);
+        allFiles.push(...files);
+        searchQueries.push(buildSearchQuery(nameFilter, folderId));
+      }
+    }
+
+    // Remove duplicates (in case a file appears in multiple searches)
+    const uniqueFiles = allFiles.filter((file, index, self) =>
+      index === self.findIndex(f => f.id === file.id)
+    );
 
     // Enhance files with additional URLs
-    const enhancedFiles = enhanceFilesWithUrls(response.data.files || []);
+    const enhancedFiles = enhanceFilesWithUrls(uniqueFiles);
 
     return {
       files: enhancedFiles,
       searchedFolders: folderIds,
-      query: searchQuery
+      queries: searchQueries
     };
 
   } catch (error: any) {

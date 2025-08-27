@@ -3,7 +3,7 @@ import { Home, Folders, Printer } from 'lucide-vue-next'
 </script>
 
 <template>
-  <nav class="h-screen w-64 bg-gradient-to-b from-white via-gray-50 to-gray-100 border-r border-gray-200 flex flex-col py-8 px-6 shadow-sm">
+  <nav class="h-screen w-64 bg-gradient-to-b from-white via-gray-50 to-gray-100 border-r border-gray-200 flex flex-col py-8 px-6">
     <div class="mb-6 flex items-center gap-3">
       <span class="font-extrabold text-xl tracking-tight text-gray-900">Carton Club</span>
     </div>

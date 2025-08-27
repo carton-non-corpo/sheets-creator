@@ -8,5 +8,6 @@ export enum Game {
 export interface GameFolders {
   id: string; // https://drive.google.com/drive/folders/${folder_id}
   name: string;
+  bleed: boolean;
   game: Game;
 }
