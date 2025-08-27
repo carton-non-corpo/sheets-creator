@@ -62,14 +62,15 @@ const searchText = computed(() => {
   return `Chercher dans les catégories sélectionnées...`
 })
 
-onMounted(() => {
-  fetchFiles();
-  foldersIds.value = gameFolders.filter(folder => folder.game === selectedGame.value).map(folder => folder.id);
+watch(foldersIds, () => {
+  nextTick(() => fetchFiles());
 });
 
-watch(foldersIds, () => {
-  fetchFiles();
-});
+watch(selectedGame, () => {
+  nextTick(() => fetchFiles());
+  foldersIds.value = gameFolders.filter(folder => folder.game === selectedGame.value).map(folder => folder.id);
+  console.log(foldersIds.value);
+}, { immediate: true });
 </script>
 
 <template>

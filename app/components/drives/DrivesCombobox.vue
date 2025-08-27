@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { GameFolders } from '~~/common/types/games';
 import { ref, computed } from 'vue';
-import { ChevronDown, Check, FolderOpen } from 'lucide-vue-next';
+import { ChevronDown, FolderOpen } from 'lucide-vue-next';
 import { getGameDisplayName } from '~~/common/utils/games';
 import { Combobox, ComboboxAnchor, ComboboxTrigger, ComboboxList, ComboboxInput, ComboboxViewport, ComboboxEmpty, ComboboxGroup, ComboboxItem } from '~/components/ui/combobox';
 import { Checkbox } from '~/components/ui/checkbox';
@@ -20,12 +20,16 @@ const { selectedGame } = storeToRefs(gameStore)
 const open = ref(false)
 const searchTerm = ref('')
 
+const gameFolders = computed(() => {
+  return props.folders.filter(folder => folder.game === selectedGame.value)
+})
+
 // Filter folders based on search term
 const filteredFolders = computed(() => {
-  if (!searchTerm.value) return props.folders
-  return props.folders.filter(folder => 
-    folder.name.toLowerCase().includes(searchTerm.value.toLowerCase())
-  )
+  if (!searchTerm.value) return gameFolders.value
+  return gameFolders.value
+    .filter(folder => folder.game === selectedGame.value)
+    .filter(folder => folder.name.toLowerCase().includes(searchTerm.value.toLowerCase()))
 })
 
 const isSelected = (folderId: string) => {
@@ -43,10 +47,10 @@ const toggleFolder = (folderId: string) => {
 const selectedText = computed(() => {
   if (model.value.length === 0) return 'Selectionner des catégories...'
   if (model.value.length === 1) {
-    const folder = props.folders.find(f => f.id === model.value[0])
+    const folder = gameFolders.value.find(f => f.id === model.value[0])
     return folder?.name || 'Catégorie inconnue'
   }
-  if (model.value.length === props.folders.length) return getGameDisplayName(selectedGame.value)
+  if (model.value.length === gameFolders.value.length) return getGameDisplayName(selectedGame.value)
   return `${model.value.length} catégories sélectionnées`
 })
 </script>

@@ -1,12 +1,20 @@
 <script setup lang="ts">
+import type { StripBoardContentCard } from '~~/common/types/strip_board'
+
 const props = defineProps<{
   scale: number;
+  showLandmarks: boolean;
+  cards?: Array<StripBoardContentCard & { printIndex: number }>;
 }>()
 
 const stripBoardStore = useStripBoardStore();
 const { stripBoard } = storeToRefs(stripBoardStore);
 
 const cardsForPrint = computed(() => {
+  if (props.cards) {
+    return props.cards;
+  }
+  
   if (!stripBoard.value) return [];
   
   const cards = [];
@@ -46,13 +54,14 @@ const cardsForPrint = computed(() => {
                 class="w-full h-full object-cover"
                 @error="console.log('Image failed to load:', card.imageUrl)"
               />
+              
             </div>
             <div v-else class="flex items-center justify-center w-full h-full px-3 bg-gray-200">
               <span class="text-gray-500 text-xs break-all text-center">{{ card.name || 'No image' }}</span>
             </div>
           </div>
         </div>
-        <div class="absolute inset-0 pointer-events-none">
+        <div v-if="props.showLandmarks" class="absolute inset-0 pointer-events-none">
           <svg viewBox="0 0 794 1123"><line x1="41" y1="39.93359375" x2="41" y2="62.60546875" stroke="#000" stroke-width="2"></line><line x1="41" y1="1060.39453125" x2="41" y2="1083.06640625" stroke="#000" stroke-width="2"></line><line x1="279" y1="39.93359375" x2="279" y2="62.60546875" stroke="#000" stroke-width="2"></line><line x1="279" y1="1060.39453125" x2="279" y2="1083.06640625" stroke="#000" stroke-width="2"></line><line x1="279" y1="39.93359375" x2="279" y2="62.60546875" stroke="#000" stroke-width="2"></line><line x1="279" y1="1060.39453125" x2="279" y2="1083.06640625" stroke="#000" stroke-width="2"></line><line x1="517" y1="39.93359375" x2="517" y2="62.60546875" stroke="#000" stroke-width="2"></line><line x1="517" y1="1060.39453125" x2="517" y2="1083.06640625" stroke="#000" stroke-width="2"></line><line x1="517" y1="39.93359375" x2="517" y2="62.60546875" stroke="#000" stroke-width="2"></line><line x1="517" y1="1060.39453125" x2="517" y2="1083.06640625" stroke="#000" stroke-width="2"></line><line x1="755" y1="39.93359375" x2="755" y2="62.60546875" stroke="#000" stroke-width="2"></line><line x1="755" y1="1060.39453125" x2="755" y2="1083.06640625" stroke="#000" stroke-width="2"></line><line x1="17.1640625" y1="64" x2="39.8359375" y2="64" stroke="#000" stroke-width="2"></line><line x1="754.1640625" y1="64" x2="776.8359375" y2="64" stroke="#000" stroke-width="2"></line><line x1="17.1640625" y1="396" x2="39.8359375" y2="396" stroke="#000" stroke-width="2"></line><line x1="754.1640625" y1="396" x2="776.8359375" y2="396" stroke="#000" stroke-width="2"></line><line x1="17.1640625" y1="396" x2="39.8359375" y2="396" stroke="#000" stroke-width="2"></line><line x1="754.1640625" y1="396" x2="776.8359375" y2="396" stroke="#000" stroke-width="2"></line><line x1="17.1640625" y1="729" x2="39.8359375" y2="729" stroke="#000" stroke-width="2"></line><line x1="754.1640625" y1="729" x2="776.8359375" y2="729" stroke="#000" stroke-width="2"></line><line x1="17.1640625" y1="729" x2="39.8359375" y2="729" stroke="#000" stroke-width="2"></line><line x1="754.1640625" y1="729" x2="776.8359375" y2="729" stroke="#000" stroke-width="2"></line><line x1="17.1640625" y1="1061" x2="39.8359375" y2="1061" stroke="#000" stroke-width="2"></line><line x1="754.1640625" y1="1061" x2="776.8359375" y2="1061" stroke="#000" stroke-width="2"></line></svg>
         </div>
       </div>
