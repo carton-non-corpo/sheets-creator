@@ -28,7 +28,6 @@ const gameFolders = computed(() => {
 const filteredFolders = computed(() => {
   if (!searchTerm.value) return gameFolders.value
   return gameFolders.value
-    .filter(folder => folder.game === selectedGame.value)
     .filter(folder => folder.name.toLowerCase().includes(searchTerm.value.toLowerCase()))
 })
 
@@ -76,7 +75,7 @@ const selectedText = computed(() => {
         class="h-9"
       />
       
-      <ComboboxViewport class="max-h-[200px]">
+      <ComboboxViewport class="max-h-[420px]">
         <ComboboxEmpty class="py-6 text-center text-sm">
           Aucune catégorie trouvée.
         </ComboboxEmpty>

@@ -22,7 +22,8 @@ function decrement() {
   }
 }
 
-function goToWeblink() {
+function goToWebLink() {
+  console.log('Web link clicked:', props.card.webViewLink);
   if (props.card.webViewLink) {
     window.open(props.card.webViewLink, '_blank');
   }
@@ -42,8 +43,8 @@ function goToWeblink() {
         @error="console.log('Image failed to load:', props.card.imageUrl)"
       />
     </div>
-    <div v-else class=" flex items-center justify-center w-full h-full px-3 rounded bg-gray-200">
-      <span class="text-gray-500 text-xs break-all ">{{ props.card.name || 'No image' }}</span>
+    <div v-else class="flex items-center justify-center w-full h-full px-3 rounded bg-gray-200">
+      <p class="text-gray-500 text-xs break-all">{{ props.card.name || 'No image' }}</p>
     </div>
 
     <!-- Buttons in top right corner - only show on hover -->
@@ -77,7 +78,7 @@ function goToWeblink() {
 
     <!-- Card Name at Bottom -->
     <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity">
-      <div class="text-white text-xs font-medium truncate">{{ card.name }}</div>
+      <div class="w-fit text-white text-xs font-medium truncate hover:underline cursor-pointer" @click.stop="goToWebLink">{{ card.name }}</div>
     </div>
   </div>
 </template>

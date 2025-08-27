@@ -43,7 +43,10 @@ function buildSearchQuery(nameFilter: string, folderId?: string): string {
     folderQuery = ` AND '${folderId}' in parents`;
   }
 
-  return `name contains '${nameFilter}'${folderQuery}`;
+  // Exclude folders from results
+  const excludeFolders = ` AND mimeType != 'application/vnd.google-apps.folder'`;
+
+  return `name contains '${nameFilter}'${folderQuery}${excludeFolders}`;
 }
 
 /**

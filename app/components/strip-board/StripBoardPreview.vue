@@ -57,7 +57,7 @@ const allPages = computed(() => {
   return pages;
 });
 
-const closeDialog = () => {
+function closeDialog() {
   emit('update:open', false);
 };
 </script>

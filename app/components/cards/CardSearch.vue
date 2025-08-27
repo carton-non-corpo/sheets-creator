@@ -10,7 +10,7 @@ import { Separator } from '~/components/ui/separator';
 import { LoaderCircle } from 'lucide-vue-next';
 
 const gameStore = useGameStore()
-const { selectedGame } = storeToRefs(gameStore)
+const { selectedGame, currentGameFolders } = storeToRefs(gameStore)
 
 const loading = ref(false);
 const error = ref<string | null>(null);
@@ -21,6 +21,16 @@ const foldersIds = ref<string[]>([]);
 const sortedCards = computed((): EnhancedFile[] => {
   return files.value.sort((a, b) => a.name.localeCompare(b.name));
 });
+
+const searchText = computed(() => {
+  if (foldersIds.value.length === 0) return 'Selectionner des catégories...'
+  if (foldersIds.value.length === 1) {
+    const folder = currentGameFolders.value.find(f => f.id === foldersIds.value[0])
+    return `Chercher dans ${folder?.name}...` || 'Erreur'
+  }
+  if (foldersIds.value.length === currentGameFolders.value.length) return `Chercher dans ${getGameDisplayName(selectedGame.value)}...` 
+  return `Chercher dans les catégories sélectionnées...`
+})
 
 const debouncedFetchFiles = debounce(fetchFiles, 300, { trailing: true });
 
@@ -52,15 +62,13 @@ async function fetchFiles() {
   }
 };
 
-const searchText = computed(() => {
-  if (foldersIds.value.length === 0) return 'Selectionner des catégories...'
-  if (foldersIds.value.length === 1) {
-    const folder = gameFolders.find(f => f.id === foldersIds.value[0])
-    return `Chercher dans ${folder?.name}...` || 'Erreur'
+function presetFoldersIds() {
+  if (currentGameFolders.value.length >= 5) {
+    foldersIds.value = []
+    return
   }
-  if (foldersIds.value.length === gameFolders.length) return `Chercher dans ${getGameDisplayName(selectedGame.value)}...` 
-  return `Chercher dans les catégories sélectionnées...`
-})
+  foldersIds.value = currentGameFolders.value.map(folder => folder.id);
+};
 
 watch(foldersIds, () => {
   nextTick(() => fetchFiles());
@@ -68,14 +76,13 @@ watch(foldersIds, () => {
 
 watch(selectedGame, () => {
   nextTick(() => fetchFiles());
-  foldersIds.value = gameFolders.filter(folder => folder.game === selectedGame.value).map(folder => folder.id);
-  console.log(foldersIds.value);
+  presetFoldersIds();
 }, { immediate: true });
 </script>
 
 <template>
   <div class="flex flex-col gap-2 p-4 h-full">
-    <DrivesCombobox v-model="foldersIds" :folders="gameFolders" />
+    <DrivesCombobox v-model="foldersIds" :folders="currentGameFolders" />
 
     <Input
       v-model="searchQuery"
