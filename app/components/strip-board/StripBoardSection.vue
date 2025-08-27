@@ -10,6 +10,7 @@ const { stripBoard } = storeToRefs(stripBoardStore);
 
 const landmarks = ref<boolean>(true);
 const currentPage = ref<number>(1);
+const previewDialogOpen = ref<boolean>(false);
 const cardsPerPage = 9; // 3x3 grid
 
 const totalCards = computed(() => {
@@ -66,7 +67,7 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
       </div>
 
       <div class="flex gap-3">
-        <Button variant="outline" class="cursor-pointer">
+        <Button variant="outline" class="cursor-pointer" @click="previewDialogOpen = true">
           <Search />
           Prévisualiser
         </Button>
@@ -125,5 +126,8 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
         />
       </PaginationContent>
     </Pagination>
+
+    <!-- Strip Board Preview Dialog -->
+    <StripBoardPreview v-model:open="previewDialogOpen" />
   </div>
 </template>
