@@ -8,8 +8,6 @@ export function getGameDisplayName(game: Game): string {
       return 'Magic: The Gathering';
     case Game.RIFTBOUND:
       return 'Riftbound';
-    case Game.OTHER:
-      return 'Other';
     default:
       return 'Unknown Game';
   }

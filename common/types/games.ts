@@ -2,7 +2,6 @@ export enum Game {
   OPTCG = 'optcg',
   MTG = 'mtg',
   RIFTBOUND = 'riftbound',
-  OTHER = 'other'
 }
 
 export interface GameFolders {
