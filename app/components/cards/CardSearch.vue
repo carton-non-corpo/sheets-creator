@@ -34,10 +34,18 @@ const searchText = computed(() => {
 
 const debouncedFetchFiles = debounce(fetchFiles, 300, { trailing: true });
 
+function getTargettedFolders(): string[] {
+  // If user is searching by name and no folders are selected, return all folders for the current game
+  if (foldersIds.value.length === 0 && searchQuery.value.length >= 3) {
+    return currentGameFolders.value.map(folder => folder.id);
+  }
+  return foldersIds.value;
+}
+
 async function fetchFiles() {
   if (loading.value) return;
 
-  if (!foldersIds.value.length) {
+  if (!foldersIds.value.length && searchQuery.value.length < 3) {
     files.value = [];
     return;
   }
@@ -46,7 +54,8 @@ async function fetchFiles() {
   error.value = null;
   
   try {
-    const res = await fetch(`/api/v1/drive-files?name=${searchQuery.value}&foldersIds=${foldersIds.value.join(',')}`);
+    const ids = getTargettedFolders(); 
+    const res = await fetch(`/api/v1/drive-files?name=${searchQuery.value}&foldersIds=${ids.join(',')}`);
     const data = await res.json();
     
     if (data.error) {
