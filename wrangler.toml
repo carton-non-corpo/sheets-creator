@@ -1,12 +1,11 @@
 name = "imprimerie-sheets-creator"
 compatibility_date = "2024-08-27"
 compatibility_flags = ["nodejs_compat"]
-
-[build]
-command = "pnpm build"
+pages_build_output_dir = "dist"
 
 [env.production]
 name = "imprimerie-sheets-creator"
+compatibility_flags = ["nodejs_compat"]
 
 [env.production.vars]
 # Environment variables will be set via Cloudflare dashboard or CLI

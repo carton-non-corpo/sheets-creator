@@ -29,6 +29,9 @@ export default defineNuxtConfig({
     plugins: [
       tailwindcss(),
     ],
+    build: {
+      sourcemap: process.env.NODE_ENV === 'development', // Only generate sourcemaps in development
+    },
   },
 
   shadcn: {

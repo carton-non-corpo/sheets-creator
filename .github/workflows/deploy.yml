@@ -44,13 +44,11 @@ jobs:
         env:
           NODE_OPTIONS: "--max-old-space-size=8192"
           GOOGLE_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
+          GOOGLE_DRIVE_FOLDER_ID: ${{ secrets.GOOGLE_DRIVE_FOLDER_ID }}
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
-          directory: dist
-        env:
-          NODE_OPTIONS: "--max-old-space-size=8192"
+          command: pages deploy dist --project-name ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
