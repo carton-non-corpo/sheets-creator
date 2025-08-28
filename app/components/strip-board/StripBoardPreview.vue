@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { ScrollArea } from '~/components/ui/scroll-area';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
-import { X, Download } from 'lucide-vue-next';
+import { X, Download, Printer } from 'lucide-vue-next';
 
 const props = defineProps<{
   open: boolean;
@@ -16,7 +16,7 @@ const emit = defineEmits<{
 const stripBoardStore = useStripBoardStore();
 const { stripBoard } = storeToRefs(stripBoardStore);
 
-const cardsPerPage = 9; // 3x3 grid
+const { cardsPerPage, exportAllPages, exportSinglePage } = usePdfExport();
 
 const totalCards = computed(() => {
   if (!stripBoard.value) return 0;
@@ -77,7 +77,7 @@ function closeDialog() {
             <Badge variant="secondary" class="text-sm">
               {{ totalPages }} page{{ totalPages > 1 ? 's' : '' }} • {{ totalCards }} carte{{ totalCards > 1 ? 's' : '' }}
             </Badge>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" @click="() => exportAllPages(allPages, stripBoard?.name)">
               <Download class="w-4 h-4 mr-2" />
               Exporter tout
             </Button>
@@ -94,7 +94,12 @@ function closeDialog() {
           >
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-lg font-medium">Page {{ page.pageNumber }}</h3>
-              <Badge variant="outline">{{ page.cards.length }}/{{ cardsPerPage }} cartes</Badge>
+              <div class="flex items-center gap-2">
+                <Badge variant="outline">{{ page.cards.length }}/{{ cardsPerPage }} cartes</Badge>
+                <Button variant="ghost" size="sm" @click="() => exportSinglePage(page, stripBoard?.name)">
+                  <Printer class="w-4 h-4" />
+                </Button>
+              </div>
             </div>
             
             <div class="flex justify-center overflow-hidden">
