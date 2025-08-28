@@ -2,11 +2,13 @@
 import { Switch } from '~/components/ui/switch';
 import { Label } from '~/components/ui/label';
 import { Button } from '~/components/ui/button';
-import { Download, Search, Layers, GalleryHorizontalEnd } from 'lucide-vue-next';
+import { Download, Search } from 'lucide-vue-next';
 import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext, PaginationEllipsis } from '~/components/ui/pagination';
-
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '~/components/ui/dropdown-menu';
 const stripBoardStore = useStripBoardStore();
 const { stripBoard } = storeToRefs(stripBoardStore);
+
+const { exportAllPages, exportSinglePage } = usePdfExport();
 
 const landmarks = ref<boolean>(true);
 const currentPage = ref<number>(1);
@@ -48,6 +50,20 @@ const paginatedCards = computed(() => {
   return cardsForPrint.value.slice(startIndex, endIndex);
 });
 
+const allPages = computed(() => {
+  const pages = [];
+  for (let i = 0; i < totalPages.value; i++) {
+    const startIndex = i * cardsPerPage;
+    const endIndex = startIndex + cardsPerPage;
+    const pageCards = cardsForPrint.value.slice(startIndex, endIndex);
+    pages.push({
+      pageNumber: i + 1,
+      cards: pageCards
+    });
+  }
+  return pages;
+});
+
 // Watch for changes in totalPages and adjust currentPage if needed
 watch(totalPages, (newTotalPages, oldTotalPages) => {
   if (newTotalPages < oldTotalPages && currentPage.value > newTotalPages) {
@@ -71,26 +87,32 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
           <Search />
           Prévisualiser
         </Button>
-        <Button class="cursor-pointer">
-          <Download />
-          Exporter
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger as-child>
+            <Button class="cursor-pointer">
+              <Download />
+              Exporter
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent class="w-auto mr-4 mt-1">
+            <DropdownMenuLabel>Choisir l'action</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem class="cursor-pointer" @click="() => exportAllPages(allPages, stripBoard?.name)">
+              Tout exporter
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              class="cursor-pointer" 
+              @click="() => {
+                const currentPageData = allPages[currentPage - 1];
+                if (currentPageData) exportSinglePage(currentPageData, stripBoard?.name);
+              }"
+            >
+              Exporter la planche actuelle
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
-
-    <!-- <div class="flex justify-center gap-4">
-      <div class="flex items-center gap-1.5 px-3 py-2 bg-muted/50 rounded-lg border">
-        <GalleryHorizontalEnd class="w-4 h-4 text-muted-foreground mr-0.5" />
-        <span class="text-sm font-medium">{{ totalUniqueCards }}</span>
-        <span class="text-xs text-muted-foreground">unique{{ totalUniqueCards > 1 ? 's' : '' }}</span>
-      </div>
-      
-      <div class="flex items-center gap-1.5 px-3 py-2 bg-muted/50 rounded-lg border">
-        <Layers class="w-4 h-4 text-muted-foreground mr-0.5" />
-        <span class="text-sm font-medium">{{ totalCards }}</span>
-        <span class="text-xs text-muted-foreground">totale{{ totalCards > 1 ? 's' : '' }}</span>
-      </div>
-    </div> -->
 
     <StripBoardDisplay :scale="0.5" :show-landmarks="landmarks" :cards="paginatedCards" />
 

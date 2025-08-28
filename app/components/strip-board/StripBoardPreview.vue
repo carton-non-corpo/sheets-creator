@@ -3,7 +3,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { ScrollArea } from '~/components/ui/scroll-area';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
-import { X, Download, Printer } from 'lucide-vue-next';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
+import { Download, GalleryHorizontalEnd, Layers, Info } from 'lucide-vue-next';
 
 const props = defineProps<{
   open: boolean;
@@ -21,6 +22,10 @@ const { cardsPerPage, exportAllPages, exportSinglePage } = usePdfExport();
 const totalCards = computed(() => {
   if (!stripBoard.value) return 0;
   return stripBoard.value.content.reduce((sum, card) => sum + card.quantity, 0);
+});
+
+const totalUniqueCards = computed(() => {
+  return stripBoard.value?.content.length || 0;
 });
 
 const totalPages = computed(() => {
@@ -66,39 +71,59 @@ function closeDialog() {
   <Dialog :open="props.open" @update:open="emit('update:open', $event)">
     <DialogContent class="max-w-4xl w-[90vw] h-[85vh] p-0 flex flex-col">
       <DialogHeader class="p-6 pb-4 border-b flex-shrink-0">
-        <div class="flex items-center justify-between">
-          <div>
-            <DialogTitle class="text-xl font-semibold">Prévisualisation des planches</DialogTitle>
-            <DialogDescription class="mt-1">
-              Aperçu de toutes vos planches
-            </DialogDescription>
-          </div>
-          <div class="flex items-center gap-3">
-            <Badge variant="secondary" class="text-sm">
-              {{ totalPages }} page{{ totalPages > 1 ? 's' : '' }} • {{ totalCards }} carte{{ totalCards > 1 ? 's' : '' }}
-            </Badge>
-            <Button variant="outline" size="sm" @click="() => exportAllPages(allPages, stripBoard?.name)">
-              <Download class="w-4 h-4 mr-2" />
-              Exporter tout
-            </Button>
-          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex gap-1.5">
+              <DialogTitle class="text-xl font-semibold">Prévisualisation des planches</DialogTitle>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild class="mt-0.5">
+                    <Button variant="ghost" size="sm" class="h-auto w-auto py-1 !px-1">
+                      <Info class="w-4 h-4 text-muted-foreground" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom" class="max-w-xs">
+                    <img src="~/assets/images/save_as_pdf.png" alt="Guide d'export PDF" class="w-full" />
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
         </div>
       </DialogHeader>
       
       <ScrollArea class="flex-1 overflow-hidden">
-        <div class="p-6 space-y-4">
+        <div class="p-6 pt-0 space-y-4">
+
+          <div class="flex justify-center gap-4">
+            <div class="flex items-center gap-1.5 px-3 py-1.75 text-foreground bg-muted/50 rounded-md border">
+              <GalleryHorizontalEnd class="w-4 h-4 text-muted-foreground mr-0.5" />
+              <span class="text-sm font-medium">{{ totalUniqueCards }}</span>
+              <span class="text-xs text-muted-foreground">unique{{ totalUniqueCards > 1 ? 's' : '' }}</span>
+            </div>
+            
+            <div class="flex items-center gap-1.5 px-3 py-1.75 text-foreground bg-muted/50 rounded-md border">
+              <Layers class="w-4 h-4 text-muted-foreground mr-0.5" />
+              <span class="text-sm font-medium">{{ totalCards }}</span>
+              <span class="text-xs text-muted-foreground">totale{{ totalCards > 1 ? 's' : '' }}</span>
+            </div>
+
+            <Button variant="outline" class="cursor-pointer" @click="() => exportAllPages(allPages, stripBoard?.name)">
+              <Download class="w-4 h-4" />
+              Tout exporter 
+            </Button>
+          </div>
+
           <div 
             v-for="page in allPages" 
             :key="page.pageNumber"
             class="border rounded-lg p-4 bg-gray-50"
           >
             <div class="flex items-center justify-between mb-4">
-              <h3 class="text-lg font-medium">Page {{ page.pageNumber }}</h3>
+              <h3 class="text-lg font-medium text-foreground">Page {{ page.pageNumber }}</h3>
               <div class="flex items-center gap-2">
                 <Badge variant="outline">{{ page.cards.length }}/{{ cardsPerPage }} cartes</Badge>
-                <Button variant="ghost" size="sm" @click="() => exportSinglePage(page, stripBoard?.name)">
+                <!-- <Button variant="ghost" size="sm" @click="() => exportSinglePage(page, stripBoard?.name)">
                   <Printer class="w-4 h-4" />
-                </Button>
+                </Button> -->
               </div>
             </div>
             
