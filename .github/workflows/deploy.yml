@@ -2,22 +2,19 @@ name: Deploy to Cloudflare Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     name: Deploy to Cloudflare Pages
-    
     permissions:
       contents: read
       deployments: write
       pull-requests: write
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,30 +23,37 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'pnpm'
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10.14.0
-          run_install: false
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Install Nuxt CLI
-        run: pnpm add -g nuxt
-
-      - name: Build application
-        run: nuxt build
+      # No need to globally install "nuxt"
+      - name: Build application (Nuxt 4 → Cloudflare Pages)
+        run: pnpm nuxi build
         env:
           NODE_OPTIONS: "--max-old-space-size=8192"
+          # Build-time envs (only if your build needs them):
           GOOGLE_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
+
+      # (Recommended) add wrangler.toml to the artifact so the worker has Node polyfills
+      - name: Add wrangler.toml to artifact
+        run: |
+          cat > .output/public/wrangler.toml <<'EOF'
+          compatibility_date = "2025-08-01"
+          compatibility_flags = ["nodejs_compat"]
+          EOF
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
-          directory: dist
-
+          apiToken:   ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId:  ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName:${{ secrets.CLOUDFLARE_PROJECT_NAME }}
+          directory:  .output/public
+          gitHubToken:${{ secrets.GITHUB_TOKEN }}
