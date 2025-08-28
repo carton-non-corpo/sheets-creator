@@ -13,6 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy to Cloudflare Pages
     
+    permissions:
+      contents: read
+      deployments: write
+      pull-requests: write
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,6 +51,5 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           directory: dist
 
