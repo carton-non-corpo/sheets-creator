@@ -31,6 +31,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Install Nuxt CLI
+        run: pnpm add -g nuxt
+
       - name: Build application
         run: nuxt build
         env:

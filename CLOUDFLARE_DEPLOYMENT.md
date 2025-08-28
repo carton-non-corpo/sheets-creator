@@ -52,22 +52,6 @@ Add these secrets to your GitHub repository (Settings > Secrets and variables > 
 2. Select your domain
 3. Copy the Account ID from the right sidebar
 
-### 5. Local Development with Wrangler
-
-Install dependencies and login to Wrangler:
-
-```bash
-pnpm install
-pnpm cf:login
-```
-
-Build and deploy manually:
-
-```bash
-pnpm build
-pnpm deploy
-```
-
 ## Automatic Deployments
 
 The CI/CD pipeline will automatically:
@@ -97,23 +81,7 @@ The CI/CD pipeline will automatically:
 2. **Environment Variables**: Check they're accessible in the runtime config
 3. **Node.js Compatibility**: Some Node.js APIs might not be available in the Cloudflare Workers runtime
 
-## Manual Deployment
-
-You can also deploy manually using Wrangler:
-
-```bash
-# Login to Wrangler (one time setup)
-pnpm cf:login
-
-# Build your application
-pnpm build
-
-# Deploy to Cloudflare Pages
-pnpm deploy
-```
-
 ## Resources
 
 - [Cloudflare Pages Documentation](https://developers.cloudflare.com/pages/)
 - [Nuxt Cloudflare Deployment](https://nuxt.com/docs/getting-started/deployment#cloudflare-pages)
-- [Wrangler CLI Documentation](https://developers.cloudflare.com/workers/wrangler/)
