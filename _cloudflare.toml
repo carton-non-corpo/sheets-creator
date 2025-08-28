@@ -1,0 +1,15 @@
+# Cloudflare Pages configuration
+
+# Build settings
+BUILD_COMMAND = "pnpm build"
+BUILD_OUTPUT_DIRECTORY = ".output/public"
+
+# Environment variables
+# These should be set in the Cloudflare Pages dashboard
+# GOOGLE_SERVICE_ACCOUNT
+
+# Node.js version
+NODE_VERSION = "20"
+
+# Compatibility flags
+COMPATIBILITY_FLAGS = ["nodejs_compat"]
