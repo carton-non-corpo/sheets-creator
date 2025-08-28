@@ -1,6 +1,6 @@
 # Cloudflare Pages Deployment Guide
 
-This guide covers deploying your Nuxt 4 application to Cloudflare Pages.
+This guide covers deploying your Nuxt 4 application to Cloudflare Pages using GitHub Actions.
 
 ## Prerequisites
 
@@ -16,15 +16,17 @@ This guide covers deploying your Nuxt 4 application to Cloudflare Pages.
 2. Click "Create a project"
 3. Connect your GitHub repository
 4. Configure build settings:
-   - **Build command**: `pnpm build`
-   - **Build output directory**: `.output/public`
+   - **Build command**: `nuxt build`
+   - **Build output directory**: `dist`
    - **Root directory**: `/` (leave empty)
+   - **Node.js version**: `20`
 
 ### 2. Environment Variables
 
 Set these environment variables in your Cloudflare Pages dashboard:
 
 - `GOOGLE_SERVICE_ACCOUNT`: Your Google service account JSON
+- `GOOGLE_DRIVE_FOLDER_ID`: Your Google Drive folder ID
 - `NODE_VERSION`: `20`
 
 ### 3. GitHub Secrets
@@ -35,6 +37,7 @@ Add these secrets to your GitHub repository (Settings > Secrets and variables > 
 - `CLOUDFLARE_ACCOUNT_ID`: Your Cloudflare account ID
 - `CLOUDFLARE_PROJECT_NAME`: Your Cloudflare Pages project name
 - `GOOGLE_SERVICE_ACCOUNT`: Your Google service account JSON
+- `GOOGLE_DRIVE_FOLDER_ID`: Your Google Drive folder ID
 
 ### 4. Getting Cloudflare Credentials
 
@@ -73,7 +76,7 @@ The CI/CD pipeline will automatically:
 
 1. **API Token**: Verify your Cloudflare API token has correct permissions
 2. **Project Name**: Ensure the project name matches your Cloudflare Pages project
-3. **Build Output**: Check that `.output/public` directory is created after build
+3. **Build Output**: Check that `dist` directory is created after build
 
 ### Runtime Issues
 

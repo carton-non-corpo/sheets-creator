@@ -16,7 +16,6 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    '@nuxt/content',
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/icon',
@@ -34,7 +33,7 @@ export default defineNuxtConfig({
 
   shadcn: {
     prefix: '',
-    componentDir: './components/ui'
+    componentDir: './app/components/ui'
   },
 
   nitro: {
