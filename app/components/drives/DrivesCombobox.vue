@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { GameFolders } from '~~/common/types/games';
 import { ref, computed } from 'vue';
-import { ChevronDown, FolderOpen } from 'lucide-vue-next';
+import { ChevronDown, FolderOpen, Minus } from 'lucide-vue-next';
 import { getGameDisplayName } from '~~/common/utils/games';
 import { Combobox, ComboboxAnchor, ComboboxTrigger, ComboboxList, ComboboxInput, ComboboxViewport, ComboboxEmpty, ComboboxGroup, ComboboxItem } from '~/components/ui/combobox';
 import { Checkbox } from '~/components/ui/checkbox';
@@ -52,6 +52,30 @@ const selectedText = computed(() => {
   if (model.value.length === gameFolders.value.length) return getGameDisplayName(selectedGame.value)
   return `${model.value.length} catégories sélectionnées`
 })
+
+// Computed properties for the master checkbox
+const allFoldersSelected = computed(() => {
+  return gameFolders.value.length > 0 && model.value.length === gameFolders.value.length
+})
+
+const someFoldersSelected = computed(() => {
+  return model.value.length > 0 && model.value.length < gameFolders.value.length
+})
+
+const noFoldersSelected = computed(() => {
+  return model.value.length === 0
+})
+
+// Toggle all folders
+const toggleAllFolders = () => {
+  if (allFoldersSelected.value) {
+    // Unselect all
+    model.value = []
+  } else {
+    // Select all
+    model.value = gameFolders.value.map(folder => folder.id)
+  }
+}
 </script>
 
 <template>
@@ -69,11 +93,20 @@ const selectedText = computed(() => {
     </ComboboxAnchor>
 
     <ComboboxList class="w-[300px] p-0">
-      <ComboboxInput
-        v-model="searchTerm"
-        placeholder="Chercher une catégorie..."
-        class="h-9"
-      />
+      <div class="flex items-center gap-3 px-3 py-2 border-b">
+        <Checkbox
+          :model-value="allFoldersSelected || someFoldersSelected"
+          :indeterminate="someFoldersSelected"
+          @update:model-value="toggleAllFolders"
+          class="pointer-events-auto border-gray-300 data-[state=checked]:bg-green-100 data-[state=checked]:border-green-600 hover:border-green-400 focus-visible:ring-green-500/50 [&[data-state=checked]_svg]:text-green-600"
+        >
+          <Minus v-if="someFoldersSelected" class="size-3.5" />
+        </Checkbox>
+        <ComboboxInput
+          v-model="searchTerm"
+          placeholder="Chercher une catégorie..."
+        />
+      </div>
       
       <ComboboxViewport class="max-h-[420px]">
         <ComboboxEmpty class="py-6 text-center text-sm">
