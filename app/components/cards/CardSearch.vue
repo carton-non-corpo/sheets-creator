@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { Input } from '~/components/ui/input';
-import { debounce } from 'lodash';
+import { useDebounceFn } from '@vueuse/core';
 import type { EnhancedFile } from '~~/common/types/drive';
-import { gameFolders } from '~~/common/utils/drives';
 import { ScrollArea } from '~/components/ui/scroll-area';
 import CardSelector from '~/components/cards/CardSelector.vue';
 import { getGameDisplayName } from '~~/common/utils/games';
@@ -32,7 +31,7 @@ const searchText = computed(() => {
   return `Chercher dans les catégories sélectionnées...`
 })
 
-const debouncedFetchFiles = debounce(fetchFiles, 400, { trailing: true });
+const debouncedFetchFiles = useDebounceFn(fetchFiles, 400);
 
 function getTargettedFolders(): string[] {
   // If user is searching by name and no folders are selected, return all folders for the current game

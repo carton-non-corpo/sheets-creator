@@ -4,13 +4,16 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
+    "build:cloudrun": "NITRO_PRESET=node-server nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "deploy": "wrangler pages deploy .output/public",
     "deploy:preview": "wrangler pages deploy .output/public --compatibility-date=2024-08-27",
-    "cf:login": "wrangler login"
+    "cf:login": "wrangler login",
+    "docker:build": "docker build -t nuxt-app .",
+    "docker:run": "docker run -p 3000:3000 nuxt-app"
   },
   "dependencies": {
     "@nuxt/eslint": "1.8.0",
@@ -28,7 +31,6 @@
     "dotenv": "^17.2.1",
     "eslint": "^9.0.0",
     "googleapis": "^157.0.0",
-    "lodash": "^4.17.21",
     "lucide-vue-next": "^0.539.0",
     "nuxt": "^4.0.3",
     "pinia": "^3.0.3",
