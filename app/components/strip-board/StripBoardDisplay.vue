@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { Minus, Plus } from 'lucide-vue-next';
 import type { StripBoardContentCard } from '~~/common/types/strip_board'
+import type { EnhancedFile } from '~~/common/types/drive'
 
 const props = defineProps<{
   scale: number;
@@ -9,6 +11,26 @@ const props = defineProps<{
 
 const stripBoardStore = useStripBoardStore();
 const { stripBoard } = storeToRefs(stripBoardStore);
+const { addCard, removeCard } = stripBoardStore;
+
+function handleCardAddition(card: StripBoardContentCard & { printIndex: number }) {
+  
+  // Convert the card back to EnhancedFile format for addCard
+  const enhancedFile: EnhancedFile = {
+    id: card.id,
+    name: card.name,
+    mimeType: card.mimeType,
+    parents: card.parents,
+    thumbnailLink: card.thumbnailLink,
+    webContentLink: card.webContentLink,
+    webViewLink: card.webViewLink,
+    imageUrl: card.imageUrl,
+    downloadUrl: card.downloadUrl,
+    viewUrl: card.viewUrl
+  };
+  
+  addCard(enhancedFile);
+}
 
 const cardsForPrint = computed(() => {
   if (props.cards) {
@@ -48,7 +70,13 @@ const placeholders = computed(() => 9 - cardsForPrint.value.length)
           class="grid place-content-center w-full h-full z-1"
           style="grid-template-columns: repeat(3, 63mm); grid-template-rows: repeat(3, 88mm);"
         >
-          <div v-for="card in cardsForPrint" :key="card.printIndex" class="relative border-box overflow-hidden">
+          <div 
+            v-for="card in cardsForPrint" 
+            :key="card.printIndex" 
+            class="relative border-box overflow-hidden group cursor-pointer"
+            @click="handleCardAddition(card)"
+            @contextmenu.prevent="removeCard(card.id)"
+          >
             <div v-if="card.imageUrl" class="w-full h-full">
               <img 
                 :src="card.imageUrl" 
@@ -59,6 +87,30 @@ const placeholders = computed(() => 9 - cardsForPrint.value.length)
             </div>
             <div v-else class="flex items-center justify-center w-full h-full px-3 bg-gray-200">
               <span class="text-gray-500 text-xs break-all text-center">{{ card.name || 'No image' }}</span>
+            </div>
+
+            <!-- Gradient black overlay on hover -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+
+            <!-- Buttons in top right corner - only show on hover -->
+            <div class="absolute top-2 right-2 flex flex-col gap-1">
+              <Button 
+                size="sm" 
+                variant="secondary" 
+                class="hidden group-hover:flex h-8 w-8 p-0 ml-auto mr-0.25 rounded shadow-md border-1 border-gray-800 cursor-pointer disabled:!cursor-not-allowed disabled:opacity-70"
+                @click="removeCard(card.id)"
+              >
+                <Minus class="h-5 w-5" />
+              </Button>
+
+              <Button 
+                size="sm" 
+                variant="secondary" 
+                class="hidden group-hover:flex h-8 w-8 p-0 ml-auto mr-0.25 rounded shadow-md border-1 border-gray-800 cursor-pointer disabled:!cursor-not-allowed disabled:opacity-70"
+                @click="handleCardAddition(card)"
+              >
+                <Plus class="h-5 w-5" />
+              </Button>
             </div>
           </div>
           <div v-for="placeholder in placeholders" :key="placeholder" class="relative border-box overflow-hidden border border-gray-100" />

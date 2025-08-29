@@ -79,11 +79,15 @@ function presetFoldersIds() {
 };
 
 watch(foldersIds, () => {
-  nextTick(() => fetchFiles());
+  nextTick(() => debouncedFetchFiles());
+});
+
+watch(searchQuery, () => {
+  debouncedFetchFiles();
 });
 
 watch(selectedGame, () => {
-  nextTick(() => fetchFiles());
+  nextTick(() => debouncedFetchFiles());
   presetFoldersIds();
 }, { immediate: true });
 </script>
@@ -96,7 +100,6 @@ watch(selectedGame, () => {
       v-model="searchQuery"
       :placeholder="searchText"
       class="p-2"
-      @input="debouncedFetchFiles"
     />
 
     <Separator />

@@ -33,7 +33,9 @@ function goToWebLink() {
 
 <template>
   <div 
-    class="group relative h-full w-full"
+    class="group relative h-full w-full min-h-36"
+    @click="addCard(props.card)"
+    @contextmenu.prevent="removeCard(props.card.id)"
   >
     <div v-if="props.card.thumbnailLink" class="w-full h-auto">
       <img 

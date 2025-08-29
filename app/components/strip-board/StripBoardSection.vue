@@ -113,7 +113,7 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
         </DropdownMenu>
       </div>
     </div>
-
+    
     <StripBoardDisplay :scale="0.5" :show-landmarks="landmarks" :cards="paginatedCards" />
 
     <Pagination 
