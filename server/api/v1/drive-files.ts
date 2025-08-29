@@ -43,10 +43,10 @@ function buildSearchQuery(nameFilter: string, folderId?: string): string {
     folderQuery = ` AND '${folderId}' in parents`;
   }
 
-  // Exclude folders from results
-  const excludeFolders = ` AND mimeType != 'application/vnd.google-apps.folder'`;
+  // Only include image files
+  const imageFilter = ` AND (mimeType contains 'image/')`;
 
-  return `name contains '${nameFilter}'${folderQuery}${excludeFolders}`;
+  return `name contains '${nameFilter}'${folderQuery}${imageFilter}`;
 }
 
 /**

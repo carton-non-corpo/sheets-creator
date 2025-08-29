@@ -35,12 +35,12 @@ function goToWebLink() {
   <div 
     class="group relative h-full w-full"
   >
-    <div v-if="props.card.imageUrl" class="w-full h-auto">
+    <div v-if="props.card.thumbnailLink" class="w-full h-auto">
       <img 
-        :src="props.card.imageUrl" 
+        :src="props.card.thumbnailLink" 
         :alt="props.card.name || 'Card image'"
         class="w-full h-full object-cover"
-        @error="console.log('Image failed to load:', props.card.imageUrl)"
+        @error="console.log('Image failed to load:', props.card.thumbnailLink)"
       />
     </div>
     <div v-else class="flex items-center justify-center w-full h-full px-3 rounded bg-gray-200">
