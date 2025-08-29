@@ -2,6 +2,8 @@ import { Game, type GameFolders } from "../types/games";
 
 const mtgFolders: GameFolders[] = [
   // By Main Groups
+
+  // TO RENAME => Chilli_Axe's Drive
   {
     id: "1HPuw0u6y0cvbId0JT8wqLfZp0sjdfbkc",
     name: "Planechase",
@@ -80,8 +82,6 @@ const mtgFolders: GameFolders[] = [
     bleed: true,
     game: Game.MTG
   },
-
-  // Crossovers
   {
     id: "16uXFPWJL67tFqBaarwMCEZxVovlFx1jd",
     name: "Standalone Crossovers",
@@ -177,7 +177,7 @@ const mtgFolders: GameFolders[] = [
     game: Game.MTG
   },
   {
-    id: "LV6AHdXTSJgY_e9_TjWh4ueDhOsgJJVg",
+    id: "1OlfQ4xgPKWo35C60s9MfDe0_oinPApMB",
     name: "Berserk - Guts #2",
     bleed: true,
     game: Game.MTG
@@ -417,7 +417,7 @@ const mtgFolders: GameFolders[] = [
     game: Game.MTG
   },
   {
-    id: "11R7G80oxlX5W4jVR83TzG5tIpNg1TOSwt",
+    id: "1R7G80oxlX5W4jVR83TzG5tIpNg1TOSwt",
     name: "Lovecraft",
     bleed: true,
     game: Game.MTG
