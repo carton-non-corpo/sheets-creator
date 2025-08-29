@@ -98,23 +98,27 @@ export default defineEventHandler(async (event) => {
     // Parse folder IDs
     const folderIds = parseFolderIds(foldersIds, config.googleDriveFolderId);
 
-    // Fetch files from each folder separately
-    const allFiles: any[] = [];
-    const searchQueries: string[] = [];
+    // Fetch files from each folder concurrently using Promise.all
+    let fileResults: any[];
+    let searchQueries: string[];
 
     if (folderIds.length === 0) {
       // Search without folder restriction
       const files = await fetchFilesFromFolder(drive, nameFilter);
-      allFiles.push(...files);
-      searchQueries.push(buildSearchQuery(nameFilter));
+      fileResults = [files];
+      searchQueries = [buildSearchQuery(nameFilter)];
     } else {
-      // Search in each folder separately
-      for (const folderId of folderIds) {
-        const files = await fetchFilesFromFolder(drive, nameFilter, folderId);
-        allFiles.push(...files);
-        searchQueries.push(buildSearchQuery(nameFilter, folderId));
-      }
+      // Search in each folder concurrently
+      const fetchPromises = folderIds.map(folderId =>
+        fetchFilesFromFolder(drive, nameFilter, folderId)
+      );
+
+      fileResults = await Promise.all(fetchPromises);
+      searchQueries = folderIds.map(folderId => buildSearchQuery(nameFilter, folderId));
     }
+
+    // Flatten all files from all folders
+    const allFiles = fileResults.flat();
 
     // Remove duplicates (in case a file appears in multiple searches)
     const uniqueFiles = allFiles.filter((file, index, self) =>
