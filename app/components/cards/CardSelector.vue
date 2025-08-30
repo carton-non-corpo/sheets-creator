@@ -33,7 +33,7 @@ function goToWebLink() {
 
 <template>
   <div 
-    class="group relative h-full w-full min-h-36"
+    class="group relative h-full w-full min-h-36 cursor-pointer"
     @click="addCard(props.card)"
     @contextmenu.prevent="removeCard(props.card.id)"
   >

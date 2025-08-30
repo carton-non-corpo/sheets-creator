@@ -22,3 +22,6 @@ logs
 .env
 .env.*
 !.env.example
+
+# Scripts Ouput
+/server/scripts/driver-downloader/output/*
