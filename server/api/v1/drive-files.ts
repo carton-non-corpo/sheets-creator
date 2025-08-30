@@ -50,17 +50,28 @@ function buildSearchQuery(nameFilter: string, folderId?: string): string {
 }
 
 /**
- * Fetch files from a single folder
+ * Fetch files from a single folder with full pagination (no limits)
  */
 async function fetchFilesFromFolder(drive: any, nameFilter: string, folderId?: string) {
   const searchQuery = buildSearchQuery(nameFilter, folderId);
+  const allFiles: any[] = [];
+  let nextPageToken: string | undefined;
 
-  const response = await drive.files.list({
-    q: searchQuery,
-    fields: 'files(id, name, mimeType, parents, thumbnailLink, webContentLink, webViewLink)',
-  });
+  do {
+    const response = await drive.files.list({
+      q: searchQuery,
+      fields: 'files(id, name, mimeType, parents, thumbnailLink, webContentLink, webViewLink), nextPageToken',
+      pageSize: 1000, // Maximum allowed by Google Drive API
+      pageToken: nextPageToken,
+    });
 
-  return response.data.files || [];
+    const files = response.data.files || [];
+    allFiles.push(...files);
+    nextPageToken = response.data.nextPageToken;
+
+  } while (nextPageToken);
+
+  return allFiles;
 }
 
 /**

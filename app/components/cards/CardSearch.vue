@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Input } from '~/components/ui/input';
-import { useDebounceFn } from '@vueuse/core';
+import { useDebounceFn, useIntersectionObserver } from '@vueuse/core';
 import type { EnhancedFile } from '~~/common/types/drive';
 import { ScrollArea } from '~/components/ui/scroll-area';
 import CardSelector from '~/components/cards/CardSelector.vue';
@@ -17,8 +17,68 @@ const searchQuery = ref('');
 const files = ref<EnhancedFile[]>([]);
 const foldersIds = ref<string[]>([]);
 
+// Viewport-based loading
+const scrollContainer = ref<HTMLElement>();
+const sentinelTop = ref<HTMLElement>();
+const sentinelBottom = ref<HTMLElement>();
+
+// Pagination state
+const itemsPerPage = 50;
+const currentPage = ref(0);
+const loadedItems = ref<EnhancedFile[]>([]);
+
 const sortedCards = computed((): EnhancedFile[] => {
   return files.value.sort((a, b) => a.name.localeCompare(b.name));
+});
+
+// Load more items when needed
+const loadItems = (page: number) => {
+  const startIndex = page * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, sortedCards.value.length);
+  const newItems = sortedCards.value.slice(startIndex, endIndex);
+  
+  if (page === 0) {
+    loadedItems.value = newItems;
+  } else {
+    loadedItems.value.push(...newItems);
+  }
+};
+
+// Setup intersection observers for infinite scroll
+const { stop: stopTopObserver } = useIntersectionObserver(
+  sentinelTop,
+  (entries) => {
+    const [entry] = entries;
+    if (entry?.isIntersecting && currentPage.value > 0) {
+      // Load previous page (if implementing bidirectional scroll)
+      // For now, we'll keep it simple and only implement forward loading
+    }
+  },
+  { threshold: 0.1 }
+);
+
+const { stop: stopBottomObserver } = useIntersectionObserver(
+  sentinelBottom,
+  (entries) => {
+    const [entry] = entries;
+    if (entry?.isIntersecting && loadedItems.value.length < sortedCards.value.length) {
+      currentPage.value++;
+      loadItems(currentPage.value);
+    }
+  },
+  { threshold: 0.1 }
+);
+
+// Reset when cards change
+watch(sortedCards, () => {
+  currentPage.value = 0;
+  loadItems(0);
+}, { immediate: true });
+
+// Cleanup
+onUnmounted(() => {
+  stopTopObserver();
+  stopBottomObserver();
 });
 
 const searchText = computed(() => {
@@ -104,13 +164,21 @@ watch(selectedGame, () => {
 
     <Separator />
 
-    <ScrollArea class="h-[calc(100vh-12.5rem)]">
-      <div v-if="!loading" class="grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-3">
-        <CardSelector 
-          v-for="card in sortedCards" 
-          :key="card.id" 
-          :card="card"
-        />
+    <ScrollArea ref="scrollContainer" class="h-[calc(100vh-12.5rem)]">
+      <div v-if="!loading">
+        <!-- Top sentinel for future bidirectional scrolling -->
+        <div ref="sentinelTop" class="h-1"></div>
+        
+        <div class="grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-3">
+          <CardSelector 
+            v-for="card in loadedItems" 
+            :key="card.id" 
+            :card="card"
+          />
+        </div>
+        
+        <!-- Bottom sentinel for loading more items -->
+        <div ref="sentinelBottom" class="h-1"></div>
       </div>
       <div v-else class="mt-8 flex justify-center w-full">
         <LoaderCircle class="animate-spin" />

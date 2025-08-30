@@ -119,7 +119,7 @@ const toggleAllFolders = () => {
             :key="folder.id"
             :value="folder.id"
             @click="toggleFolder(folder.id)"
-            class="flex items-center space-x-2 px-2 py-1.5"
+            class="flex items-center space-x-2 px-2 py-1.5 cursor-pointer"
           >
             <Checkbox
               :model-value="isSelected(folder.id)"
@@ -129,9 +129,17 @@ const toggleAllFolders = () => {
             />
 
             <div class="flex flex-col flex-1 min-w-0">
-              <span class="text-sm font-medium truncate">{{ folder.name }}</span>
-              <span class="text-xs text-muted-foreground capitalize">
-                {{ folder.subCategory || "Base set" }} {{ folder.bleed ? '• Frond Perdu' : '' }}
+              <div class="flex items-center gap-1.5">
+                <span class="text-sm font-medium truncate">{{ folder.name }}</span>
+                <span 
+                  v-if="folder.subCategory" 
+                  class="inline-flex items-center px-1 py-0.25 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200"
+                >
+                  {{ folder.subCategory }}
+                </span>
+              </div>
+              <span class="text-xs text-muted-foreground capitalize truncate">
+                {{ folder.custom ? 'Custom' : getGameDisplayName(folder.game) }} {{ folder.bleed ? '• Frond Perdu' : '' }}
               </span>
             </div>
           </ComboboxItem>

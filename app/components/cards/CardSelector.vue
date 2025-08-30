@@ -23,7 +23,6 @@ function decrement() {
 }
 
 function goToWebLink() {
-  console.log('Web link clicked:', props.card.webViewLink);
   if (props.card.webViewLink) {
     window.open(props.card.webViewLink, '_blank');
   }
