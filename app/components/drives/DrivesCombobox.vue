@@ -131,7 +131,7 @@ const toggleAllFolders = () => {
             <div class="flex flex-col flex-1 min-w-0">
               <span class="text-sm font-medium truncate">{{ folder.name }}</span>
               <span class="text-xs text-muted-foreground capitalize">
-                {{ getGameDisplayName(folder.game) }} {{ folder.bleed ? '• Frond Perdu' : '' }}
+                {{ folder.subCategory || "Base set" }} {{ folder.bleed ? '• Frond Perdu' : '' }}
               </span>
             </div>
           </ComboboxItem>
