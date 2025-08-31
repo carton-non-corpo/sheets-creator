@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import { google } from 'googleapis';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as readline from 'readline';
@@ -9,6 +8,7 @@ import { pipeline } from 'stream/promises';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import dotenv from 'dotenv';
+import { google, drive_v3 } from 'googleapis';
 
 // Load environment variables
 dotenv.config();
@@ -16,8 +16,15 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+interface DriveFileMetadata extends drive_v3.Schema$File {
+    imageUrl?: string;
+    downloadUrl?: string;
+    viewUrl?: string;
+    thumbnailUrl?: string;
+}
+
 interface DownloadResult {
-    file: any;
+    file: DriveFileMetadata;
     success: boolean;
     error?: string;
     outputPath?: string;
@@ -30,7 +37,7 @@ interface FolderInfo {
 }
 
 class GoogleDriveDownloader {
-    private drive: any;
+    private drive!: drive_v3.Drive;
     private baseOutputDir: string;
     private failedDownloads: DownloadResult[] = [];
     private successfulDownloads: DownloadResult[] = [];
@@ -44,9 +51,14 @@ class GoogleDriveDownloader {
         let serviceAccount: Record<string, string>;
 
         try {
-            serviceAccount = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT || '{}');
+            // Try both environment variable names for backwards compatibility
+            const credentials = process.env.GOOGLE_APPLICATION_CREDENTIALS || process.env.GOOGLE_SERVICE_ACCOUNT;
+            if (!credentials) {
+                throw new Error('Google service account credentials not found');
+            }
+            serviceAccount = JSON.parse(credentials);
         } catch (e) {
-            throw new Error('Invalid Google service account configuration. Make sure GOOGLE_SERVICE_ACCOUNT is set.');
+            throw new Error('Invalid Google service account configuration. Make sure GOOGLE_APPLICATION_CREDENTIALS is set.');
         }
 
         if (!serviceAccount.client_email || !serviceAccount.private_key) {
@@ -59,7 +71,17 @@ class GoogleDriveDownloader {
             scopes: ['https://www.googleapis.com/auth/drive.readonly'],
         });
 
-        this.drive = google.drive({ version: 'v3', auth });
+        this.drive = google.drive({
+            version: 'v3',
+            auth,
+            timeout: 30000,
+            retry: true,
+            retryConfig: {
+                retry: 3,
+                retryDelay: 1000,
+                statusCodesToRetry: [[100, 199], [429, 429], [500, 599]],
+            },
+        });
     }
 
     private async askQuestion(question: string): Promise<string> {
@@ -85,7 +107,7 @@ class GoogleDriveDownloader {
         }
     }
 
-    private isImageFile(file: any): boolean {
+    private isImageFile(file: DriveFileMetadata): boolean {
         if (!file.name) return false;
 
         const fileName = file.name.toLowerCase();
@@ -120,8 +142,8 @@ class GoogleDriveDownloader {
             });
 
             return {
-                id: response.data.id,
-                name: response.data.name,
+                id: response.data.id || folderId,
+                name: response.data.name || 'Unknown Folder',
                 path: '',
             };
         } catch (error) {
@@ -130,10 +152,10 @@ class GoogleDriveDownloader {
         }
     }
 
-    private async getAllFiles(folderId: string, folderPath: string = ''): Promise<Array<{ file: any; folderPath: string }>> {
+    private async getAllFiles(folderId: string, folderPath: string = ''): Promise<Array<{ file: DriveFileMetadata; folderPath: string }>> {
         console.log(`📁 Scanning folder: ${folderPath || 'Root folder'}`);
 
-        const allFiles: Array<{ file: any; folderPath: string }> = [];
+        const allFiles: Array<{ file: DriveFileMetadata; folderPath: string }> = [];
         let pageToken: string | undefined;
 
         try {
@@ -150,8 +172,8 @@ class GoogleDriveDownloader {
                 for (const file of files) {
                     if (file.mimeType === 'application/vnd.google-apps.folder') {
                         // Recursively get files from subfolder
-                        const subfolderPath = path.join(folderPath, file.name);
-                        const subfolderFiles = await this.getAllFiles(file.id, subfolderPath);
+                        const subfolderPath = path.join(folderPath, file.name || 'Unknown');
+                        const subfolderFiles = await this.getAllFiles(file.id!, subfolderPath);
                         allFiles.push(...subfolderFiles);
                     } else if (this.isImageFile(file)) {
                         // Only add image files
@@ -162,7 +184,7 @@ class GoogleDriveDownloader {
                     }
                 }
 
-                pageToken = response.data.nextPageToken;
+                pageToken = response.data.nextPageToken || undefined;
             } while (pageToken);
 
             return allFiles;
@@ -172,8 +194,8 @@ class GoogleDriveDownloader {
         }
     }
 
-    private async downloadFile(file: any, outputDir: string): Promise<DownloadResult> {
-        const sanitizedName = file.name.replace(/[<>:"/\\|?*]/g, '_');
+    private async downloadFile(file: DriveFileMetadata, outputDir: string): Promise<DownloadResult> {
+        const sanitizedName = (file.name || 'unknown').replace(/[<>:"/\\|?*]/g, '_');
         const outputPath = path.join(outputDir, sanitizedName);
 
         try {
@@ -197,10 +219,10 @@ class GoogleDriveDownloader {
                 };
             }
 
-            console.log(`⬇️  Downloading: ${sanitizedName} (${this.formatFileSize(file.size)})`);
+            console.log(`⬇️  Downloading: ${sanitizedName} (${this.formatFileSize(file.size || '0')})`);
 
             const response = await this.drive.files.get({
-                fileId: file.id,
+                fileId: file.id!,
                 alt: 'media',
             }, { responseType: 'stream' });
 
@@ -222,10 +244,11 @@ class GoogleDriveDownloader {
         }
     }
 
-    private formatFileSize(bytes: string | number): string {
+    private formatFileSize(bytes: string | number | null | undefined): string {
         if (!bytes) return 'Unknown size';
 
         const size = typeof bytes === 'string' ? parseInt(bytes) : bytes;
+        if (isNaN(size)) return 'Unknown size';
         const units = ['B', 'KB', 'MB', 'GB'];
         let unitIndex = 0;
         let fileSize = size;

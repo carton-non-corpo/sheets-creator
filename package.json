@@ -14,7 +14,8 @@
     "cf:login": "wrangler login",
     "docker:build": "docker build -t nuxt-app .",
     "docker:run": "docker run -p 3000:3000 nuxt-app",
-    "download:drive": "node --import tsx/esm server/scripts/driver-downloader/index.ts"
+    "download:drive": "node --import tsx/esm server/scripts/driver-downloader/index.ts",
+    "test:drive": "node --import tsx/esm tests/google-drive-test.js"
   },
   "dependencies": {
     "@nuxt/eslint": "1.8.0",

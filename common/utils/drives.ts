@@ -879,7 +879,7 @@ const optcgFolders: GameFolders[] = [
     id: "1TcsliNESunCVt-AOShceR64nX4sYXaoF",
     name: "OP11",
     bleed: false,
-    custom: true,
+    custom: false,
     subCategory: null,
     game: Game.OPTCG
   },
@@ -887,7 +887,7 @@ const optcgFolders: GameFolders[] = [
     id: "1K3lkcWQJfwEFxv4TsO3KJ8ZZnSR0TGTz",
     name: "OP11 Alts",
     bleed: false,
-    custom: true,
+    custom: false,
     subCategory: null,
     game: Game.OPTCG
   },
@@ -895,7 +895,7 @@ const optcgFolders: GameFolders[] = [
     id: "1N8deCs55bSYTyQPBHIrz9gpNhK9nmv0V",
     name: "OP11 SPs",
     bleed: false,
-    custom: true,
+    custom: false,
     subCategory: null,
     game: Game.OPTCG
   },
@@ -903,7 +903,7 @@ const optcgFolders: GameFolders[] = [
     id: "1b5fBoKcl_j_951dw8v4DEDBC1V2ekB0X",
     name: "OP12",
     bleed: false,
-    custom: true,
+    custom: false,
     subCategory: null,
     game: Game.OPTCG
   },
@@ -911,7 +911,7 @@ const optcgFolders: GameFolders[] = [
     id: "1v5Aaxl5LPsqzOrwF43bKesfQrWEtoJbY",
     name: "OP12 Alts",
     bleed: false,
-    custom: true,
+    custom: false,
     subCategory: null,
     game: Game.OPTCG
   },
@@ -919,7 +919,7 @@ const optcgFolders: GameFolders[] = [
     id: "1QoTBoZyHEsFQMkP-I2xMSAJGFXmhSnk6",
     name: "OP12 SPs",
     bleed: false,
-    custom: true,
+    custom: false,
     subCategory: null,
     game: Game.OPTCG
   },
@@ -927,7 +927,7 @@ const optcgFolders: GameFolders[] = [
     id: "11OCtst5VqNhXuGzpRez-HnGwilTXMCSS",
     name: "OP13",
     bleed: false,
-    custom: true,
+    custom: false,
     subCategory: null,
     game: Game.OPTCG
   },
@@ -935,7 +935,7 @@ const optcgFolders: GameFolders[] = [
     id: "1f8PRrd8kK5dy3GfO_Abn8bdYLdpAY9Xf",
     name: "OP13 Alts",
     bleed: false,
-    custom: true,
+    custom: false,
     subCategory: null,
     game: Game.OPTCG
   },
@@ -943,7 +943,7 @@ const optcgFolders: GameFolders[] = [
     id: "1i6taSwaHku8VMRd1pRGiyXKSroHuk25Z",
     name: "OP13 SPs",
     bleed: false,
-    custom: true,
+    custom: false,
     subCategory: null,
     game: Game.OPTCG
   },
@@ -953,7 +953,7 @@ const optcgFolders: GameFolders[] = [
     id: "11fOuBoV1YmjA-sjAqWW41LciBZvg34ip",
     name: "EB02",
     bleed: false,
-    custom: true,
+    custom: false,
     subCategory: null,
     game: Game.OPTCG
   },
@@ -961,7 +961,7 @@ const optcgFolders: GameFolders[] = [
     id: "1xODPK2EDZarV8RznosozDWibIo_oITHM",
     name: "EB02 Alts",
     bleed: false,
-    custom: true,
+    custom: false,
     subCategory: null,
     game: Game.OPTCG
   },
@@ -969,7 +969,7 @@ const optcgFolders: GameFolders[] = [
     id: "1yuUu3NZokAFo83aAkeQD0lGo2Exf7ye8",
     name: "PRB02",
     bleed: false,
-    custom: true,
+    custom: false,
     subCategory: null,
     game: Game.OPTCG
   },
@@ -977,7 +977,7 @@ const optcgFolders: GameFolders[] = [
     id: "1qQW_vopy2dzMMzkYufek6IBauNkHYYQ3",
     name: "PRB02 Alts",
     bleed: false,
-    custom: true,
+    custom: false,
     subCategory: null,
     game: Game.OPTCG
   },
@@ -985,7 +985,7 @@ const optcgFolders: GameFolders[] = [
     id: "143iz5yQXYvVkipQFTEn7qsFB6T4GDacO",
     name: "PRB02 SPs",
     bleed: false,
-    custom: true,
+    custom: false,
     subCategory: null,
     game: Game.OPTCG
   },
@@ -993,7 +993,7 @@ const optcgFolders: GameFolders[] = [
     id: "17_IIzxZlKsJlCW_dtKPwcib1fpmmvZSC",
     name: "PRB02 Don!!",
     bleed: false,
-    custom: true,
+    custom: false,
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1001,7 +1001,7 @@ const optcgFolders: GameFolders[] = [
     id: "1WNfIRCag7dlZ41ZVjHpnK-8o6pe_wWhD",
     name: "PRB02 Gold Don!!",
     bleed: false,
-    custom: true,
+    custom: false,
     subCategory: null,
     game: Game.OPTCG
   },

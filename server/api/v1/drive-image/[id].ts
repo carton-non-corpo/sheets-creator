@@ -1,5 +1,4 @@
-import { google } from 'googleapis';
-import { getServiceAccountCredentials } from '../../../service-account';
+import { useGoogleDrive } from '../../../composables/useGoogleDrive';
 
 export default defineEventHandler(async (event) => {
   const fileId = getRouterParam(event, 'id');
@@ -12,45 +11,53 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    // Setup authentication and Drive client
-    const config = useRuntimeConfig();
-    const serviceAccount = getServiceAccountCredentials(config);
-
-    const auth = new google.auth.JWT({
-      email: serviceAccount.client_email,
-      key: serviceAccount.private_key.replace(/\\n/g, '\n'),
-      scopes: ['https://www.googleapis.com/auth/drive.readonly'],
-    });
-
-    const drive = google.drive({ version: 'v3', auth });
+    const { getFile, getFileStream, isImageFile } = useGoogleDrive();
 
     // Get file metadata to check if it's an image
-    const fileMetadata = await drive.files.get({
-      fileId,
-      fields: 'mimeType'
-    });
+    const fileMetadata = await getFile(fileId, 'mimeType');
 
-    if (!fileMetadata.data.mimeType?.startsWith('image/')) {
+    if (!isImageFile(fileMetadata)) {
       throw createError({
         statusCode: 400,
         statusMessage: 'File is not an image'
       });
     }
 
-    // Get the file content
-    const response = await drive.files.get({
-      fileId,
-      alt: 'media'
-    }, { responseType: 'stream' });
+    // Get the file content as stream
+    const response = await getFileStream(fileId);
 
     // Set appropriate headers
-    setHeader(event, 'Content-Type', fileMetadata.data.mimeType);
+    setHeader(event, 'Content-Type', fileMetadata.mimeType || 'image/jpeg');
     setHeader(event, 'Cache-Control', 'public, max-age=3600'); // Cache for 1 hour
+    setHeader(event, 'X-Content-Type-Options', 'nosniff');
 
     return sendStream(event, response.data);
 
   } catch (error: any) {
-    console.error('Drive image proxy error:', error);
+    console.error('❌ Drive image proxy error:', error);
+
+    // Handle specific error types
+    if (error.name === 'GoogleDriveAuthError') {
+      throw createError({
+        statusCode: 401,
+        statusMessage: 'Google Drive authentication failed'
+      });
+    }
+
+    if (error.name === 'GoogleDriveRateLimitError') {
+      throw createError({
+        statusCode: 429,
+        statusMessage: 'Rate limit exceeded. Please try again later.'
+      });
+    }
+
+    if (error.code === 'NOT_FOUND') {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Image not found in Google Drive'
+      });
+    }
+
     throw createError({
       statusCode: 500,
       statusMessage: 'Failed to fetch image from Google Drive'
