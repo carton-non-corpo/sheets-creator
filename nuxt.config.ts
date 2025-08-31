@@ -8,8 +8,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     // Private keys (only available on server-side)
-    googleServiceAccount: process.env.GOOGLE_SERVICE_ACCOUNT,
-    googleDriveFolderId: process.env.GOOGLE_DRIVE_FOLDER_ID,
+    googleApplicationCredentials: process.env.GOOGLE_APPLICATION_CREDENTIALS,
 
     // Public keys (exposed to client-side)
     public: {}

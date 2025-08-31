@@ -5,13 +5,13 @@ This script downloads only image files from a Google Drive folder and its subfol
 ## Prerequisites
 
 1. **Google Service Account**: You need a Google Service Account with access to the Google Drive API.
-2. **Environment Variable**: Set the `GOOGLE_SERVICE_ACCOUNT` environment variable with your service account JSON credentials.
+2. **Environment Variable**: Set the `GOOGLE_APPLICATION_CREDENTIALS` environment variable with your service account JSON credentials.
 
 ## Setup
 
 1. Make sure you have the environment variable set in your `.env` file:
    ```env
-   GOOGLE_SERVICE_ACCOUNT={"type":"service_account","project_id":"...","private_key_id":"..."}
+   GOOGLE_APPLICATION_CREDENTIALS={"type":"service_account","project_id":"...","private_key_id":"..."}
    ```
 
 2. The service account must have access to the Google Drive folder you want to download.

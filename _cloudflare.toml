@@ -6,7 +6,7 @@ BUILD_OUTPUT_DIRECTORY = ".output/public"
 
 # Environment variables
 # These should be set in the Cloudflare Pages dashboard
-# GOOGLE_SERVICE_ACCOUNT
+# GOOGLE_APPLICATION_CREDENTIALS
 
 # Node.js version
 NODE_VERSION = "20"
