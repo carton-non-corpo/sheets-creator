@@ -14,18 +14,18 @@ const emit = defineEmits<{
   'update:open': [value: boolean];
 }>();
 
-const stripBoardStore = useStripBoardStore();
-const { stripBoard } = storeToRefs(stripBoardStore);
+const sheetStore = useSheetStore();
+const { sheet } = storeToRefs(sheetStore);
 
 const { cardsPerPage, exportAllPages, exportSinglePage } = usePdfExport();
 
 const totalCards = computed(() => {
-  if (!stripBoard.value) return 0;
-  return stripBoard.value.content.reduce((sum, card) => sum + card.quantity, 0);
+  if (!sheet.value) return 0;
+  return sheet.value.content.reduce((sum, card) => sum + card.quantity, 0);
 });
 
 const totalUniqueCards = computed(() => {
-  return stripBoard.value?.content.length || 0;
+  return sheet.value?.content.length || 0;
 });
 
 const totalPages = computed(() => {
@@ -34,10 +34,10 @@ const totalPages = computed(() => {
 });
 
 const cardsForPrint = computed(() => {
-  if (!stripBoard.value) return [];
+  if (!sheet.value) return [];
   
   const cards = [];
-  for (const card of stripBoard.value.content) {
+  for (const card of sheet.value.content) {
     for (let i = 0; i < card.quantity; i++) {
       cards.push({
         ...card,
@@ -106,7 +106,7 @@ function closeDialog() {
               <span class="text-xs text-muted-foreground">totale{{ totalCards > 1 ? 's' : '' }}</span>
             </div>
 
-            <Button variant="outline" class="cursor-pointer" @click="() => exportAllPages(allPages, stripBoard?.name)">
+            <Button variant="outline" class="cursor-pointer" @click="() => exportAllPages(allPages, sheet?.name)">
               <Download class="w-4 h-4" />
               Tout exporter 
             </Button>
@@ -121,7 +121,7 @@ function closeDialog() {
               <h3 class="text-lg font-medium text-foreground">Page {{ page.pageNumber }}</h3>
               <div class="flex items-center gap-2">
                 <Badge variant="outline">{{ page.cards.length }}/{{ cardsPerPage }} cartes</Badge>
-                <!-- <Button variant="ghost" size="sm" @click="() => exportSinglePage(page, stripBoard?.name)">
+                <!-- <Button variant="ghost" size="sm" @click="() => exportSinglePage(page, sheet?.name)">
                   <Printer class="w-4 h-4" />
                 </Button> -->
               </div>
@@ -129,7 +129,7 @@ function closeDialog() {
             
             <div class="flex justify-center overflow-hidden">
               <div class="w-full max-w-md">
-                <StripBoardDisplay 
+                <SheetDisplay 
                   :scale="0.25" 
                   :show-landmarks="true" 
                   :cards="page.cards"
@@ -141,7 +141,7 @@ function closeDialog() {
           <!-- Empty state if no pages -->
           <div v-if="totalPages === 0" class="text-center py-12 text-gray-500">
             <p class="text-lg">Aucune carte à afficher</p>
-            <p class="text-sm mt-2">Ajoutez des cartes à votre strip board pour voir la prévisualisation</p>
+            <p class="text-sm mt-2">Ajoutez des cartes à votre planche pour voir la prévisualisation</p>
           </div>
         </div>
       </ScrollArea>

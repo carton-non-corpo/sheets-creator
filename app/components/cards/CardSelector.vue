@@ -7,8 +7,8 @@ const props = defineProps<{
   card: EnhancedFile
 }>();
 
-const stripBoardStore = useStripBoardStore();
-const { addCard, removeCard, getCardQuantity } = stripBoardStore;
+const sheetStore = useSheetStore();
+const { addCard, removeCard, getCardQuantity } = sheetStore;
 
 const quantity = computed(() => getCardQuantity(props.card.id));
 

@@ -5,8 +5,8 @@ import { Button } from '~/components/ui/button';
 import { Download, Search } from 'lucide-vue-next';
 import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext, PaginationEllipsis } from '~/components/ui/pagination';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '~/components/ui/dropdown-menu';
-const stripBoardStore = useStripBoardStore();
-const { stripBoard } = storeToRefs(stripBoardStore);
+const sheetStore = useSheetStore();
+const { sheet } = storeToRefs(sheetStore);
 
 const { exportAllPages, exportSinglePage } = usePdfExport();
 
@@ -16,12 +16,12 @@ const previewDialogOpen = ref<boolean>(false);
 const cardsPerPage = 9; // 3x3 grid
 
 const totalCards = computed(() => {
-  if (!stripBoard.value) return 0;
-  return stripBoard.value.content.reduce((sum, card) => sum + card.quantity, 0);
+  if (!sheet.value) return 0;
+  return sheet.value.content.reduce((sum, card) => sum + card.quantity, 0);
 });
 
 const totalUniqueCards = computed(() => {
-  return stripBoard.value?.content.length || 0;
+  return sheet.value?.content.length || 0;
 });
 
 const totalPages = computed(() => {
@@ -30,10 +30,10 @@ const totalPages = computed(() => {
 });
 
 const cardsForPrint = computed(() => {
-  if (!stripBoard.value) return [];
+  if (!sheet.value) return [];
   
   const cards = [];
-  for (const card of stripBoard.value.content) {
+  for (const card of sheet.value.content) {
     for (let i = 0; i < card.quantity; i++) {
       cards.push({
         ...card,
@@ -97,14 +97,14 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
           <DropdownMenuContent class="w-auto mr-4 mt-1">
             <DropdownMenuLabel>Choisir l'action</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem class="cursor-pointer" @click="() => exportAllPages(allPages, stripBoard?.name)">
+            <DropdownMenuItem class="cursor-pointer" @click="() => exportAllPages(allPages, sheet?.name)">
               Tout exporter
             </DropdownMenuItem>
             <DropdownMenuItem 
               class="cursor-pointer" 
               @click="() => {
                 const currentPageData = allPages[currentPage - 1];
-                if (currentPageData) exportSinglePage(currentPageData, stripBoard?.name);
+                if (currentPageData) exportSinglePage(currentPageData, sheet?.name);
               }"
             >
               Exporter la planche actuelle
@@ -114,7 +114,7 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
       </div>
     </div>
     
-    <StripBoardDisplay :scale="0.5" :show-landmarks="landmarks" :cards="paginatedCards" />
+    <SheetDisplay :scale="0.5" :show-landmarks="landmarks" :cards="paginatedCards" />
 
     <Pagination 
       v-slot="{ page }" 
@@ -149,7 +149,7 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
       </PaginationContent>
     </Pagination>
 
-    <!-- Strip Board Preview Dialog -->
-    <StripBoardPreview v-model:open="previewDialogOpen" />
+    <!-- Sheet Preview Dialog -->
+    <SheetPreview v-model:open="previewDialogOpen" />
   </div>
 </template>

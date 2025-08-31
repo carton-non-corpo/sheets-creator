@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { Minus, Plus } from 'lucide-vue-next';
-import type { StripBoardContentCard } from '~~/common/types/strip_board'
+import type { SheetContentCard } from '~~/common/types/sheet'
 import type { EnhancedFile } from '~~/common/types/drive'
 
 const props = defineProps<{
   scale: number;
   showLandmarks: boolean;
-  cards?: Array<StripBoardContentCard & { printIndex: number }>;
+  cards?: Array<SheetContentCard & { printIndex: number }>;
 }>()
 
-const stripBoardStore = useStripBoardStore();
-const { stripBoard } = storeToRefs(stripBoardStore);
-const { addCard, removeCard } = stripBoardStore;
+const sheetStore = useSheetStore();
+const { sheet } = storeToRefs(sheetStore);
+const { addCard, removeCard } = sheetStore;
 
-function handleCardAddition(card: StripBoardContentCard & { printIndex: number }) {
+function handleCardAddition(card: SheetContentCard & { printIndex: number }) {
   
   // Convert the card back to EnhancedFile format for addCard
   const enhancedFile: EnhancedFile = {
@@ -37,10 +37,10 @@ const cardsForPrint = computed(() => {
     return props.cards;
   }
   
-  if (!stripBoard.value) return [];
+  if (!sheet.value) return [];
   
   const cards = [];
-  for (const card of stripBoard.value.content) {
+  for (const card of sheet.value.content) {
     for (let i = 0; i < card.quantity; i++) {
       cards.push({
         ...card,
@@ -57,7 +57,7 @@ const placeholders = computed(() => 9 - cardsForPrint.value.length)
 <template>
   <div class="flex grow justify-center items-center w-full">
     <div 
-      class="strip-board-display-container" 
+      class="sheet-display-container" 
       :style="`transform: scale(${props.scale}); margin-bottom: calc(-297mm * ${1 - props.scale}); transform-origin: top center; width: 210mm; height: 297mm;`"
     >
       <!-- Actual export content - maintains 210mm x 297mm for PDF export -->
@@ -126,7 +126,7 @@ const placeholders = computed(() => 9 - cardsForPrint.value.length)
 <style scoped>
 /* When printing or exporting, reset the scaling to maintain original dimensions */
 @media print {
-  .strip-board-display-container {
+  .sheet-display-container {
     transform: none !important;
     margin-bottom: 0 !important;
   }

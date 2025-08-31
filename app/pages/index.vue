@@ -1,29 +1,29 @@
 <script setup lang="ts">
 import CardSearch from '~/components/cards/CardSearch.vue';
-import StripBoardSection from '~/components/strip-board/StripBoardSection.vue';
+import SheetSection from '~/components/sheet/SheetSection.vue';
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '~/components/ui/resizable';
 
 definePageMeta({ name: 'Planches', title: 'Planches' })
 
-const stripBoardStore = useStripBoardStore();
-const { stripBoard } = storeToRefs(stripBoardStore);
+const sheetStore = useSheetStore();
+const { sheet } = storeToRefs(sheetStore);
 
-// Watch for changes in the strip board and log them
-watch(stripBoard, (newStripBoard) => {
-  if (newStripBoard) {
-    console.log('Strip board updated:', {
-      id: newStripBoard.id,
-      name: newStripBoard.name,
-      totalCards: newStripBoard.content.length,
-      totalQuantity: newStripBoard.content.reduce((sum, card) => sum + card.quantity, 0),
-      content: newStripBoard.content.map(card => ({
+// Watch for changes in the sheet and log them
+watch(sheet, (newSheet) => {
+  if (newSheet) {
+    console.log('Sheet updated:', {
+      id: newSheet.id,
+      name: newSheet.name,
+      totalCards: newSheet.content.length,
+      totalQuantity: newSheet.content.reduce((sum, card) => sum + card.quantity, 0),
+      content: newSheet.content.map(card => ({
         id: card.id,
         name: card.name,
         quantity: card.quantity
       }))
     });
   } else {
-    console.log('Strip board is null');
+    console.log('Sheet is null');
   }
 }, { deep: true });
 </script>
@@ -39,7 +39,7 @@ watch(stripBoard, (newStripBoard) => {
       </ResizablePanel>
       <ResizableHandle with-handle />
       <ResizablePanel :default-size="60" :min-size="40">
-        <StripBoardSection />
+        <SheetSection />
       </ResizablePanel>
     </ResizablePanelGroup>
   </NuxtLayout>

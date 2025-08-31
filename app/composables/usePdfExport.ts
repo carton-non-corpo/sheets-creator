@@ -1,11 +1,11 @@
-import type { StripBoardContentCard } from '~~/common/types/strip_board'
+import type { SheetContentCard } from '~~/common/types/sheet'
 
 /**
  * Interface for page data structure used in PDF generation
  */
 interface PageData {
   pageNumber: number;
-  cards: Array<StripBoardContentCard & { printIndex: number }>;
+  cards: Array<SheetContentCard & { printIndex: number }>;
 }
 
 /**
@@ -177,7 +177,7 @@ export const usePdfExport = () => {
    * Generates HTML for a single card slot
    * Handles both image cards and placeholder cards
    */
-  function generateCardHtml(card: StripBoardContentCard & { printIndex: number }): string {
+  function generateCardHtml(card: SheetContentCard & { printIndex: number }): string {
     return `
       <div class="card-slot">
         ${card.imageUrl
@@ -302,9 +302,9 @@ export const usePdfExport = () => {
   /**
    * Exports all pages as a single PDF document
    */
-  async function exportAllPages(pages: PageData[], stripBoardName?: string): Promise<void> {
-    const title = `Strip Board Export - ${stripBoardName || 'Planches'}`;
-    const filename = `${stripBoardName || 'strip-board'}-all-pages.pdf`;
+  async function exportAllPages(pages: PageData[], sheetName?: string): Promise<void> {
+    const title = `Sheet Export - ${sheetName || 'Planches'}`;
+    const filename = `${sheetName || 'sheet'}-all-pages.pdf`;
     const htmlContent = generateHtmlDocument(pages, title);
     await downloadPdf(htmlContent, filename);
   }
@@ -312,9 +312,9 @@ export const usePdfExport = () => {
   /**
    * Exports a single page as a PDF document
    */
-  async function exportSinglePage(pageData: PageData, stripBoardName?: string): Promise<void> {
-    const title = `Strip Board Page ${pageData.pageNumber} - ${stripBoardName || 'Planche'}`;
-    const filename = `${stripBoardName || 'strip-board'}-page-${pageData.pageNumber}.pdf`;
+  async function exportSinglePage(pageData: PageData, sheetName?: string): Promise<void> {
+    const title = `Sheet Page ${pageData.pageNumber} - ${sheetName || 'Planche'}`;
+    const filename = `${sheetName || 'sheet'}-page-${pageData.pageNumber}.pdf`;
     const htmlContent = generateHtmlDocument([pageData], title);
     await downloadPdf(htmlContent, filename);
   }
