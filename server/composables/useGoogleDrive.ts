@@ -276,7 +276,7 @@ export const useGoogleDrive = () => {
 
         // Try both runtime config and direct process.env
         let credentials = config.GOOGLE_APPLICATION_CREDENTIALS || process.env.GOOGLE_APPLICATION_CREDENTIALS;
-        
+
         // Check if credentials are base64 encoded
         if (credentials && !credentials.startsWith('{')) {
             try {
@@ -285,7 +285,7 @@ export const useGoogleDrive = () => {
                 console.error('❌ Failed to decode base64 credentials:', error);
             }
         }
-        
+
         if (!credentials) {
             throw new GoogleDriveAuthError(
                 'GOOGLE_APPLICATION_CREDENTIALS environment variable is not set'

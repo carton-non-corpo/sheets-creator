@@ -139,7 +139,7 @@ const toggleAllFolders = () => {
                 </span>
               </div>
               <span class="text-xs text-muted-foreground capitalize truncate">
-                {{ folder.custom ? 'Custom' : getGameDisplayName(folder.game) }} {{ folder.bleed ? '• Frond Perdu' : '' }}
+                {{ folder.author ?? 'Custom' }} {{ folder.bleed ? '• Frond Perdu' : '' }}
               </span>
             </div>
           </ComboboxItem>
