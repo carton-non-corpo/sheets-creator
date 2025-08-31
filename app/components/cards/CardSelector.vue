@@ -61,7 +61,7 @@ function goToWebLink() {
         size="sm" 
         variant="secondary" 
         class="hidden group-hover:flex h-5 w-5 p-0 ml-auto mr-0.25 rounded shadow-md border-1 border-gray-800 cursor-pointer disabled:!cursor-not-allowed disabled:opacity-70"
-        @click="decrement"
+        @click.stop="decrement"
         :disabled="quantity === 0"
       >
         <Minus class="h-3 w-3" />
@@ -71,7 +71,7 @@ function goToWebLink() {
         size="sm" 
         variant="secondary" 
         class="hidden group-hover:flex h-5 w-5 p-0 ml-auto mr-0.25 rounded shadow-md border-1 border-gray-800 cursor-pointer disabled:!cursor-not-allowed disabled:opacity-70"
-        @click="increment"
+        @click.stop="increment"
       >
         <Plus class="h-3 w-3" />
       </Button>

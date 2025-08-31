@@ -114,7 +114,11 @@ async function fetchFiles() {
   
   try {
     const ids = getTargettedFolders(); 
-    const res = await fetch(`/api/v1/drive-files?name=${searchQuery.value}&foldersIds=${ids.join(',')}`);
+    const params = new URLSearchParams({
+      name: searchQuery.value,
+      foldersIds: ids.join(',')
+    });
+    const res = await fetch(`/api/v1/drive-files?${params.toString()}`);
     const data = await res.json();
     
     if (data.error) {

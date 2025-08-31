@@ -277,8 +277,9 @@ export const useGoogleDrive = () => {
         // Try both runtime config and direct process.env
         let credentials = config.GOOGLE_APPLICATION_CREDENTIALS || process.env.GOOGLE_APPLICATION_CREDENTIALS;
 
-        // Check if credentials are base64 encoded
-        if (credentials && !credentials.startsWith('{')) {
+        // Check if credentials are base64 encoded (only if it's not a file path)
+        if (credentials && !credentials.startsWith('{') && !credentials.startsWith('./') && !credentials.startsWith('/') && !credentials.endsWith('.json')) {
+            console.log('🔐 Decoding base64 encoded credentials');
             try {
                 credentials = Buffer.from(credentials, 'base64').toString('utf-8');
             } catch (error) {
