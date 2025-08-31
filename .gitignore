@@ -25,3 +25,6 @@ logs
 
 # Scripts Ouput
 /server/scripts/driver-downloader/output/*
+
+# Google API credentials
+application_default_credentials.json

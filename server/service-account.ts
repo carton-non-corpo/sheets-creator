@@ -5,7 +5,7 @@ export function getServiceAccountCredentials(config: any) {
   let serviceAccount: Record<string, string>;
 
   try {
-    serviceAccount = JSON.parse(config.googleApplicationCredentials || '{}');
+    serviceAccount = JSON.parse(config.GOOGLE_APPLICATION_CREDENTIALS);
   } catch (e) {
     throw new Error('Invalid Google service account configuration');
   }

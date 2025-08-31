@@ -8,10 +8,12 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     // Private keys (only available on server-side)
-    googleApplicationCredentials: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+    GOOGLE_APPLICATION_CREDENTIALS: process.env.GOOGLE_APPLICATION_CREDENTIALS,
 
     // Public keys (exposed to client-side)
-    public: {}
+    public: {
+      GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
+    }
   },
 
   modules: [
