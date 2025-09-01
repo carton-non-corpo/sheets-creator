@@ -14,12 +14,14 @@ watch(sheet, (newSheet) => {
     console.log('Sheet updated:', {
       id: newSheet.id,
       name: newSheet.name,
+      bleed: newSheet.bleed,
       totalCards: newSheet.content.length,
       totalQuantity: newSheet.content.reduce((sum, card) => sum + card.quantity, 0),
       content: newSheet.content.map(card => ({
         id: card.id,
         name: card.name,
-        quantity: card.quantity
+        quantity: card.quantity,
+        bleed: card.bleed
       }))
     });
   } else {

@@ -28,37 +28,54 @@ const totalUniqueCards = computed(() => {
   return sheet.value?.content.length || 0;
 });
 
-const totalPages = computed(() => {
-  const pages = Math.ceil(totalCards.value / cardsPerPage);
-  return Math.max(1, pages);
-});
-
-const cardsForPrint = computed(() => {
+// Create pages with bleed breaks
+const allPages = computed(() => {
   if (!sheet.value) return [];
   
+  const pages = [];
   const cards = [];
+  
+  // Expand all cards with their quantities
   for (const card of sheet.value.content) {
     for (let i = 0; i < card.quantity; i++) {
       cards.push({
         ...card,
-        printIndex: cards.length // Unique identifier for each printed instance
+        printIndex: cards.length
       });
     }
   }
-  return cards;
-});
-
-const allPages = computed(() => {
-  const pages = [];
-  for (let i = 0; i < totalPages.value; i++) {
-    const startIndex = i * cardsPerPage;
-    const endIndex = startIndex + cardsPerPage;
-    const pageCards = cardsForPrint.value.slice(startIndex, endIndex);
+  
+  if (cards.length === 0) return [];
+  
+  let currentPage = [];
+  let currentBleed = cards[0]?.bleed;
+  
+  for (const card of cards) {
+    // If bleed changes or page is full, start a new page
+    if (card.bleed !== currentBleed || currentPage.length >= cardsPerPage) {
+      if (currentPage.length > 0) {
+        pages.push({
+          pageNumber: pages.length + 1,
+          cards: [...currentPage],
+          bleed: currentBleed
+        });
+      }
+      currentPage = [];
+      currentBleed = card.bleed;
+    }
+    
+    currentPage.push(card);
+  }
+  
+  // Add the last page if it has cards
+  if (currentPage.length > 0) {
     pages.push({
-      pageNumber: i + 1,
-      cards: pageCards
+      pageNumber: pages.length + 1,
+      cards: currentPage,
+      bleed: currentBleed
     });
   }
+  
   return pages;
 });
 
@@ -120,10 +137,8 @@ function closeDialog() {
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-lg font-medium text-foreground">Page {{ page.pageNumber }}</h3>
               <div class="flex items-center gap-2">
+                <Badge variant="secondary">{{ page.bleed }}mm bleed</Badge>
                 <Badge variant="outline">{{ page.cards.length }}/{{ cardsPerPage }} cartes</Badge>
-                <!-- <Button variant="ghost" size="sm" @click="() => exportSinglePage(page, sheet?.name)">
-                  <Printer class="w-4 h-4" />
-                </Button> -->
               </div>
             </div>
             
@@ -139,7 +154,7 @@ function closeDialog() {
           </div>
           
           <!-- Empty state if no pages -->
-          <div v-if="totalPages === 0" class="text-center py-12 text-gray-500">
+          <div v-if="allPages.length === 0" class="text-center py-12 text-gray-500">
             <p class="text-lg">Aucune carte à afficher</p>
             <p class="text-sm mt-2">Ajoutez des cartes à votre planche pour voir la prévisualisation</p>
           </div>

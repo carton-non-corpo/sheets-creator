@@ -6,7 +6,8 @@ import type { EnhancedFile } from '~~/common/types/drive'
 const props = defineProps<{
   scale: number;
   showLandmarks: boolean;
-  cards?: Array<SheetContentCard & { printIndex: number }>;
+  cards: Array<SheetContentCard & { printIndex: number }> | undefined;
+  bleed: number | undefined;
 }>()
 
 const sheetStore = useSheetStore();
@@ -97,8 +98,8 @@ const placeholders = computed(() => 9 - cardsForPrint.value.length)
               <Button 
                 size="sm" 
                 variant="secondary" 
-                class="hidden group-hover:flex h-8 w-8 p-0 ml-auto mr-0.25 rounded shadow-md border-1 border-gray-800 cursor-pointer disabled:!cursor-not-allowed disabled:opacity-70"
-                @click="removeCard(card.id)"
+                class="hidden group-hover:flex h-8 w-8 p-0 ml-auto mr-0.25 rounded shadow-md border-1 border-gray-800 cursor-pointer hover:bg-gray-200"
+                @click.stop="removeCard(card.id)"
               >
                 <Minus class="h-5 w-5" />
               </Button>
@@ -106,8 +107,8 @@ const placeholders = computed(() => 9 - cardsForPrint.value.length)
               <Button 
                 size="sm" 
                 variant="secondary" 
-                class="hidden group-hover:flex h-8 w-8 p-0 ml-auto mr-0.25 rounded shadow-md border-1 border-gray-800 cursor-pointer disabled:!cursor-not-allowed disabled:opacity-70"
-                @click="handleCardAddition(card)"
+                class="hidden group-hover:flex h-8 w-8 p-0 ml-auto mr-0.25 rounded shadow-md border-1 border-gray-800 cursor-pointer hover:bg-gray-200"
+                @click.stop="handleCardAddition(card)"
               >
                 <Plus class="h-5 w-5" />
               </Button>

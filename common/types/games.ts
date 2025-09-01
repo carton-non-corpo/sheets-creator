@@ -7,7 +7,7 @@ export enum Game {
 export interface GameFoldersOPTCG {
   id: string; // https://drive.google.com/drive/folders/${folder_id}
   name: string;
-  bleed: boolean;
+  bleed: number; // In millimeter
   author: string;
   subCategory: null;
   game: Game.OPTCG;
@@ -16,7 +16,7 @@ export interface GameFoldersOPTCG {
 export interface GameFoldersMTG {
   id: string; // https://drive.google.com/drive/folders/${folder_id}
   name: string;
-  bleed: boolean;
+  bleed: number; // In millimeter
   author: string;
   subCategory: "Tokens" | "Lands" | "Backs" | "Alternatives" | "Sideboard" | null;
   game: Game.MTG;
@@ -25,7 +25,7 @@ export interface GameFoldersMTG {
 export interface GameFoldersRiftbound {
   id: string; // https://drive.google.com/drive/folders/${folder_id}
   name: string;
-  bleed: boolean;
+  bleed: number; // In millimeter
   author: string;
   subCategory: null;
   game: Game.RIFTBOUND;

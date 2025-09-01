@@ -139,7 +139,7 @@ const toggleAllFolders = () => {
                 </span>
               </div>
               <span class="text-xs text-muted-foreground capitalize truncate">
-                {{ folder.author ? folder.author : 'Custom' }} {{ folder.bleed ? '• Frond Perdu' : '' }}
+                {{ folder.author ? folder.author : 'Custom' }} {{ folder.bleed > 0 ? `• Fond Perdu ${folder.bleed}mm` : '' }}
               </span>
             </div>
           </ComboboxItem>
