@@ -1177,9 +1177,17 @@ const optcgFolders: GameFolders[] = [
   // Custom folders
   {
     id: "1eOmfpNGRE7jTnf5q9YetxvMiI7MTzr5r",
-    name: "Custom Cards",
+    name: "OP TCG Custom Card Collection",
     bleed: 0,
-    author: "",
+    author: "morpice0009",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1MZh9nG8oOBoa_OWAjxHlGviR9xvT7jpg",
+    name: "The Doctor's Customs",
+    bleed: 0,
+    author: "The Doctor",
     subCategory: null,
     game: Game.OPTCG
   },
