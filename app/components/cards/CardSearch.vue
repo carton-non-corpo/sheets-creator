@@ -153,6 +153,7 @@ watch(searchQuery, () => {
 watch(selectedGame, () => {
   nextTick(() => debouncedFetchFiles());
   presetFoldersIds();
+  searchQuery.value = '';
 }, { immediate: true });
 </script>
 

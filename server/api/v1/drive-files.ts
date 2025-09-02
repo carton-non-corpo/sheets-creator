@@ -15,6 +15,9 @@ export default defineEventHandler(async (event) => {
       folderIds = foldersIds.split(',').map(id => id.trim()).filter(Boolean);
     }
 
+    // Remove duplicates
+    folderIds = [...new Set(folderIds)];
+
     // Fallback to default folder if none provided
     const config = useRuntimeConfig();
     if (folderIds.length === 0 && config.googleDriveFolderId) {
