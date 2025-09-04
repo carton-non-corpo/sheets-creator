@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
 import { ScrollArea } from '~/components/ui/scroll-area';
 import { Badge } from '~/components/ui/badge';
@@ -90,7 +91,7 @@ function closeDialog() {
       <DialogHeader class="p-6 pb-4 border-b flex-shrink-0">
           <div class="flex items-center justify-between">
             <div class="flex gap-1.5">
-              <DialogTitle class="text-xl font-semibold">Prévisualisation des planches</DialogTitle>
+              <DialogTitle class="text-xl font-semibold">{{ $t('sheet.preview.title') }}</DialogTitle>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild class="mt-0.5">
@@ -114,13 +115,13 @@ function closeDialog() {
             <div class="flex items-center gap-1.5 px-3 py-1.75 text-foreground bg-muted/50 rounded-md border">
               <GalleryHorizontalEnd class="w-4 h-4 text-muted-foreground mr-0.5" />
               <span class="text-sm font-medium">{{ totalUniqueCards }}</span>
-              <span class="text-xs text-muted-foreground">unique{{ totalUniqueCards > 1 ? 's' : '' }}</span>
+              <span class="text-xs text-muted-foreground">{{ $t('sheet.preview.unique', totalUniqueCards) }}</span>
             </div>
             
             <div class="flex items-center gap-1.5 px-3 py-1.75 text-foreground bg-muted/50 rounded-md border">
               <Layers class="w-4 h-4 text-muted-foreground mr-0.5" />
               <span class="text-sm font-medium">{{ totalCards }}</span>
-              <span class="text-xs text-muted-foreground">totale{{ totalCards > 1 ? 's' : '' }}</span>
+              <span class="text-xs text-muted-foreground">{{ $t('sheet.preview.total', totalCards) }}</span>
             </div>
 
             <Button variant="outline" class="cursor-pointer" @click="() => exportAllPages(allPages, sheet?.name)">
@@ -138,7 +139,7 @@ function closeDialog() {
               <h3 class="text-lg font-medium text-foreground">Page {{ page.pageNumber }}</h3>
               <div class="flex items-center gap-2">
                 <Badge variant="secondary">{{ page.bleed }}mm bleed</Badge>
-                <Badge variant="outline">{{ page.cards.length }}/{{ cardsPerPage }} cartes</Badge>
+                <Badge variant="outline">{{ page.cards.length }}/{{ cardsPerPage }} {{ $t('sheet.preview.cards', page.cards.length) }}</Badge>
               </div>
             </div>
             
@@ -147,6 +148,7 @@ function closeDialog() {
                 <SheetDisplay 
                   :scale="0.25" 
                   :show-landmarks="true" 
+                  :bleed="page.bleed"
                   :cards="page.cards"
                 />
               </div>
@@ -155,8 +157,8 @@ function closeDialog() {
           
           <!-- Empty state if no pages -->
           <div v-if="allPages.length === 0" class="text-center py-12 text-gray-500">
-            <p class="text-lg">Aucune carte à afficher</p>
-            <p class="text-sm mt-2">Ajoutez des cartes à votre planche pour voir la prévisualisation</p>
+            <p class="text-lg">{{ $t('sheet.preview.empty') }}</p>
+            <p class="text-sm mt-2">{{ $t('sheet.preview.empty_hint') }}</p>
           </div>
         </div>
       </ScrollArea>

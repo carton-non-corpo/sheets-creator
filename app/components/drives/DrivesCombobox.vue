@@ -44,13 +44,13 @@ const toggleFolder = (folderId: string) => {
 }
 
 const selectedText = computed(() => {
-  if (model.value.length === 0) return 'Selectionner des catégories...'
+  if (model.value.length === 0) return $t('drives.select_categories')
   if (model.value.length === 1) {
     const folder = gameFolders.value.find(f => f.id === model.value[0])
-    return folder?.name || 'Catégorie inconnue'
+    return folder?.name || $t('drives.unknown_category')
   }
   if (model.value.length === gameFolders.value.length) return getGameDisplayName(selectedGame.value)
-  return `${model.value.length} catégories sélectionnées`
+  return $t('drives.categories_selected', { count: model.value.length })
 })
 
 // Computed properties for the master checkbox
@@ -104,13 +104,13 @@ const toggleAllFolders = () => {
         </Checkbox>
         <ComboboxInput
           v-model="searchTerm"
-          placeholder="Chercher une catégorie..."
+          :placeholder="$t('drives.search_category')"
         />
       </div>
       
       <ComboboxViewport class="max-h-[420px]">
         <ComboboxEmpty class="py-6 text-center text-sm">
-          Aucune catégorie trouvée.
+          {{ $t('drives.no_category_found') }}
         </ComboboxEmpty>
 
         <ComboboxGroup>
@@ -139,7 +139,7 @@ const toggleAllFolders = () => {
                 </span>
               </div>
               <span class="text-xs text-muted-foreground capitalize truncate">
-                {{ folder.author ? folder.author : 'Custom' }} {{ folder.bleed > 0 ? `• Fond Perdu ${folder.bleed}mm` : '' }}
+                {{ folder.author ? folder.author : $t('drives.custom') }} {{ folder.bleed > 0 ? `• ${$t('drives.bleed')} ${folder.bleed}mm` : '' }}
               </span>
             </div>
           </ComboboxItem>

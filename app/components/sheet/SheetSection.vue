@@ -99,27 +99,27 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
       <div class="flex items-center gap-6">
         <div class="flex items-center space-x-2">
           <Switch id="landmarks" v-model="landmarks" class="cursor-pointer" />
-          <Label for="landmarks" class="cursor-pointer">Repères</Label>
+           <Label for="landmarks" class="cursor-pointer">{{ $t('sheet.section.landmarks') }}</Label>
         </div>
       </div>
 
       <div class="flex gap-3">
         <Button variant="outline" class="cursor-pointer" @click="previewDialogOpen = true">
           <Search />
-          Prévisualiser
+           {{ $t('sheet.section.preview') }}
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger as-child>
             <Button class="cursor-pointer">
               <Download />
-              Exporter
+               {{ $t('sheet.section.export') }}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent class="w-auto mr-4 mt-1">
-            <DropdownMenuLabel>Choisir l'action</DropdownMenuLabel>
+             <DropdownMenuLabel>{{ $t('sheet.section.choose_action') }}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem class="cursor-pointer" @click="() => exportAllPages(allPages, sheet?.name)">
-              Tout exporter
+               {{ $t('sheet.section.export_all') }}
             </DropdownMenuItem>
             <DropdownMenuItem 
               class="cursor-pointer" 
@@ -128,7 +128,7 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
                 if (currentPageData) exportSinglePage(currentPageData, sheet?.name);
               }"
             >
-              Exporter la page actuelle
+               {{ $t('sheet.section.export_current') }}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -174,8 +174,8 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
     <!-- Empty state -->
     <div v-if="!sheet || totalCards === 0" class="flex items-center justify-center text-center">
       <div class="text-muted-foreground">
-        <p class="text-lg">Aucune carte ajoutée</p>
-        <p class="text-sm mt-2">Ajoutez des cartes pour créer vos planches</p>
+         <p class="text-lg">{{ $t('sheet.section.empty') }}</p>
+         <p class="text-sm mt-2">{{ $t('sheet.section.empty_hint') }}</p>
       </div>
     </div>
 

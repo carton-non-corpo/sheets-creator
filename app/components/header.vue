@@ -14,8 +14,8 @@ const gameStore = useGameStore()
 const { selectedGame } = storeToRefs(gameStore)
 
 const pageName = computed(() => {
-  if (route.path === '/') return 'Planches'
-  if (route.path === '/decks') return 'Decks'
+  if (route.path === '/') return $t('nav.sheets')
+  if (route.path === '/decks') return $t('nav.decks')
 })
 </script>
 
@@ -24,11 +24,11 @@ const pageName = computed(() => {
     <div class="text-xl font-semibold">{{ pageName }}</div>
     <Select v-model="selectedGame">
       <SelectTrigger class="min-w-[180px]">
-        <SelectValue placeholder="Select a game" />
+        <SelectValue :placeholder="$t('header.select_game')" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Games</SelectLabel>
+          <SelectLabel>{{ $t('header.games') }}</SelectLabel>
           <SelectItem v-for="g in Game" :key="g" :value="g">
             {{ getGameDisplayName(g) }}
           </SelectItem>

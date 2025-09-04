@@ -91,7 +91,7 @@ const placeholders = computed(() => 9 - cardsForPrint.value.length)
               />
             </div>
             <div v-else class="flex items-center justify-center w-full h-full px-3 bg-gray-200">
-              <span class="text-gray-500 text-xs break-all text-center">{{ card.name || 'No image' }}</span>
+              <span class="text-gray-500 text-xs break-all text-center">{{ card.name || $t('sheet.display.no_image') }}</span>
             </div>
 
             <!-- Gradient black overlay on hover -->

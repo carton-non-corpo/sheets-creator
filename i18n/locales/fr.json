@@ -1,0 +1,52 @@
+{
+  "decks": {
+    "content": "Contenu de la page Decks.",
+    "title": "Decks"
+  },
+  "drives": {
+    "bleed": "Fond Perdu",
+    "categories_selected": "{count} catégories sélectionnées",
+    "custom": "Custom",
+    "no_category_found": "Aucune catégorie trouvée.",
+    "search_category": "Chercher une catégorie...",
+    "select_categories": "Sélectionner des catégories...",
+    "unknown_category": "Catégorie inconnue"
+  },
+  "header": {
+    "games": "Jeux",
+    "select_game": "Sélectionner un jeu"
+  },
+  "nav": {
+    "brand": "Carton Club",
+    "decks": "Decks",
+    "discord": "Discord",
+    "sheets": "Planches"
+  },
+  "pagination": {
+    "next": "Suivant",
+    "previous": "Précédent"
+  },
+  "sheet": {
+    "display": {
+      "no_image": "Pas d'image"
+    },
+    "preview": {
+      "cards": "carte | carte | cartes",
+      "empty": "Aucune carte à afficher",
+      "empty_hint": "Ajoutez des cartes à votre planche pour voir la prévisualisation",
+      "title": "Prévisualisation des planches",
+      "total": "totale | totale | totales",
+      "unique": "unique | unique | uniques"
+    },
+    "section": {
+      "choose_action": "Choisir l'action",
+      "empty": "Aucune carte ajoutée",
+      "empty_hint": "Ajoutez des cartes pour créer vos planches",
+      "export": "Exporter",
+      "export_all": "Tout exporter",
+      "export_current": "Exporter la page actuelle",
+      "landmarks": "Repères",
+      "preview": "Prévisualiser"
+    }
+  }
+}

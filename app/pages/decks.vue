@@ -5,8 +5,8 @@ definePageMeta({ name: 'Decks', title: 'Decks' })
 <template>
   <NuxtLayout>
     <div class="p-8">
-      <h1 class="text-2xl font-bold mb-4">Decks</h1>
-      <p>Contenu de la page Decks.</p>
+      <h1 class="text-2xl font-bold mb-4">{{ $t('decks.title') }}</h1>
+      <p>{{ $t('decks.content') }}</p>
     </div>
   </NuxtLayout>
 </template>

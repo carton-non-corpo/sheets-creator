@@ -22,8 +22,9 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     '@nuxt/image',
     '@nuxt/scripts',
+    '@nuxtjs/i18n',
     '@pinia/nuxt',
-    'shadcn-nuxt'
+    'shadcn-nuxt',
   ],
 
   vite: {
@@ -33,6 +34,14 @@ export default defineNuxtConfig({
     build: {
       sourcemap: process.env.NODE_ENV === 'development', // Only generate sourcemaps in development
     },
+  },
+
+  i18n: {
+    locales: [
+      { code: 'en', language: 'en-US', file: 'en.json' },
+      { code: 'fr', language: 'fr-FR', file: 'fr.json' }
+    ],
+    defaultLocale: 'en',
   },
 
   shadcn: {
