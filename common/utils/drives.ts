@@ -304,6 +304,14 @@ const mtgFolders: GameFolders[] = [
     game: Game.MTG
   },
   {
+    id: "1OK_5T2-p771DH1R4vyIa96zljT98Lpfg",
+    name: "Clair Obscur: Expedition 33",
+    bleed: 1,
+    author: "Pascii20",
+    subCategory: null,
+    game: Game.MTG
+  },
+  {
     id: "1hytsKJiusidSz_UrKTCuP478d_wuzPAG",
     name: "Code Geass - Urza, Chief Artificer",
     bleed: 1,
@@ -560,6 +568,30 @@ const mtgFolders: GameFolders[] = [
     game: Game.MTG
   },
   {
+    id: "1B3UHTu7BYWig9U9LNJiAXDZoijIKLn5e",
+    name: "League of Legends",
+    bleed: 0,
+    author: "Sakeretsu",
+    subCategory: null,
+    game: Game.MTG
+  },
+  {
+    id: "1g2WL28BRIf5D9r-ST0qrKkzU0bv-0a99",
+    name: "LoL - Star Guardians",
+    bleed: 1,
+    author: "",
+    subCategory: null,
+    game: Game.MTG
+  },
+  {
+    id: "1iByFHeIvdA2BMYib-G9wXF9MZXomtniD",
+    name: "LoL - Star Guardians",
+    bleed: 1,
+    author: "",
+    subCategory: "Alternatives",
+    game: Game.MTG
+  },
+  {
     id: "1u1Juh4MqO7gE72xj2ik4-neecTXL5h2t",
     name: "Lost",
     bleed: 1,
@@ -596,6 +628,14 @@ const mtgFolders: GameFolders[] = [
     name: "Marvel - Customs",
     bleed: 1,
     author: "",
+    subCategory: "Tokens",
+    game: Game.MTG
+  },
+  {
+    id: "1JNunCNkpc0lVKrx16iRuosH3xs8WeSqP",
+    name: "Marvel Rivals",
+    bleed: 0,
+    author: "DingoXIII",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -697,15 +737,15 @@ const mtgFolders: GameFolders[] = [
   },
   {
     id: "1emWiQ4aUSAFCXeVDIBhuSfX5H5YEr1m7",
-    name: "Pokemon(Wayta)",
+    name: "Pokemon (Wayta)",
     bleed: 1,
-    author: "",
+    author: "Wayta",
     subCategory: null,
     game: Game.MTG
   },
   {
     id: "1g5AJE3na_66iVhSOTsdGSPIawbWgOUy3",
-    name: "Pokemon(Wayta)",
+    name: "Pokemon (Wayta)",
     bleed: 1,
     author: "",
     subCategory: "Lands",
@@ -713,7 +753,7 @@ const mtgFolders: GameFolders[] = [
   },
   {
     id: "1gFhcc1D84nzd3p1hoXzu_mYY39jxG5kn",
-    name: "Pokemon(Wayta)",
+    name: "Pokemon (Wayta)",
     bleed: 1,
     author: "",
     subCategory: "Tokens",
@@ -721,7 +761,7 @@ const mtgFolders: GameFolders[] = [
   },
   {
     id: "1ySHUyDshmx-hMINUnuc5SOg2G4mufVB3",
-    name: "Pokemon(TCG)",
+    name: "Pokemon",
     bleed: 1,
     author: "",
     subCategory: null,
@@ -840,22 +880,6 @@ const mtgFolders: GameFolders[] = [
     game: Game.MTG
   },
   {
-    id: "1g2WL28BRIf5D9r-ST0qrKkzU0bv-0a99",
-    name: "Star Guardians - LoL",
-    bleed: 1,
-    author: "",
-    subCategory: null,
-    game: Game.MTG
-  },
-  {
-    id: "1iByFHeIvdA2BMYib-G9wXF9MZXomtniD",
-    name: "Star Guardians - LoL",
-    bleed: 1,
-    author: "",
-    subCategory: "Alternatives",
-    game: Game.MTG
-  },
-  {
     id: "1V4erF7flOMB0_ThlaodwuHxLlp6S4DRQ",
     name: "Star Guardians - LoL",
     bleed: 1,
@@ -876,6 +900,14 @@ const mtgFolders: GameFolders[] = [
     name: "YuGiOh, The Ur Dragon",
     bleed: 1,
     author: "",
+    subCategory: null,
+    game: Game.MTG
+  },
+  {
+    id: "1JxMbYspMsLPYPRhKIgMPrqCsNaAy6Kf3",
+    name: "Zelda - Breath Of The Wild",
+    bleed: 0,
+    author: "nahdawgg",
     subCategory: null,
     game: Game.MTG
   },
