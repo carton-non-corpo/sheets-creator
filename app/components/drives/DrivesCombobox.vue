@@ -68,7 +68,7 @@ const noFoldersSelected = computed(() => {
 
 // Toggle all folders
 const toggleAllFolders = () => {
-  if (allFoldersSelected.value) {
+  if (someFoldersSelected.value) {
     // Unselect all
     model.value = []
   } else {
