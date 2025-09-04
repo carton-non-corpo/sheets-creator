@@ -52,6 +52,10 @@ const cardsForPrint = computed(() => {
   return cards;
 });
 
+const gridStyleByBleed = computed(() => {
+  return `grid-template-columns: repeat(3, calc(63mm + ${props.bleed}mm)); grid-template-rows: repeat(3, calc(88mm + ${props.bleed}mm));`;
+});
+
 const placeholders = computed(() => 9 - cardsForPrint.value.length)
 </script>
 
@@ -69,7 +73,7 @@ const placeholders = computed(() => 9 - cardsForPrint.value.length)
       >
         <div 
           class="grid place-content-center w-full h-full z-1"
-          style="grid-template-columns: repeat(3, 63mm); grid-template-rows: repeat(3, 88mm);"
+          :style="gridStyleByBleed"
         >
           <div 
             v-for="card in cardsForPrint" 
