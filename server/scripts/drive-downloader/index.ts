@@ -48,26 +48,33 @@ class GoogleDriveDownloader {
     }
 
     private setupAuth() {
-        let serviceAccount: Record<string, string>;
-
-        try {
-            // Try both environment variable names for backwards compatibility
-            const credentials = process.env.GOOGLE_APPLICATION_CREDENTIALS || process.env.GOOGLE_SERVICE_ACCOUNT;
-            if (!credentials) {
-                throw new Error('Google service account credentials not found');
+        let serviceAccount;
+        // Always use GOOGLE_APPLICATION_CREDENTIALS as a file path
+        const credPath = process.env.GOOGLE_APPLICATION_CREDENTIALS || './application_default_credentials.json';
+        if (!fs.existsSync(credPath)) {
+            // Try to decode B64_GOOGLE_APPLICATION_CREDENTIALS and write to file
+            const b64Creds = process.env.B64_GOOGLE_APPLICATION_CREDENTIALS;
+            if (b64Creds) {
+                let creds = b64Creds;
+                // Remove wrapping quotes if present
+                if (creds.startsWith("'")) creds = creds.slice(1);
+                if (creds.endsWith("'")) creds = creds.slice(0, -1);
+                fs.writeFileSync(credPath, creds);
+            } else {
+                throw new Error('Google service account credentials not found. Set GOOGLE_APPLICATION_CREDENTIALS to a valid file or provide B64_GOOGLE_APPLICATION_CREDENTIALS.');
             }
-            serviceAccount = JSON.parse(credentials);
-        } catch (e) {
-            throw new Error('Invalid Google service account configuration. Make sure GOOGLE_APPLICATION_CREDENTIALS is set.');
         }
-
+        try {
+            serviceAccount = JSON.parse(fs.readFileSync(credPath, 'utf8'));
+        } catch (e) {
+            throw new Error('Invalid Google service account configuration. Make sure GOOGLE_APPLICATION_CREDENTIALS points to a valid JSON file.');
+        }
         if (!serviceAccount.client_email || !serviceAccount.private_key) {
             throw new Error('Missing Google service account credentials. Check client_email and private_key.');
         }
-
         const auth = new google.auth.JWT({
             email: serviceAccount.client_email,
-            key: serviceAccount.private_key.replace(/\\n/g, '\n'),
+            key: serviceAccount.private_key.replace(/\n/g, '\n'),
             scopes: ['https://www.googleapis.com/auth/drive.readonly'],
         });
 

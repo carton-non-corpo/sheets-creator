@@ -24,7 +24,7 @@ logs
 !.env.example
 
 # Scripts Ouput
-/server/scripts/driver-downloader/output/*
+/server/scripts/drive-downloader/output/*
 
 # Google API credentials
 application_default_credentials.json

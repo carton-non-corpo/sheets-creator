@@ -19,3 +19,4 @@ coverage/
 dist/
 .wrangler/
 .data/
+server/scripts
