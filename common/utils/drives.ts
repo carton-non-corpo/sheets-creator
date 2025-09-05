@@ -940,6 +940,230 @@ const mtgFolders: GameFolders[] = [
 const optcgFolders: GameFolders[] = [
   // Main Sets
   {
+    id: "1tOGhsTi30uFBjA-Z4yFQ2P96sUqC8rr_",
+    name: "OP01",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1QHsAahiBFBJw4wVj2B8n2CN1OJc6BhBZ",
+    name: "OP01 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1Mh8cdH2Q4_Il4ARW8gWpTXddxxP-Qsfd",
+    name: "OP02",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1CSzV5sVx3cabI6TUn1g0XWruU8qNrKKe",
+    name: "OP02 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1gc1mi-aG-qBE4pCWYRM_c40BLHvset-g",
+    name: "OP03",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1_AIoTDbMQMP98mvfAetjG1Lk7sVyGNCV",
+    name: "OP03 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1CdUCV28gOWr7uAoZ2rVIwkuXhhIZX8sp",
+    name: "OP04",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1oAz7OZCb9Js6MWtGCWt1CDASGiJDAPzY",
+    name: "OP04 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1vbLcGPLj958nVwo7aODRLD2qswJdAXQf",
+    name: "OP05",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1jL2Cx6-46F9fLenyQ6V6diuid3pEN-mF",
+    name: "OP05 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1T9hvFDveNOROIIafdqnmpi5E5M52G9X1",
+    name: "OP05 SPs",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1--BAawNno0l-eAhM2NohJ7GVaa8j-2Ck",
+    name: "OP06",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "129oX9EaDK1vlji5F0ZiKuX4Nw0aR7BBC",
+    name: "OP06 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1CkVxwjCgX2CskUXr4ZUpiKn77cg3HCCU",
+    name: "OP06 SPs",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1JR-PHRPU-HXZ2VbVgF-L0fXuFKMb7U4e",
+    name: "OP06 TRs",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1fiFnjC8bBLqSGhMAw0HYN_yxc0arPrNo",
+    name: "OP07",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "119KxxaECsKb7CeEVoCO8UTbe6fk84_-3",
+    name: "OP07 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "18K0BepZCCwFB5qUT__FS8e9e3oQu9ypG",
+    name: "OP07 SPs",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1UFONmnbBl063eSm6pLGDsjciG0irNwqc",
+    name: "OP07 TRs",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1o9EPkf3eIYC4lvWc2Gck-0biyb5MV1NK",
+    name: "OP08",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1cW-ivmN4IQ1mq50iyKNtSsI-CLA70iJw",
+    name: "OP08 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1F2VcfNgtkZISTGfdvECR2tmpRyhbmv8k",
+    name: "OP08 SPs",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1d3zaF5zfJxVnKCy7oFylpH7IypgQ2XqA",
+    name: "OP09",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1AOysNJgl-k1MOyvyISlOOyF1Y5lHcqQI",
+    name: "OP09 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1ANrC0VbVgXH2FCI81KtJSULWQP3O2PPM",
+    name: "OP09 SPs",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1OqFhm9UKgOhbDOMHMxKGNgTtKnYEXq6-",
+    name: "OP10",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1kBFtSguUHKmEFaItERbqsnmyVdxtZzJf",
+    name: "OP10 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1q2m9744pPoyIA1FG8eiH_93fMgTNb63Q",
+    name: "OP10 SPs",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
     id: "1TcsliNESunCVt-AOShceR64nX4sYXaoF",
     name: "OP11",
     bleed: 0,
@@ -1014,6 +1238,22 @@ const optcgFolders: GameFolders[] = [
 
   // Sub Sets
   {
+    id: "1PaJQzsYrjlUW9bVF9Ivkwo4l_-l4vNYS",
+    name: "EB01",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1_2wGqtIdIR3BzsjGciHn-apERmcX8E1E",
+    name: "EB01",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
     id: "11fOuBoV1YmjA-sjAqWW41LciBZvg34ip",
     name: "EB02",
     bleed: 0,
@@ -1024,6 +1264,30 @@ const optcgFolders: GameFolders[] = [
   {
     id: "1xODPK2EDZarV8RznosozDWibIo_oITHM",
     name: "EB02 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1cONwgutxS6u9yyZhPP3s-vOPIGiiEZXA",
+    name: "PRB01",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "13cM47xgCYg9Wf37qn1gsTxCKqcS-D5hn",
+    name: "PRB01 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1igwt2iatGGXna5CvI0XkFh3o_KQfPlQM",
+    name: "PRB01 Gold Don!!",
     bleed: 0,
     author: "One Piece Card Game",
     subCategory: null,
@@ -1072,6 +1336,190 @@ const optcgFolders: GameFolders[] = [
 
   // Starter decks
   {
+    id: "14G4uNSDl8VjukWEAQPoyVbMkMOUZBTqV",
+    name: "ST01",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "176JafkoM5nlqnV1KDy5aaSZXfJVE67xj",
+    name: "ST01 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1YUNUBtCXHEA0x8EmZd5uGgJTCGbzrTDm",
+    name: "ST02",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1jjMeyydywY1ZUEcUrapFSI0lk1RDoJi2",
+    name: "ST02 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1a0YmUIcP-GwDoHlckgS1esIByQdxu2no",
+    name: "ST03",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1oMGMZFzDStt1rv9dpa0IOAF0c16kimP0",
+    name: "ST03 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1PhkEnQSjk42zzjT0pbabjkkOf58TLjXp",
+    name: "ST04",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1ligp9uAIBdA2i0oEyHRp9XhB6UxNyakD",
+    name: "ST04 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "12z-Y8g5Xdfy5UECMbFLrZBafqJNQ0NBe",
+    name: "ST05",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1jEjSrpcKrGLXNixjBu8BG7auWEPSTF0w",
+    name: "ST05 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "132--q2gpMnui1Q_mv6_Lq8P3Az8fZgWC",
+    name: "ST06",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "153ufQg8iZBD7Q67vDn1dVNhttv_CWc3f",
+    name: "ST06 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "13FgaO81gse_Ibm5cFpkB54WgUfuJET_K",
+    name: "ST07",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1y6yH5GTVpg8C1vKAfx_2aRyJD6bh_HfL",
+    name: "ST07 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "12Gp8x48id4QWVsuO6KViqVbmWgp8dJT5",
+    name: "ST08",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1AEPseOLGCeId0TtCevAKO1Viy-RoAN-z",
+    name: "ST08 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1EAzYrwLlbGGWogJaWDIDFFCpxwLXCPL_",
+    name: "ST09",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1QsKcTRbD5D3i-LNad6J1C9Ugu-FBTPb3",
+    name: "ST10",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "18fPoRwiuy_wbcuiuR93ZNp_uXM-CujLo",
+    name: "ST10 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "12XrMBcFW1QmfCneeT3qTIBv9pplBqUUS",
+    name: "ST11",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1QhoRzzG_Zg2zUvRTM_ZXpVAgZRHxM1id",
+    name: "ST11 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1oe1SGRhSsVnRjjrU7ODyQj-ChSsRF9eG",
+    name: "ST12",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1rjkOa2t6jQl3NbDiXR2kuUqCt-G7KNH_",
+    name: "ST12 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
     id: "1DablZD1uq0_R6MBgrm34Vwm6aAC85Oze",
     name: "ST13",
     bleed: 0,
@@ -1082,6 +1530,78 @@ const optcgFolders: GameFolders[] = [
   {
     id: "1iZ8Crmpn89VTbndqNrTL490bzN5LcjVF",
     name: "ST13 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "17T3jTAzb6PFVurOCAAHrL0hHE-uG_CgO",
+    name: "ST14",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1SWYPHR5mX_KJReNE4RCIoHZ_W10G8zez",
+    name: "ST15",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1othQSQjuKLMrPOHaj2OxbjyOlffL_cqB",
+    name: "ST16",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1KgsBCmlbG5kUsqkBO1Kq1DhUXartyKLO",
+    name: "ST16 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "10hfC3P3gRiobL6kfZhMulOnotNfleEVk",
+    name: "ST17",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1jqa6xWNl6qptLUIJYh91booUHxUJvO8b",
+    name: "ST17 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1_xKXlRIO1WQrH6qI5f5fEBALZz0Xeilw",
+    name: "ST18",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1Iogy0hKVH0kQopYjS4enpQgdR_hU0yK1",
+    name: "ST19",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1kOquCtfXlQ6Ue8RSzPgAUwY9vfCUWwRT",
+    name: "ST20",
     bleed: 0,
     author: "One Piece Card Game",
     subCategory: null,
@@ -1168,10 +1688,26 @@ const optcgFolders: GameFolders[] = [
     game: Game.OPTCG
   },
 
-  // Promos
+  // Promoss
+  {
+    id: "13SlfwS0FFuqjSMjhxiXr3IhfKGYMefxC",
+    name: "OP06-10 Promos",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "14qU9tqCzhVfZPOhe_4UYm-JIqJxZy0k-",
+    name: "OP06-10 Promos Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
   {
     id: "1dYrWB8PEqbrsbw6hDxVEj6eJP31wN7Za",
-    name: "Promos",
+    name: "OP11+ Promos",
     bleed: 0,
     author: "One Piece Card Game",
     subCategory: null,
@@ -1179,7 +1715,7 @@ const optcgFolders: GameFolders[] = [
   },
   {
     id: "10puThJtSgrb4qrA1M6GVBwAah3TIeqZG",
-    name: "Promos Alts",
+    name: "OP11+ Promos Alts",
     bleed: 0,
     author: "One Piece Card Game",
     subCategory: null,
@@ -1188,8 +1724,16 @@ const optcgFolders: GameFolders[] = [
 
   // Don!! folders
   {
+    id: "1MBdQJHQqBhXkZCaHfJ9MGvsd14ZD2zdx",
+    name: "OP01-11 Don!!",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
     id: "1yyuR8acsS7jVJOHNjuB6JsL8kfj6-8Hd",
-    name: "Don!!",
+    name: "OP11+ Don!!",
     bleed: 0,
     author: "One Piece Card Game",
     subCategory: null,
@@ -1267,7 +1811,7 @@ const optcgFolders: GameFolders[] = [
     id: "1MZh9nG8oOBoa_OWAjxHlGviR9xvT7jpg",
     name: "The Doctor's Customs",
     bleed: 0,
-    author: "The Doctor",
+    author: "viri0x",
     subCategory: null,
     game: Game.OPTCG
   },
