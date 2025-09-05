@@ -472,6 +472,14 @@ const mtgFolders: GameFolders[] = [
     game: Game.MTG
   },
   {
+    id: "1VSjBLu-F4tRAlXP2caIT162_kEFFTruy",
+    name: "Final Fantasy XIV - Tazri, Stalwart Survivor",
+    bleed: 0,
+    author: "REMARKABLE",
+    subCategory: null,
+    game: Game.MTG
+  },
+  {
     id: "1gDxdyD-AARSA2w_aPwhGItuV5bkDKRhC",
     name: "Full Metal Alchemist",
     bleed: 1,
@@ -1063,6 +1071,22 @@ const optcgFolders: GameFolders[] = [
   },
 
   // Starter decks
+  {
+    id: "1DablZD1uq0_R6MBgrm34Vwm6aAC85Oze",
+    name: "ST13",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
+  {
+    id: "1iZ8Crmpn89VTbndqNrTL490bzN5LcjVF",
+    name: "ST13 Alts",
+    bleed: 0,
+    author: "One Piece Card Game",
+    subCategory: null,
+    game: Game.OPTCG
+  },
   {
     id: "1dYrWB8PEqbrsbw6hDxVEj6eJP31wN7Za",
     name: "ST21",
