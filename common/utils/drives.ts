@@ -8,6 +8,7 @@ const mtgFolders: GameFolders[] = [
     name: "White",
     bleed: 1,
     author: "Magic The Gathring",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -16,6 +17,7 @@ const mtgFolders: GameFolders[] = [
     name: "Blue",
     bleed: 1,
     author: "Magic The Gathring",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -24,6 +26,7 @@ const mtgFolders: GameFolders[] = [
     name: "Black",
     bleed: 1,
     author: "Magic The Gathring",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -32,6 +35,7 @@ const mtgFolders: GameFolders[] = [
     name: "Red",
     bleed: 1,
     author: "Magic The Gathring",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -40,6 +44,7 @@ const mtgFolders: GameFolders[] = [
     name: "Green",
     bleed: 1,
     author: "Magic The Gathring",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -48,6 +53,7 @@ const mtgFolders: GameFolders[] = [
     name: "Multicolors",
     bleed: 1,
     author: "Magic The Gathring",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -56,6 +62,7 @@ const mtgFolders: GameFolders[] = [
     name: "Colorless",
     bleed: 1,
     author: "Magic The Gathring",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -64,6 +71,7 @@ const mtgFolders: GameFolders[] = [
     name: "Lands",
     bleed: 1,
     author: "Magic The Gathring",
+    decklist: "",
     subCategory: "Lands",
     game: Game.MTG
   },
@@ -72,6 +80,7 @@ const mtgFolders: GameFolders[] = [
     name: "Full Art Basic Lands",
     bleed: 1,
     author: "Magic The Gathring",
+    decklist: "",
     subCategory: "Lands",
     game: Game.MTG
   },
@@ -80,6 +89,7 @@ const mtgFolders: GameFolders[] = [
     name: "Normal Style Basic Lands",
     bleed: 1,
     author: "Magic The Gathring",
+    decklist: "",
     subCategory: "Lands",
     game: Game.MTG
   },
@@ -88,6 +98,7 @@ const mtgFolders: GameFolders[] = [
     name: "Retro Style Basic Lands",
     bleed: 1,
     author: "Magic The Gathring",
+    decklist: "",
     subCategory: "Lands",
     game: Game.MTG
   },
@@ -96,6 +107,7 @@ const mtgFolders: GameFolders[] = [
     name: "Tokens",
     bleed: 1,
     author: "Magic The Gathring",
+    decklist: "",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -104,6 +116,7 @@ const mtgFolders: GameFolders[] = [
     name: "Planechase",
     bleed: 1,
     author: "Magic The Gathring",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -112,6 +125,7 @@ const mtgFolders: GameFolders[] = [
     name: "MTG Standalone Crossovers",
     bleed: 1,
     author: "Magic The Gathring",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -120,6 +134,7 @@ const mtgFolders: GameFolders[] = [
     name: "MTG Crossover: Dark Souls",
     bleed: 1,
     author: "Magic The Gathring",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -128,6 +143,7 @@ const mtgFolders: GameFolders[] = [
     name: "MTG Crossover: Godzilla",
     bleed: 1,
     author: "Magic The Gathring",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -136,6 +152,7 @@ const mtgFolders: GameFolders[] = [
     name: "MTG Crossover: Heroes Of The Realm",
     bleed: 1,
     author: "Magic The Gathring",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -144,6 +161,7 @@ const mtgFolders: GameFolders[] = [
     name: "MTG Crossover: The Walking Dead",
     bleed: 1,
     author: "Magic The Gathring",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -155,7 +173,8 @@ const mtgFolders: GameFolders[] = [
     id: "1ZC81zbzZHThYNDMlPR0GO6csTnKKsGLd",
     name: "Adventure Time",
     bleed: 1,
-    author: "",
+    author: "thefirstjakerowley",
+    decklist: "https://www.moxfield.com/decks/kmB3b-92wU-WaaUjPK1EGA",
     subCategory: null,
     game: Game.MTG
   },
@@ -163,7 +182,8 @@ const mtgFolders: GameFolders[] = [
     id: "10LAS_3BlgVIjmuWw1RN5TDcK4AccMJvH",
     name: "Arcane",
     bleed: 1,
-    author: "",
+    author: "Haydensan",
+    decklist: "https://www.moxfield.com/decks/p2FZZDvV8E2pABH11Xs4Ww",
     subCategory: null,
     game: Game.MTG
   },
@@ -171,7 +191,26 @@ const mtgFolders: GameFolders[] = [
     id: "1QFLDSUQ-NV3ZYKirwDcCdvd-6VTe5T3o",
     name: "Arcane",
     bleed: 1,
-    author: "",
+    author: "Haydensan",
+    decklist: "https://www.moxfield.com/decks/p2FZZDvV8E2pABH11Xs4Ww",
+    subCategory: "Tokens",
+    game: Game.MTG
+  },
+  {
+    id: "11-EiiN9ntMRqzYXG_wDBaCfiLb8KUYkX",
+    name: "Attack On Titan",
+    bleed: 1,
+    author: "solomonsnewgrundle",
+    decklist: "https://drive.google.com/file/d/13m9RfPYRKU6kxM56RloNKR0YILf0WvJV/view",
+    subCategory: null,
+    game: Game.MTG
+  },
+  {
+    id: "13m53ew9p92lIzdicHxwPrj7VG0EnMZ8t",
+    name: "Attack On Titan",
+    bleed: 1,
+    author: "solomonsnewgrundle",
+    decklist: "https://drive.google.com/file/d/13m9RfPYRKU6kxM56RloNKR0YILf0WvJV/view",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -180,6 +219,7 @@ const mtgFolders: GameFolders[] = [
     name: "Avatar The Last Airbender - Customs",
     bleed: 1,
     author: "",
+    decklist: "https://archidekt.com/decks/7205651/atla_omnath_locus_of_creation",
     subCategory: null,
     game: Game.MTG
   },
@@ -188,6 +228,7 @@ const mtgFolders: GameFolders[] = [
     name: "Avatar The Last Airbender - Customs",
     bleed: 1,
     author: "",
+    decklist: "https://archidekt.com/decks/7205651/atla_omnath_locus_of_creation",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -195,7 +236,8 @@ const mtgFolders: GameFolders[] = [
     id: "1I4WTf20zaf1Xq9A_k3tVYQNrERrRotcr",
     name: "Batman",
     bleed: 1,
-    author: "",
+    author: "Tortex",
+    decklist: "https://drive.google.com/file/d/1NHP_LTrjwoIauvikkvuGPqfWXVgoD6QX/view",
     subCategory: null,
     game: Game.MTG
   },
@@ -203,7 +245,8 @@ const mtgFolders: GameFolders[] = [
     id: "1Mr608-vhpqHOr5k14odjfw-M6xhhE_Da",
     name: "Batman",
     bleed: 1,
-    author: "",
+    author: "Tortex",
+    decklist: "https://drive.google.com/file/d/1NHP_LTrjwoIauvikkvuGPqfWXVgoD6QX/view",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -211,7 +254,8 @@ const mtgFolders: GameFolders[] = [
     id: "1a4IB00QmWECR4xy6dey29WdrSkkr7GAg",
     name: "Berserk - Griffith",
     bleed: 1,
-    author: "",
+    author: "dnfire17",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -219,7 +263,8 @@ const mtgFolders: GameFolders[] = [
     id: "1KOIYdGe3EoBSs3tG2L_ZfgDU1_jz9CNH",
     name: "Berserk - Guts",
     bleed: 1,
-    author: "",
+    author: "dnfire17",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -227,7 +272,8 @@ const mtgFolders: GameFolders[] = [
     id: "1OlfQ4xgPKWo35C60s9MfDe0_oinPApMB",
     name: "Berserk - Guts #2",
     bleed: 1,
-    author: "",
+    author: "2mescence",
+    decklist: "https://www.moxfield.com/decks/obwFjvNw0ES2gYrNviM58Q",
     subCategory: null,
     game: Game.MTG
   },
@@ -236,6 +282,7 @@ const mtgFolders: GameFolders[] = [
     name: "Berserk - Guts #3",
     bleed: 1,
     author: "",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -243,7 +290,17 @@ const mtgFolders: GameFolders[] = [
     id: "133wggfTLPe5slsmuYKxPQfX2z7HQQFGo",
     name: "Big Tech",
     bleed: 1,
-    author: "",
+    author: "coderanger",
+    decklist: "https://moxfield.com/decks/TCAJzrlam0Cg54aOiEAVbw",
+    subCategory: null,
+    game: Game.MTG
+  },
+  {
+    id: "1NImm1QuYyranVmUiDF-BnwGfdFsYNoqC",
+    name: "Bleach",
+    bleed: 1,
+    author: "TwistedTCG",
+    decklist: "https://tappedout.net/mtg-decks/isshin-kurosaki-bleach-deck-deck/",
     subCategory: null,
     game: Game.MTG
   },
@@ -251,7 +308,8 @@ const mtgFolders: GameFolders[] = [
     id: "16KApTcRd9gJ7OpWisBwgofYsE_xeEELi",
     name: "Bloodborn",
     bleed: 1,
-    author: "",
+    author: "bankaiyo123",
+    decklist: "https://www.moxfield.com/decks/xFUo0OhHhEi29HrqV2OhPQ",
     subCategory: null,
     game: Game.MTG
   },
@@ -259,7 +317,8 @@ const mtgFolders: GameFolders[] = [
     id: "110b-T27pUkas9ZJNhdh2R9M-SfUKyy_x",
     name: "Bloodborn",
     bleed: 1,
-    author: "",
+    author: "bankaiyo123",
+    decklist: "https://www.moxfield.com/decks/xFUo0OhHhEi29HrqV2OhPQ",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -267,39 +326,53 @@ const mtgFolders: GameFolders[] = [
     id: "1GwNUABZGFotDccurP9cTwXsKsaqWuFrS",
     name: "Bloodborn - Umbris, Fear Manifest",
     bleed: 1,
-    author: "",
+    author: "Zandaman",
+    decklist: "https://www.reddit.com/r/mpcproxies/comments/17o1z2q/bloodborne_reskin_full_proxy_edh_deck_for_umbris/",
     subCategory: null,
     game: Game.MTG
   },
   {
     id: "1TwhKrWSDotMwfIwemz8IZK_NtRM6wKEO",
-    name: "Borderlands Proxy Deck",
+    name: "Borderlands",
     bleed: 1,
-    author: "",
+    author: "HeyItsSpook",
+    decklist: "https://moxfield.com/decks/lrAHgyc1y0aBOMkzVcfB0A",
     subCategory: null,
     game: Game.MTG
   },
   {
     id: "1Ki6OKJhEAPwhs-E7mLZ0VCQyygKT2G3k",
-    name: "Borderlands Proxy Deck",
+    name: "Borderlands",
     bleed: 1,
-    author: "",
+    author: "HeyItsSpook",
+    decklist: "https://moxfield.com/decks/lrAHgyc1y0aBOMkzVcfB0A",
     subCategory: "Lands",
     game: Game.MTG
   },
   {
     id: "18MUCkTl40RWYHk1fYajR9FmBJXW-Ywzu",
-    name: "Borderlands Proxy Deck",
+    name: "Borderlands",
     bleed: 1,
-    author: "",
+    author: "HeyItsSpook",
+    decklist: "https://moxfield.com/decks/lrAHgyc1y0aBOMkzVcfB0A",
     subCategory: "Tokens",
+    game: Game.MTG
+  },
+  {
+    id: "1dWXU342RDvITfLhWTKsMAcmmUFtuoJ03",
+    name: "Bunnies",
+    bleed: 1,
+    author: "ReinetteHawke",
+    decklist: "https://www.moxfield.com/decks/JNCuwc2GC0yya_wiHACYbg",
+    subCategory: null,
     game: Game.MTG
   },
   {
     id: "1P70jmUD4a14NAv5PnlFBNn086kAV_FgM",
     name: "Cats",
     bleed: 1,
-    author: "",
+    author: "ukuleleaccordi",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -308,6 +381,7 @@ const mtgFolders: GameFolders[] = [
     name: "Clair Obscur: Expedition 33",
     bleed: 1,
     author: "Pascii20",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -315,7 +389,8 @@ const mtgFolders: GameFolders[] = [
     id: "1hytsKJiusidSz_UrKTCuP478d_wuzPAG",
     name: "Code Geass - Urza, Chief Artificer",
     bleed: 1,
-    author: "",
+    author: "OctavioPrisca",
+    decklist: "https://docs.google.com/spreadsheets/d/1uElormP5pmoKNkJo7S37oMQ_68c9uwrK04ijjezPkuM/edit?gid=0#gid=0",
     subCategory: null,
     game: Game.MTG
   },
@@ -323,15 +398,17 @@ const mtgFolders: GameFolders[] = [
     id: "1PtGqVYyOjSAcwXnETLDLdn2kUfzO76Ex",
     name: "Cyberpunk 2077",
     bleed: 1,
-    author: "",
+    author: "pjohnson86",
+    decklist: "https://moxfield.com/decks/zn9A4oTL2UqMjP9NaBea5g",
     subCategory: null,
     game: Game.MTG
   },
   {
     id: "1FJIDWORrDqToWMpPrpj-mEscLj9Ojqcm",
-    name: "Dark Souls Isshin",
+    name: "Dark Souls - Isshin",
     bleed: 1,
-    author: "",
+    author: "captainplanet52",
+    decklist: "https://manabox.app/decks/SrfEJy-wQ7u3oncFMqWeqg",
     subCategory: null,
     game: Game.MTG
   },
@@ -339,7 +416,8 @@ const mtgFolders: GameFolders[] = [
     id: "1IS7HNR93QJxYe1py79P1HEhvi4clJ9Y-",
     name: "Dark Souls Isshin",
     bleed: 1,
-    author: "",
+    author: "captainplanet52",
+    decklist: "https://manabox.app/decks/SrfEJy-wQ7u3oncFMqWeqg",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -347,7 +425,8 @@ const mtgFolders: GameFolders[] = [
     id: "1VOyCYB3dQTX7ijIcLS_Oba9FcfEXHQfo",
     name: "Diablo",
     bleed: 1,
-    author: "",
+    author: "brosepolis",
+    decklist: "https://drive.google.com/file/d/1QpYpdtZIRVZtLGf0RFf0W-zFZXaWkLus/view",
     subCategory: null,
     game: Game.MTG
   },
@@ -355,7 +434,8 @@ const mtgFolders: GameFolders[] = [
     id: "1tfCQtu6PkD5L8ge46UWNftqQGqCEffx7",
     name: "Diablo - Extras",
     bleed: 1,
-    author: "",
+    author: "brosepolis",
+    decklist: "https://drive.google.com/file/d/1QpYpdtZIRVZtLGf0RFf0W-zFZXaWkLus/view",
     subCategory: null,
     game: Game.MTG
   },
@@ -363,7 +443,8 @@ const mtgFolders: GameFolders[] = [
     id: "1no5ne9s_THaryjvqCVT_zhWpIO4dxaKS",
     name: "Dr. Seuss",
     bleed: 1,
-    author: "",
+    author: "Yugischmoe",
+    decklist: "https://tappedout.net/mtg-decks/dr-seuss-teller-of-tales-all-art-altered/",
     subCategory: null,
     game: Game.MTG
   },
@@ -371,7 +452,8 @@ const mtgFolders: GameFolders[] = [
     id: "1rNwrrwVL7kDUSAB19y8TUplH4ldnefhF",
     name: "Demon Slayer",
     bleed: 1,
-    author: "",
+    author: "thetoastinside22",
+    decklist: "https://www.reddit.com/r/mpcproxies/comments/wy0lzm/finished_my_isshin_demon_slayer_deck_link_to_the/",
     subCategory: null,
     game: Game.MTG
   },
@@ -379,7 +461,8 @@ const mtgFolders: GameFolders[] = [
     id: "1X1f25yY4febXVGWvs7ZvZDQF14UGS-ua",
     name: "Demon Slayer",
     bleed: 1,
-    author: "",
+    author: "thetoastinside22",
+    decklist: "https://www.reddit.com/r/mpcproxies/comments/wy0lzm/finished_my_isshin_demon_slayer_deck_link_to_the/",
     subCategory: "Backs",
     game: Game.MTG
   },
@@ -387,15 +470,26 @@ const mtgFolders: GameFolders[] = [
     id: "1tBw6Fv5RS83dXIIARksJppGVl0QaCcZ-",
     name: "Demon Slayer",
     bleed: 1,
-    author: "",
+    author: "thetoastinside22",
+    decklist: "https://www.reddit.com/r/mpcproxies/comments/wy0lzm/finished_my_isshin_demon_slayer_deck_link_to_the/",
     subCategory: "Tokens",
+    game: Game.MTG
+  },
+  {
+    id: "14cjmgLwKGk784Erf3mZOoZojBN0Yv81w",
+    name: "Disney Princesses",
+    bleed: 1,
+    author: "JRMJay00",
+    decklist: "https://www.moxfield.com/decks/_cJs10bxpkOeeF_hNZUDTA",
+    subCategory: null,
     game: Game.MTG
   },
   {
     id: "1mPkPZOlXiES55mIevyCelNmQHz0hIWFI",
     name: "Dragon Quest",
     bleed: 1,
-    author: "",
+    author: "canofbeams",
+    decklist: "https://old.reddit.com/r/mpcproxies/comments/1bara2e/deleted_by_user/",
     subCategory: null,
     game: Game.MTG
   },
@@ -403,7 +497,8 @@ const mtgFolders: GameFolders[] = [
     id: "1IofMWzXTAG0FskxMHaFtI5nTQ7Rwx1Kh",
     name: "Dune - Rise of Muah'Dib",
     bleed: 1,
-    author: "",
+    author: "leocrevier",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -411,7 +506,8 @@ const mtgFolders: GameFolders[] = [
     id: "1INwGpfgHY_862E_k4tItd5KJyNswjrva",
     name: "Dune - Rise of Muah'Dib",
     bleed: 1,
-    author: "",
+    author: "leocrevier",
+    decklist: "",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -419,7 +515,8 @@ const mtgFolders: GameFolders[] = [
     id: "1-brEJjHJRhiUKjQxt4YycEQVtTRBlb-U",
     name: "Dune - Baron",
     bleed: 1,
-    author: "",
+    author: "Historical_Hamster54",
+    decklist: "https://www.archidekt.com/decks/7404813/baron_von_counters_final",
     subCategory: null,
     game: Game.MTG
   },
@@ -427,7 +524,8 @@ const mtgFolders: GameFolders[] = [
     id: "1eX2orjmYduRbAsP_6OGOw9WNhs4llrce",
     name: "Dune - Baron",
     bleed: 1,
-    author: "",
+    author: "Historical_Hamster54",
+    decklist: "https://www.archidekt.com/decks/7404813/baron_von_counters_final",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -435,7 +533,8 @@ const mtgFolders: GameFolders[] = [
     id: "1zMXFrV7G_3jMDtBEX22QEyqkYtsf_x7P",
     name: "Evangelion Neon Genesis Engine",
     bleed: 1,
-    author: "",
+    author: "Apcebo",
+    decklist: "https://moxfield.com/decks/eEPgddXQ3UC8sYJU9hzfww",
     subCategory: null,
     game: Game.MTG
   },
@@ -443,7 +542,8 @@ const mtgFolders: GameFolders[] = [
     id: "1gleqe-oh3aMIZIloCqvJQwZnPQoBqyaJ",
     name: "Evangelion Neon Genesis Engine Revamped",
     bleed: 1,
-    author: "",
+    author: "Apcebo",
+    decklist: "https://moxfield.com/decks/eEPgddXQ3UC8sYJU9hzfww",
     subCategory: null,
     game: Game.MTG
   },
@@ -451,7 +551,8 @@ const mtgFolders: GameFolders[] = [
     id: "1JmoMR1vXjZJ5Ye9Hi72Zz2CUDAP5pVV-",
     name: "Final Fantasy VII",
     bleed: 1,
-    author: "",
+    author: "Apcebo",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -459,7 +560,8 @@ const mtgFolders: GameFolders[] = [
     id: "1k34aBmpRhiLHeFHtp4rwaQGwg0wGJ5YF",
     name: "Final Fantasy VII",
     bleed: 1,
-    author: "",
+    author: "Apcebo",
+    decklist: "",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -467,7 +569,8 @@ const mtgFolders: GameFolders[] = [
     id: "1EAqEy5Hpb-DTOj1nUdwxHpnrBx7MexXH",
     name: "Final Fantasy XIV - Y'shtola Spellslinger",
     bleed: 0,
-    author: "",
+    author: "Naraki_Maul",
+    decklist: "https://drive.google.com/file/d/1tFhyMv6SvKkjHrQjhToJj40zZL2lRJgl/view?usp=sharing",
     subCategory: null,
     game: Game.MTG
   },
@@ -476,6 +579,7 @@ const mtgFolders: GameFolders[] = [
     name: "Final Fantasy XIV - Tazri, Stalwart Survivor",
     bleed: 0,
     author: "REMARKABLE",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -483,7 +587,17 @@ const mtgFolders: GameFolders[] = [
     id: "1gDxdyD-AARSA2w_aPwhGItuV5bkDKRhC",
     name: "Full Metal Alchemist",
     bleed: 1,
-    author: "",
+    author: "TwistedTCG",
+    decklist: "https://www.twistedtcg.com/fmacommander",
+    subCategory: null,
+    game: Game.MTG
+  },
+  {
+    id: "1OBesFl_TvabfHDDfu5NNjw58i_J_yYyu",
+    name: "Frieren",
+    bleed: 1,
+    author: "OctavioPrisca",
+    decklist: "https://docs.google.com/spreadsheets/d/1-zwdBCnswsJQmRPyKFWtRKSliTPJgxLBEljQSrfgavI/edit?gid=0#gid=0",
     subCategory: null,
     game: Game.MTG
   },
@@ -491,7 +605,8 @@ const mtgFolders: GameFolders[] = [
     id: "1OBesFl_TvabfHDDfu5NNjw58i_J_yYyu",
     name: "Futurama",
     bleed: 1,
-    author: "",
+    author: "SolomonsNewGrundle",
+    decklist: "https://drive.google.com/file/d/1OZbLcNS2pm-NpN4MMe78mVDljwkgz3LI/view",
     subCategory: null,
     game: Game.MTG
   },
@@ -499,7 +614,8 @@ const mtgFolders: GameFolders[] = [
     id: "1T3v-x6PNG25u5XDz5yn7FiOLGKy36Gsh",
     name: "Gundam",
     bleed: 1,
-    author: "",
+    author: "steggyface",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -507,7 +623,8 @@ const mtgFolders: GameFolders[] = [
     id: "1YA9FCy-OzMRshLatfnad4CI9lK6bpruT",
     name: "Game Of Thrones",
     bleed: 1,
-    author: "",
+    author: "Apcebo",
+    decklist: "https://ko-fi.com/post/A-Game-of-Thrones-The-Long-Night-FULL-EDH-DECK-P5P3175W4P?justpublished=true&alias=A-Game-of-Thrones-The-Long-Night-FULL-EDH-DECK-P5P3175W4P#shareNewPostModal",
     subCategory: null,
     game: Game.MTG
   },
@@ -515,7 +632,8 @@ const mtgFolders: GameFolders[] = [
     id: "1ZaqHs2r36pjRgL9SzWVCT3gSsWJFGk1R",
     name: "Goosebumps",
     bleed: 1,
-    author: "",
+    author: "Okamihunter59",
+    decklist: "https://www.moxfield.com/decks/hUijkZ5zZUO_rPUuiRP_7A",
     subCategory: null,
     game: Game.MTG
   },
@@ -523,7 +641,8 @@ const mtgFolders: GameFolders[] = [
     id: "1koBmSc7U1Xlt8Qrz89HMEqfDVIPQ7Pfp",
     name: "Gravity Falls",
     bleed: 1,
-    author: "",
+    author: "Okamihunter59",
+    decklist: "https://www.moxfield.com/decks/Y8udIbJF506jBbRyogkz5w",
     subCategory: null,
     game: Game.MTG
   },
@@ -531,7 +650,8 @@ const mtgFolders: GameFolders[] = [
     id: "1R4f_2Yfp8R3wranN2ZdUgqWzF6HZAELX",
     name: "Gravity Falls",
     bleed: 1,
-    author: "",
+    author: "Okamihunter59",
+    decklist: "https://www.moxfield.com/decks/Y8udIbJF506jBbRyogkz5w",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -539,7 +659,8 @@ const mtgFolders: GameFolders[] = [
     id: "1_TE_QAwBZ5c9-qAH16_QienBIBTUmdX2",
     name: "Halo",
     bleed: 1,
-    author: "",
+    author: "Helpful_Spell_5896",
+    decklist: "https://archidekt.com/decks/5857141/unsc",
     subCategory: null,
     game: Game.MTG
   },
@@ -547,7 +668,8 @@ const mtgFolders: GameFolders[] = [
     id: "1gSMDHjxxCe3yTqPZipH4pI6IJugoF0oD",
     name: "Horizon",
     bleed: 1,
-    author: "",
+    author: "thisishowtheworldsends",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -555,15 +677,8 @@ const mtgFolders: GameFolders[] = [
     id: "1vECxWK6WJG6cqfOUc838-viNDB5pK68r",
     name: "Jujutsu Kaisen - Narset, Enlighted Master",
     bleed: 1,
-    author: "",
-    subCategory: null,
-    game: Game.MTG
-  },
-  {
-    id: "1ZaqHs2r36pjRgL9SzWVCT3gSsWJFGk1R",
-    name: "Junji Ito",
-    bleed: 1,
-    author: "",
+    author: "OctavioPrisca",
+    decklist: "https://docs.google.com/spreadsheets/d/1pcEW8wmDdnssVqQECSpXPP2ZFw7LQknrq2mtzALjQxA/edit?gid=0#gid=0",
     subCategory: null,
     game: Game.MTG
   },
@@ -571,7 +686,8 @@ const mtgFolders: GameFolders[] = [
     id: "1QnrtLFx2rdblrwMwyu97B1f6GGfFCfgE",
     name: "Kingdom Hearts",
     bleed: 1,
-    author: "",
+    author: "Nerd of the Coast",
+    decklist: "https://deckstats.net/decks/163584/3212319-sora-s-power-of-friendshipi",
     subCategory: null,
     game: Game.MTG
   },
@@ -580,6 +696,7 @@ const mtgFolders: GameFolders[] = [
     name: "League of Legends",
     bleed: 0,
     author: "Sakeretsu",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -587,55 +704,62 @@ const mtgFolders: GameFolders[] = [
     id: "1g2WL28BRIf5D9r-ST0qrKkzU0bv-0a99",
     name: "LoL - Star Guardians",
     bleed: 1,
-    author: "",
+    author: "Bankaiyo123",
+    decklist: "https://www.moxfield.com/decks/pQaA9U96-Ey9UpMEdUa3YQ",
     subCategory: null,
+    game: Game.MTG
+  },
+  {
+    id: "1V4erF7flOMB0_ThlaodwuHxLlp6S4DRQ",
+    name: "Star Guardians - LoL",
+    bleed: 1,
+    author: "Bankaiyo123",
+    decklist: "https://www.moxfield.com/decks/pQaA9U96-Ey9UpMEdUa3YQ",
+    subCategory: "Tokens",
     game: Game.MTG
   },
   {
     id: "1iByFHeIvdA2BMYib-G9wXF9MZXomtniD",
     name: "LoL - Star Guardians",
     bleed: 1,
-    author: "",
+    author: "Bankaiyo123",
+    decklist: "https://www.moxfield.com/decks/pQaA9U96-Ey9UpMEdUa3YQ",
     subCategory: "Alternatives",
-    game: Game.MTG
-  },
-  {
-    id: "1u1Juh4MqO7gE72xj2ik4-neecTXL5h2t",
-    name: "Lost",
-    bleed: 1,
-    author: "",
-    subCategory: null,
     game: Game.MTG
   },
   {
     id: "1R7G80oxlX5W4jVR83TzG5tIpNg1TOSwt",
     name: "Lovecraft",
     bleed: 1,
-    author: "",
+    author: "Tortex",
+    decklist: "https://drive.google.com/file/d/1S4ZXuVw9Cr9Xm5H2MDx1eDH0YdZWB5jw/view",
     subCategory: null,
     game: Game.MTG
   },
   {
     id: "1PuClUs53kMIm3Ar6w70N7QuaDHngMIzW",
-    name: "Marvel - Customs",
+    name: "Marvel",
     bleed: 1,
-    author: "",
+    author: "SeaMonkey",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
   {
     id: "1_F4AxBDX79Eut7XXm2tEHckfOPpLYAjY",
-    name: "Marvel - Customs",
+    name: "Marvel",
     bleed: 1,
-    author: "",
+    author: "SeaMonkey",
+    decklist: "",
     subCategory: "Lands",
     game: Game.MTG
   },
   {
     id: "1JlFvcw11aeQ5T7iExjWt2uL4L-y_he2V",
-    name: "Marvel - Customs",
+    name: "Marvel",
     bleed: 1,
-    author: "",
+    author: "SeaMonkey",
+    decklist: "",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -644,6 +768,7 @@ const mtgFolders: GameFolders[] = [
     name: "Marvel Rivals",
     bleed: 0,
     author: "DingoXIII",
+    decklist: "https://moxfield.com/decks/GuS1gQ1wTUu8dVeHD23sDg",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -651,7 +776,8 @@ const mtgFolders: GameFolders[] = [
     id: "1sczhh_R0I4ftNbZZ8uUuL7jGzQ8NOWK5",
     name: "Monster Hunter",
     bleed: 1,
-    author: "",
+    author: "Shei",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -659,7 +785,8 @@ const mtgFolders: GameFolders[] = [
     id: "1U7mTLnUqCrQ_0QNUDgFpmdRsRGKYaV-M",
     name: "Mass Effect",
     bleed: 1,
-    author: "",
+    author: "ReinetteHawke",
+    decklist: "https://moxfield.com/decks/Jo0sgg1yg0idFj8JNPgYLQ",
     subCategory: null,
     game: Game.MTG
   },
@@ -667,7 +794,8 @@ const mtgFolders: GameFolders[] = [
     id: "1--yuNwnUtYBcKQpGqKz-wn7qK-nKdGP_",
     name: "Metroid",
     bleed: 1,
-    author: "",
+    author: "Genobyl",
+    decklist: "https://www.moxfield.com/decks/lBxzse4hNUOXM8Y1FvFnYA",
     subCategory: null,
     game: Game.MTG
   },
@@ -675,7 +803,8 @@ const mtgFolders: GameFolders[] = [
     id: "1Scvrk710igoxdgwOzSAt6e5yEDLecuSU",
     name: "Metroid",
     bleed: 1,
-    author: "",
+    author: "Genobyl",
+    decklist: "https://www.moxfield.com/decks/lBxzse4hNUOXM8Y1FvFnYA",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -683,7 +812,8 @@ const mtgFolders: GameFolders[] = [
     id: "1szyDwnhoDczhWH_ysGs7y806qhd5yKf6",
     name: "Naruto",
     bleed: 1,
-    author: "",
+    author: "PADANK",
+    decklist: "https://drive.google.com/file/d/1TR4Eo8Di9LmUwah3aY_wUzVMCGrq0mAb/view?usp=sharing",
     subCategory: null,
     game: Game.MTG
   },
@@ -691,7 +821,8 @@ const mtgFolders: GameFolders[] = [
     id: "15-uQBsM-81s1fKTKTFjD4mzejCGDhBGY",
     name: "Ninja Turtles",
     bleed: 1,
-    author: "",
+    author: "jrmjay00",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -699,7 +830,8 @@ const mtgFolders: GameFolders[] = [
     id: "1X1_ZL9vIJRppZTJnSVERatER6ImxYXBO",
     name: "No Man's Sky",
     bleed: 1,
-    author: "",
+    author: "Okamihunter59",
+    decklist: "https://www.moxfield.com/decks/O0G2eKFerkCR6sf1FDO-2A",
     subCategory: null,
     game: Game.MTG
   },
@@ -707,7 +839,8 @@ const mtgFolders: GameFolders[] = [
     id: "1ldV0zoPbUDvlvruKOz84tg21w8SXkAJ2",
     name: "No Man's Sky",
     bleed: 1,
-    author: "",
+    author: "Okamihunter59",
+    decklist: "https://www.moxfield.com/decks/O0G2eKFerkCR6sf1FDO-2A",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -715,7 +848,8 @@ const mtgFolders: GameFolders[] = [
     id: "1-BUEaURvMKbrg3zG-8L6s9MLED-NLYKL",
     name: "One Piece",
     bleed: 1,
-    author: "",
+    author: "Nerd of the Coast",
+    decklist: "https://deckstats.net/decks/163584/3160980-luffy-s-ship",
     subCategory: null,
     game: Game.MTG
   },
@@ -723,7 +857,8 @@ const mtgFolders: GameFolders[] = [
     id: "1TXLRbPgTG1aC8ydnOmOA2zQ9vzy58G46",
     name: "Over The Garden Wall",
     bleed: 1,
-    author: "",
+    author: "Nicholas P. Reeve",
+    decklist: "https://www.moxfield.com/decks/nKeJPgQr_Umwhl2xgD_O_Q",
     subCategory: null,
     game: Game.MTG
   },
@@ -731,7 +866,8 @@ const mtgFolders: GameFolders[] = [
     id: "1nKoYGiDzUT1S2X7MvgfNHRuXvvHMZt3n",
     name: "Over The Garden Wall",
     bleed: 1,
-    author: "",
+    author: "Nicholas P. Reeve",
+    decklist: "https://www.moxfield.com/decks/nKeJPgQr_Umwhl2xgD_O_Q",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -739,31 +875,35 @@ const mtgFolders: GameFolders[] = [
     id: "1WZO_LxyhCgdMRL6Wn93aFNsVa68T_7xb",
     name: "Pastel Goth Spider",
     bleed: 1,
-    author: "",
+    author: "1WZO_LxyhCgdMRL6Wn93aFNsVa68T_7xb",
+    decklist: "https://deckstats.net/decks/237339/3234125-amber-pastel-goth-spiders/en",
     subCategory: null,
     game: Game.MTG
   },
   {
     id: "1emWiQ4aUSAFCXeVDIBhuSfX5H5YEr1m7",
-    name: "Pokemon (Wayta)",
+    name: "Pokemon",
     bleed: 1,
     author: "Wayta",
+    decklist: "https://www.moxfield.com/decks/JiS5cdIcdUKAxnVRxDhmDQ",
     subCategory: null,
     game: Game.MTG
   },
   {
     id: "1g5AJE3na_66iVhSOTsdGSPIawbWgOUy3",
-    name: "Pokemon (Wayta)",
+    name: "Pokemon",
     bleed: 1,
-    author: "",
+    author: "Wayta",
+    decklist: "https://www.moxfield.com/decks/JiS5cdIcdUKAxnVRxDhmDQ",
     subCategory: "Lands",
     game: Game.MTG
   },
   {
     id: "1gFhcc1D84nzd3p1hoXzu_mYY39jxG5kn",
-    name: "Pokemon (Wayta)",
+    name: "Pokemon",
     bleed: 1,
-    author: "",
+    author: "Wayta",
+    decklist: "https://www.moxfield.com/decks/JiS5cdIcdUKAxnVRxDhmDQ",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -771,7 +911,8 @@ const mtgFolders: GameFolders[] = [
     id: "1ySHUyDshmx-hMINUnuc5SOg2G4mufVB3",
     name: "Pokemon",
     bleed: 1,
-    author: "",
+    author: "VitrousSpark",
+    decklist: "https://imgur.com/gallery/pokemon-proxy-mtg-11VnWgu",
     subCategory: null,
     game: Game.MTG
   },
@@ -779,7 +920,8 @@ const mtgFolders: GameFolders[] = [
     id: "1niE0gAJCn-8KK673Hv1Pdf4a2FRQfmV-",
     name: "Power Rangers",
     bleed: 1,
-    author: "",
+    author: "Nelynes",
+    decklist: "https://moxfield.com/decks/5uDftCcMU0qi_Cj1A3bnqQ",
     subCategory: null,
     game: Game.MTG
   },
@@ -787,7 +929,8 @@ const mtgFolders: GameFolders[] = [
     id: "1k-cSQO-sXNsxop4QbWMrfUA5x9t2OAkH",
     name: "Power Rangers",
     bleed: 1,
-    author: "",
+    author: "Nelynes",
+    decklist: "https://moxfield.com/decks/5uDftCcMU0qi_Cj1A3bnqQ",
     subCategory: "Sideboard",
     game: Game.MTG
   },
@@ -795,15 +938,17 @@ const mtgFolders: GameFolders[] = [
     id: "1Udxpf6VZ06b5d1hD3boMR_5CQ4pMWiXw",
     name: "Power Rangers",
     bleed: 1,
-    author: "",
+    author: "Nelynes",
+    decklist: "https://moxfield.com/decks/5uDftCcMU0qi_Cj1A3bnqQ",
     subCategory: "Tokens",
     game: Game.MTG
   },
   {
     id: "1uLjUSI9xvVTmuULsbKgofkEGAR94mrJv",
     name: "Sailor Moon",
-    bleed: 1,
-    author: "",
+    bleed: 0,
+    author: "N. B. Patenaude",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -811,7 +956,8 @@ const mtgFolders: GameFolders[] = [
     id: "1bv8MQvInvtKV1EGfVGIQGkONcOY6rqjk",
     name: "Simpsons",
     bleed: 1,
-    author: "",
+    author: "Tortex",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -819,7 +965,8 @@ const mtgFolders: GameFolders[] = [
     id: "1NgfIwS-1MPpmL63D2W3W20Q3T3qHq0Ei",
     name: "Star Wars",
     bleed: 1,
-    author: "",
+    author: "Mannywm4",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -827,7 +974,8 @@ const mtgFolders: GameFolders[] = [
     id: "1qFcKeyjK3sQW68nEiIPMFziarU-tkcAh",
     name: "Star Wars Separatists",
     bleed: 1,
-    author: "",
+    author: "OOM-32",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -835,7 +983,8 @@ const mtgFolders: GameFolders[] = [
     id: "1TvbK2AiB3RnguRuaFd7OExQulkv-wGkJ",
     name: "Star Wars Separatists",
     bleed: 1,
-    author: "",
+    author: "OOM-32",
+    decklist: "",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -843,7 +992,8 @@ const mtgFolders: GameFolders[] = [
     id: "1QPyd6Bz5tKHB79_HsYiN0Y5SRS5UrfUg",
     name: "Scooby-Doo",
     bleed: 1,
-    author: "",
+    author: "Initial-Ad107",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -851,7 +1001,8 @@ const mtgFolders: GameFolders[] = [
     id: "1IqlRc_AFprQgA9kVxAbQp_izvRlfJ-cc",
     name: "Scooby-Doo",
     bleed: 1,
-    author: "",
+    author: "Initial-Ad107",
+    decklist: "",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -859,7 +1010,8 @@ const mtgFolders: GameFolders[] = [
     id: "1ySYtsOskDLPd5mGrxiqeiBMb9s6vQIvl",
     name: "Solo Leveling",
     bleed: 1,
-    author: "",
+    author: "Classy",
+    decklist: "https://www.moxfield.com/decks/nUib1wWRrU2UvGWAvBHZWQ",
     subCategory: null,
     game: Game.MTG
   },
@@ -867,7 +1019,8 @@ const mtgFolders: GameFolders[] = [
     id: "1e7UAImMfIydQmRDZeVxcv6eGTCfbNPMG",
     name: "Solo Leveling",
     bleed: 1,
-    author: "",
+    author: "Classy",
+    decklist: "https://www.moxfield.com/decks/nUib1wWRrU2UvGWAvBHZWQ",
     subCategory: "Alternatives",
     game: Game.MTG
   },
@@ -875,7 +1028,8 @@ const mtgFolders: GameFolders[] = [
     id: "1i_x3SAHWy7MtxKUYIQ4jRY5vxWDoy3K-",
     name: "Solo Leveling",
     bleed: 1,
-    author: "",
+    author: "Classy",
+    decklist: "https://www.moxfield.com/decks/nUib1wWRrU2UvGWAvBHZWQ",
     subCategory: "Tokens",
     game: Game.MTG
   },
@@ -883,23 +1037,17 @@ const mtgFolders: GameFolders[] = [
     id: "1IOO0r4ZNzai9acDoi82x5wcxL-_mJ1zo",
     name: "Spongebob",
     bleed: 1,
-    author: "",
+    author: "TheChilisGuy",
+    decklist: "https://moxfield.com/decks/GBEMepmPyk--7Hv7yJfaDA",
     subCategory: null,
-    game: Game.MTG
-  },
-  {
-    id: "1V4erF7flOMB0_ThlaodwuHxLlp6S4DRQ",
-    name: "Star Guardians - LoL",
-    bleed: 1,
-    author: "",
-    subCategory: "Tokens",
     game: Game.MTG
   },
   {
     id: "1E4m0bsC4BJlSKEb8sDd9EVR7_ct-Hzfw",
     name: "The Witcher",
     bleed: 1,
-    author: "",
+    author: "Radabard",
+    decklist: "https://moxfield.com/decks/NBqPY-kQ_0Gzww_TCwSX-Q",
     subCategory: null,
     game: Game.MTG
   },
@@ -907,7 +1055,8 @@ const mtgFolders: GameFolders[] = [
     id: "1iXqkzhD0yaHDA6G0I4VxZbJJCXPpuLsz",
     name: "YuGiOh, The Ur Dragon",
     bleed: 1,
-    author: "",
+    author: "OctavioPrisca",
+    decklist: "https://docs.google.com/spreadsheets/d/1WnLD3WMFdlkHIH8dRmgK0HqYNcOS80Na1QcGPVQkSlI/edit?gid=0#gid=0",
     subCategory: null,
     game: Game.MTG
   },
@@ -916,6 +1065,7 @@ const mtgFolders: GameFolders[] = [
     name: "Zelda - Breath Of The Wild",
     bleed: 0,
     author: "nahdawgg",
+    decklist: "",
     subCategory: null,
     game: Game.MTG
   },
@@ -923,7 +1073,8 @@ const mtgFolders: GameFolders[] = [
     id: "1HGEpkDRz14bSdiszKZjSY5sENuG5SKMw",
     name: "Zelda - Hyrule's Arsenal",
     bleed: 1,
-    author: "",
+    author: "David E. Bass",
+    decklist: "https://moxfield.com/decks/xnaof2VFZk-SZss7mmy53Q",
     subCategory: null,
     game: Game.MTG
   },
@@ -931,7 +1082,8 @@ const mtgFolders: GameFolders[] = [
     id: "1uBXgLRHC51No6yqtYu2eqfoD3Ha-9xBD",
     name: "Zelda - Lore",
     bleed: 0,
-    author: "",
+    author: "WhiteRabbitMTG",
+    decklist: "https://moxfield.com/decks/YlWDSTe49kSmkyFeqaP2Ng",
     subCategory: null,
     game: Game.MTG
   },
@@ -944,6 +1096,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP01",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -952,6 +1105,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP01 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -960,6 +1114,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP02",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -968,6 +1123,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP02 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -976,6 +1132,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP03",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -984,6 +1141,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP03 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -992,6 +1150,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP04",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1000,6 +1159,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP04 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1008,6 +1168,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP05",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1016,6 +1177,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP05 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1024,6 +1186,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP05 SPs",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1032,6 +1195,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP06",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1040,6 +1204,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP06 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1048,6 +1213,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP06 SPs",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1056,6 +1222,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP06 TRs",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1064,6 +1231,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP07",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1072,6 +1240,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP07 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1080,6 +1249,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP07 SPs",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1088,6 +1258,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP07 TRs",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1096,6 +1267,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP08",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1104,6 +1276,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP08 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1112,6 +1285,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP08 SPs",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1120,6 +1294,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP09",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1128,6 +1303,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP09 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1136,6 +1312,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP09 SPs",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1144,6 +1321,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP10",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1152,6 +1330,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP10 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1160,6 +1339,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP10 SPs",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1168,6 +1348,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP11",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1176,6 +1357,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP11 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1184,6 +1366,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP11 SPs",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1192,6 +1375,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP12",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1200,6 +1384,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP12 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1208,6 +1393,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP12 SPs",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1216,6 +1402,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP13",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1224,6 +1411,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP13 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1232,6 +1420,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP13 SPs",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1242,6 +1431,7 @@ const optcgFolders: GameFolders[] = [
     name: "EB01",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1250,6 +1440,7 @@ const optcgFolders: GameFolders[] = [
     name: "EB01",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1258,6 +1449,7 @@ const optcgFolders: GameFolders[] = [
     name: "EB02",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1266,6 +1458,7 @@ const optcgFolders: GameFolders[] = [
     name: "EB02 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1274,6 +1467,7 @@ const optcgFolders: GameFolders[] = [
     name: "PRB01",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1282,6 +1476,7 @@ const optcgFolders: GameFolders[] = [
     name: "PRB01 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1290,6 +1485,7 @@ const optcgFolders: GameFolders[] = [
     name: "PRB01 Gold Don!!",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1298,6 +1494,7 @@ const optcgFolders: GameFolders[] = [
     name: "PRB02",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1306,6 +1503,7 @@ const optcgFolders: GameFolders[] = [
     name: "PRB02 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1314,6 +1512,7 @@ const optcgFolders: GameFolders[] = [
     name: "PRB02 SPs",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1322,6 +1521,7 @@ const optcgFolders: GameFolders[] = [
     name: "PRB02 Don!!",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1330,6 +1530,7 @@ const optcgFolders: GameFolders[] = [
     name: "PRB02 Gold Don!!",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1340,6 +1541,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST01",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1348,6 +1550,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST01 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1356,6 +1559,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST02",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1364,6 +1568,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST02 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1372,6 +1577,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST03",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1380,6 +1586,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST03 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1388,6 +1595,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST04",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1396,6 +1604,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST04 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1404,6 +1613,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST05",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1412,6 +1622,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST05 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1420,6 +1631,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST06",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1428,6 +1640,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST06 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1436,6 +1649,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST07",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1444,6 +1658,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST07 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1452,6 +1667,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST08",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1460,6 +1676,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST08 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1468,6 +1685,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST09",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1476,6 +1694,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST10",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1484,6 +1703,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST10 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1492,6 +1712,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST11",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1500,6 +1721,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST11 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1508,6 +1730,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST12",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1516,6 +1739,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST12 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1524,6 +1748,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST13",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1532,6 +1757,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST13 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1540,6 +1766,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST14",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1548,6 +1775,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST15",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1556,6 +1784,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST16",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1564,6 +1793,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST16 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1572,6 +1802,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST17",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1580,6 +1811,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST17 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1588,6 +1820,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST18",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1596,6 +1829,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST19",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1604,6 +1838,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST20",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1612,6 +1847,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST21",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1620,6 +1856,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST21 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1628,6 +1865,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST22",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1636,6 +1874,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST22 Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1644,6 +1883,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST23",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1652,6 +1892,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST24",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1660,6 +1901,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST25",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1668,6 +1910,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST26",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1676,6 +1919,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST27",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1684,6 +1928,7 @@ const optcgFolders: GameFolders[] = [
     name: "ST28",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1694,6 +1939,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP06-10 Promos",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1702,6 +1948,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP06-10 Promos Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1710,6 +1957,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP11+ Promos",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1718,6 +1966,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP11+ Promos Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1728,6 +1977,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP01-11 Don!!",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1736,6 +1986,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP11+ Don!!",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1746,6 +1997,7 @@ const optcgFolders: GameFolders[] = [
     name: "Black Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1754,6 +2006,7 @@ const optcgFolders: GameFolders[] = [
     name: "Blue Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1762,6 +2015,7 @@ const optcgFolders: GameFolders[] = [
     name: "Green Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1770,6 +2024,7 @@ const optcgFolders: GameFolders[] = [
     name: "Purple Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1778,6 +2033,7 @@ const optcgFolders: GameFolders[] = [
     name: "Red Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1786,6 +2042,7 @@ const optcgFolders: GameFolders[] = [
     name: "Yellow Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1794,6 +2051,7 @@ const optcgFolders: GameFolders[] = [
     name: "Leaders Alts",
     bleed: 0,
     author: "One Piece Card Game",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1804,6 +2062,7 @@ const optcgFolders: GameFolders[] = [
     name: "OP TCG Custom Card Collection",
     bleed: 0,
     author: "morpice0009",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1812,6 +2071,7 @@ const optcgFolders: GameFolders[] = [
     name: "The Doctor's Customs",
     bleed: 0,
     author: "viri0x",
+    decklist: "",
     subCategory: null,
     game: Game.OPTCG
   },
@@ -1823,6 +2083,7 @@ const riftboundFolders: GameFolders[] = [
     name: "Riftbound Origin",
     bleed: 0,
     author: "Riftbound",
+    decklist: "",
     subCategory: null,
     game: Game.RIFTBOUND
   },
