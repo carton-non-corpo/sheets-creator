@@ -23,7 +23,7 @@ const sentinelTop = ref<HTMLElement>();
 const sentinelBottom = ref<HTMLElement>();
 
 // Pagination state
-const itemsPerPage = 50;
+const itemsPerPage = 20;
 const currentPage = ref(0);
 const loadedItems = ref<EnhancedFile[]>([]);
 

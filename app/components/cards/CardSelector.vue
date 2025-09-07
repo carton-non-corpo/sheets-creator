@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { Button } from '~/components/ui/button';
-import { Plus, Minus } from 'lucide-vue-next';
+import { Plus, Minus, ZoomIn } from 'lucide-vue-next';
 import type { EnhancedFile } from '~~/common/types/drive';
+import { useCardStore } from '~/stores/card';
 
 const props = defineProps<{
   card: EnhancedFile
@@ -9,6 +10,9 @@ const props = defineProps<{
 
 const sheetStore = useSheetStore();
 const { addCard, removeCard, getCardQuantity } = sheetStore;
+
+const cardStore = useCardStore();
+const { openCardDetails } = cardStore;
 
 const quantity = computed(() => getCardQuantity(props.card.id));
 
@@ -74,6 +78,16 @@ function goToWebLink() {
         @click.stop="increment"
       >
         <Plus class="h-3 w-3" />
+      </Button>
+
+      <Button 
+        v-if="props.card.imageUrl"
+        size="sm" 
+        variant="secondary" 
+        class="hidden group-hover:flex h-5 w-5 p-2 ml-auto mr-0.25 rounded shadow-md border-1 border-gray-800 cursor-pointer hover:bg-gray-200"
+        @click.stop="openCardDetails(props.card.imageUrl)"
+      >
+        <ZoomIn class="h-3 w-3" />
       </Button>
     </div>
 

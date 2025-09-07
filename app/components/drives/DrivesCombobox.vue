@@ -28,7 +28,10 @@ const gameFolders = computed(() => {
 const filteredFolders = computed(() => {
   if (!searchTerm.value) return gameFolders.value
   return gameFolders.value
-    .filter(folder => folder.name.toLowerCase().includes(searchTerm.value.toLowerCase()))
+    .filter(folder => 
+      folder.name.toLowerCase().includes(searchTerm.value.toLowerCase()) ||
+      folder.author.toLowerCase().includes(searchTerm.value.toLowerCase())
+    )
 })
 
 const isSelected = (folderId: string) => {
