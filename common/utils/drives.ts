@@ -593,7 +593,7 @@ const mtgFolders: GameFolders[] = [
     game: Game.MTG
   },
   {
-    id: "1OBesFl_TvabfHDDfu5NNjw58i_J_yYyu",
+    id: "1AIbNHtYkNHU1deXGHdVooW4J8l77ImGW",
     name: "Frieren",
     bleed: 1,
     author: "OctavioPrisca",
