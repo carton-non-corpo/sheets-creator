@@ -494,6 +494,15 @@ const mtgFolders: GameFolders[] = [
     game: Game.MTG
   },
   {
+    id: "1lK2Zx2AfBpfed0Ezaqmk-qQp1YOE2Kuu",
+    name: "Dune - Hazezon, Shaper Of Sand",
+    bleed: 1,
+    author: "DarksteelPenguin",
+    decklist: "https://imgur.com/a/enqn3gM",
+    subCategory: null,
+    game: Game.MTG
+  },
+  {
     id: "1IofMWzXTAG0FskxMHaFtI5nTQ7Rwx1Kh",
     name: "Dune - Rise of Muah'Dib",
     bleed: 1,
@@ -809,6 +818,15 @@ const mtgFolders: GameFolders[] = [
     game: Game.MTG
   },
   {
+    id: "1ywTwANCK2MI5PDGNDODA0kU9QG3G6lbg",
+    name: "Metroid 2",
+    bleed: 1,
+    author: "Arastelion",
+    decklist: "https://archidekt.com/decks/6864210/etrata_corrupting_influence",
+    subCategory: null,
+    game: Game.MTG
+  },
+  {
     id: "1szyDwnhoDczhWH_ysGs7y806qhd5yKf6",
     name: "Naruto",
     bleed: 1,
@@ -875,7 +893,7 @@ const mtgFolders: GameFolders[] = [
     id: "1WZO_LxyhCgdMRL6Wn93aFNsVa68T_7xb",
     name: "Pastel Goth Spider",
     bleed: 1,
-    author: "1WZO_LxyhCgdMRL6Wn93aFNsVa68T_7xb",
+    author: "dunn348",
     decklist: "https://deckstats.net/decks/237339/3234125-amber-pastel-goth-spiders/en",
     subCategory: null,
     game: Game.MTG
