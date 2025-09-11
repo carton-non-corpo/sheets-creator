@@ -2,6 +2,7 @@ export enum Game {
   OPTCG = 'optcg',
   MTG = 'mtg',
   RIFTBOUND = 'riftbound',
+  FFTCG = 'fftcg',
 }
 
 export interface GameFolder {
@@ -27,4 +28,9 @@ export interface GameFoldersRiftbound extends GameFolder {
   game: Game.RIFTBOUND;
 }
 
-export type GameFolders = GameFoldersMTG | GameFoldersRiftbound | GameFoldersOPTCG;
+export interface GameFoldersFFTCG extends GameFolder {
+  subCategory: null;
+  game: Game.FFTCG;
+}
+
+export type GameFolders = GameFoldersMTG | GameFoldersRiftbound | GameFoldersOPTCG | GameFoldersFFTCG;

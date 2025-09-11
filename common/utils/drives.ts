@@ -2107,8 +2107,21 @@ const riftboundFolders: GameFolders[] = [
   },
 ]
 
+const finalfantasyFolders: GameFolders[] = [
+  {
+    id: "1iIAFPR9deradYCB6LtDFakEkzp8vUFl7",
+    name: "Final Fantasy TCG",
+    bleed: 0,
+    author: "Final Fantasy",
+    decklist: "",
+    subCategory: null,
+    game: Game.FFTCG
+  }
+]
+
 export const gameFolders: GameFolders[] = [
   ...mtgFolders,
   ...optcgFolders,
   ...riftboundFolders,
+  ...finalfantasyFolders,
 ];
