@@ -6,6 +6,7 @@ import type { EnhancedFile } from '~~/common/types/drive'
 const props = defineProps<{
   scale: number;
   showLandmarks: boolean;
+  showPlaceholders: boolean;
   cards: Array<SheetContentCard & { printIndex: number }> | undefined;
   bleed: number | undefined;
 }>()
@@ -118,10 +119,20 @@ const placeholders = computed(() => 9 - cardsForPrint.value.length)
               </Button>
             </div>
           </div>
-          <div v-for="placeholder in placeholders" :key="placeholder" class="relative border-box overflow-hidden border border-gray-100" />
+          <template v-if="props.showPlaceholders">
+            <div v-for="placeholder in placeholders" :key="placeholder" class="relative border-box overflow-hidden border border-gray-100" />
+          </template>
         </div>
-        <div v-if="props.showLandmarks" class="absolute inset-0 pointer-events-none">
-          <svg viewBox="0 0 794 1123"><line x1="41" y1="39.93359375" x2="41" y2="62.60546875" stroke="#000" stroke-width="2"></line><line x1="41" y1="1060.39453125" x2="41" y2="1083.06640625" stroke="#000" stroke-width="2"></line><line x1="279" y1="39.93359375" x2="279" y2="62.60546875" stroke="#000" stroke-width="2"></line><line x1="279" y1="1060.39453125" x2="279" y2="1083.06640625" stroke="#000" stroke-width="2"></line><line x1="279" y1="39.93359375" x2="279" y2="62.60546875" stroke="#000" stroke-width="2"></line><line x1="279" y1="1060.39453125" x2="279" y2="1083.06640625" stroke="#000" stroke-width="2"></line><line x1="517" y1="39.93359375" x2="517" y2="62.60546875" stroke="#000" stroke-width="2"></line><line x1="517" y1="1060.39453125" x2="517" y2="1083.06640625" stroke="#000" stroke-width="2"></line><line x1="517" y1="39.93359375" x2="517" y2="62.60546875" stroke="#000" stroke-width="2"></line><line x1="517" y1="1060.39453125" x2="517" y2="1083.06640625" stroke="#000" stroke-width="2"></line><line x1="755" y1="39.93359375" x2="755" y2="62.60546875" stroke="#000" stroke-width="2"></line><line x1="755" y1="1060.39453125" x2="755" y2="1083.06640625" stroke="#000" stroke-width="2"></line><line x1="17.1640625" y1="64" x2="39.8359375" y2="64" stroke="#000" stroke-width="2"></line><line x1="754.1640625" y1="64" x2="776.8359375" y2="64" stroke="#000" stroke-width="2"></line><line x1="17.1640625" y1="396" x2="39.8359375" y2="396" stroke="#000" stroke-width="2"></line><line x1="754.1640625" y1="396" x2="776.8359375" y2="396" stroke="#000" stroke-width="2"></line><line x1="17.1640625" y1="396" x2="39.8359375" y2="396" stroke="#000" stroke-width="2"></line><line x1="754.1640625" y1="396" x2="776.8359375" y2="396" stroke="#000" stroke-width="2"></line><line x1="17.1640625" y1="729" x2="39.8359375" y2="729" stroke="#000" stroke-width="2"></line><line x1="754.1640625" y1="729" x2="776.8359375" y2="729" stroke="#000" stroke-width="2"></line><line x1="17.1640625" y1="729" x2="39.8359375" y2="729" stroke="#000" stroke-width="2"></line><line x1="754.1640625" y1="729" x2="776.8359375" y2="729" stroke="#000" stroke-width="2"></line><line x1="17.1640625" y1="1061" x2="39.8359375" y2="1061" stroke="#000" stroke-width="2"></line><line x1="754.1640625" y1="1061" x2="776.8359375" y2="1061" stroke="#000" stroke-width="2"></line></svg>
+
+        <div
+          v-if="props.showLandmarks"
+          class="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
+        >
+          <img
+            :src="`/landmarks-bleed-${props.bleed}mm.svg`"
+            :alt="`Landmarks with ${props.bleed}mm bleed`"
+            class="max-w-full max-h-full"
+          />
         </div>
       </div>
     </div>

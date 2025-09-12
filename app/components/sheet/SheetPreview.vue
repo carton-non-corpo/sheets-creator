@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '~/components/ui/dialog';
 import { ScrollArea } from '~/components/ui/scroll-area';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
@@ -18,7 +17,7 @@ const emit = defineEmits<{
 const sheetStore = useSheetStore();
 const { sheet } = storeToRefs(sheetStore);
 
-const { cardsPerPage, exportAllPages, exportSinglePage } = usePdfExport();
+const { cardsPerPage, exportAllPages } = usePdfExport();
 
 const totalCards = computed(() => {
   if (!sheet.value) return 0;
@@ -86,25 +85,25 @@ function closeDialog() {
 </script>
 
 <template>
-  <Dialog :open="props.open" @update:open="emit('update:open', $event)">
+  <Dialog :open="props.open" @update:open="closeDialog">
     <DialogContent class="max-w-4xl w-[90vw] h-[85vh] p-0 flex flex-col">
       <DialogHeader class="p-6 pb-4 border-b flex-shrink-0">
-          <div class="flex items-center justify-between">
-            <div class="flex gap-1.5">
-              <DialogTitle class="text-xl font-semibold">{{ $t('sheet.preview.title') }}</DialogTitle>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild class="mt-0.5">
-                    <Button variant="ghost" size="sm" class="h-auto w-auto py-1 !px-1">
-                      <Info class="w-4 h-4 text-muted-foreground" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent side="bottom" class="max-w-xs">
-                    <img src="~/assets/images/save_as_pdf.png" alt="Guide d'export PDF" class="w-full" />
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
+        <div class="flex items-center justify-between">
+          <div class="flex gap-1.5">
+            <DialogTitle class="text-xl font-semibold">{{ $t('sheet.preview.title') }}</DialogTitle>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild class="mt-0.5">
+                  <Button variant="ghost" size="sm" class="h-auto w-auto py-1 !px-1">
+                    <Info class="w-4 h-4 text-muted-foreground" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" class="max-w-xs">
+                  <img src="/save_as_pdf.png" alt="Guide d'export PDF" class="w-full" />
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
         </div>
       </DialogHeader>
       
@@ -148,6 +147,7 @@ function closeDialog() {
                 <SheetDisplay 
                   :scale="0.25" 
                   :show-landmarks="true" 
+                  :show-placeholders="false"
                   :bleed="page.bleed"
                   :cards="page.cards"
                 />

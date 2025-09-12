@@ -6,6 +6,7 @@ import type { SheetContentCard } from '~~/common/types/sheet'
 interface PageData {
   pageNumber: number;
   cards: Array<SheetContentCard & { printIndex: number }>;
+  bleed: number; // in mm, e.g., 0 or 1
 }
 
 /**
@@ -116,7 +117,7 @@ export const usePdfExport = () => {
       .landmarks {
         position: absolute;
         inset: 0;
-        pointer-events: none; /* Don't interfere with content */
+        pointer-events: none; 
       }
       
       /* Print-specific optimizations */
@@ -139,38 +140,27 @@ export const usePdfExport = () => {
    * Generates SVG cutting guidelines (landmarks) for professional printing
    * These lines help with precise cutting of the printed cards
    */
-  function generateLandmarksSvg(): string {
-    return `
-      <svg viewBox="0 0 794 1123">
-        <!-- Vertical cutting guides -->
-        <line x1="41" y1="39.93359375" x2="41" y2="62.60546875" stroke="#000" stroke-width="2"></line>
-        <line x1="41" y1="1060.39453125" x2="41" y2="1083.06640625" stroke="#000" stroke-width="2"></line>
-        <line x1="279" y1="39.93359375" x2="279" y2="62.60546875" stroke="#000" stroke-width="2"></line>
-        <line x1="279" y1="1060.39453125" x2="279" y2="1083.06640625" stroke="#000" stroke-width="2"></line>
-        <line x1="279" y1="39.93359375" x2="279" y2="62.60546875" stroke="#000" stroke-width="2"></line>
-        <line x1="279" y1="1060.39453125" x2="279" y2="1083.06640625" stroke="#000" stroke-width="2"></line>
-        <line x1="517" y1="39.93359375" x2="517" y2="62.60546875" stroke="#000" stroke-width="2"></line>
-        <line x1="517" y1="1060.39453125" x2="517" y2="1083.06640625" stroke="#000" stroke-width="2"></line>
-        <line x1="517" y1="39.93359375" x2="517" y2="62.60546875" stroke="#000" stroke-width="2"></line>
-        <line x1="517" y1="1060.39453125" x2="517" y2="1083.06640625" stroke="#000" stroke-width="2"></line>
-        <line x1="755" y1="39.93359375" x2="755" y2="62.60546875" stroke="#000" stroke-width="2"></line>
-        <line x1="755" y1="1060.39453125" x2="755" y2="1083.06640625" stroke="#000" stroke-width="2"></line>
-        
-        <!-- Horizontal cutting guides -->
-        <line x1="17.1640625" y1="64" x2="39.8359375" y2="64" stroke="#000" stroke-width="2"></line>
-        <line x1="754.1640625" y1="64" x2="776.8359375" y2="64" stroke="#000" stroke-width="2"></line>
-        <line x1="17.1640625" y1="396" x2="39.8359375" y2="396" stroke="#000" stroke-width="2"></line>
-        <line x1="754.1640625" y1="396" x2="776.8359375" y2="396" stroke="#000" stroke-width="2"></line>
-        <line x1="17.1640625" y1="396" x2="39.8359375" y2="396" stroke="#000" stroke-width="2"></line>
-        <line x1="754.1640625" y1="396" x2="776.8359375" y2="396" stroke="#000" stroke-width="2"></line>
-        <line x1="17.1640625" y1="729" x2="39.8359375" y2="729" stroke="#000" stroke-width="2"></line>
-        <line x1="754.1640625" y1="729" x2="776.8359375" y2="729" stroke="#000" stroke-width="2"></line>
-        <line x1="17.1640625" y1="729" x2="39.8359375" y2="729" stroke="#000" stroke-width="2"></line>
-        <line x1="754.1640625" y1="729" x2="776.8359375" y2="729" stroke="#000" stroke-width="2"></line>
-        <line x1="17.1640625" y1="1061" x2="39.8359375" y2="1061" stroke="#000" stroke-width="2"></line>
-        <line x1="754.1640625" y1="1061" x2="776.8359375" y2="1061" stroke="#000" stroke-width="2"></line>
-      </svg>
-    `;
+  async function generateLandmarksSvg(bleed: number): Promise<string> {
+    let svgPath = '';
+    switch (bleed) {
+      case 1:
+        // get /app/assets/landmarks-1mm-bleed.svg content
+        svgPath = '/landmarks-bleed-1mm.svg';
+        break;
+      case 0:
+      default:
+        // get /app/assets/landmarks-no-bleed.svg content
+        svgPath = '/landmarks-bleed-0mm.svg';
+        break;
+    }
+
+    const response = await fetch(svgPath);
+    if (!response.ok) {
+      throw new Error(`Failed to load SVG: ${response.status}`);
+    }
+
+    const svgContent = await response.text();
+    return svgContent;
   }
 
   /**
@@ -192,11 +182,13 @@ export const usePdfExport = () => {
    * Generates HTML for a complete page with cards and cutting guidelines
    * Fills empty slots to maintain 3x3 grid layout
    */
-  function generatePageHtml(pageData: PageData): string {
+  async function generatePageHtml(pageData: PageData): Promise<string> {
     const emptySlots = CARDS_PER_PAGE - pageData.cards.length;
     const emptySlotsHtml = Array.from({ length: emptySlots }, () =>
       '<div class="card-slot empty-slot"></div>'
     ).join('');
+
+    const landmarksSvg = await generateLandmarksSvg(pageData.bleed);
 
     return `
       <div class="page">
@@ -205,7 +197,7 @@ export const usePdfExport = () => {
           ${emptySlotsHtml}
         </div>
         <div class="landmarks">
-          ${generateLandmarksSvg()}
+          ${landmarksSvg}
         </div>
       </div>
     `;
@@ -215,7 +207,10 @@ export const usePdfExport = () => {
    * Generates complete HTML document for PDF export
    * Includes all necessary styles and page content
    */
-  function generateHtmlDocument(pages: PageData[], title: string): string {
+  async function generateHtmlDocument(pages: PageData[], title: string): Promise<string> {
+    const pageHtmlPromises = pages.map(page => generatePageHtml(page));
+    const pagesHtml = await Promise.all(pageHtmlPromises);
+
     return `
       <!DOCTYPE html>
       <html>
@@ -227,7 +222,7 @@ export const usePdfExport = () => {
         </style>
       </head>
       <body>
-        ${pages.map(page => generatePageHtml(page)).join('')}
+        ${pagesHtml.join('')}
       </body>
       </html>
     `;
@@ -303,9 +298,9 @@ export const usePdfExport = () => {
    * Exports all pages as a single PDF document
    */
   async function exportAllPages(pages: PageData[], sheetName?: string): Promise<void> {
-    const title = `Sheet Export - ${sheetName || 'Planches'}`;
+    const title = `Carton Club - ${sheetName || 'Planches'}`;
     const filename = `${sheetName || 'sheet'}-all-pages.pdf`;
-    const htmlContent = generateHtmlDocument(pages, title);
+    const htmlContent = await generateHtmlDocument(pages, title);
     await downloadPdf(htmlContent, filename);
   }
 
@@ -315,7 +310,7 @@ export const usePdfExport = () => {
   async function exportSinglePage(pageData: PageData, sheetName?: string): Promise<void> {
     const title = `Sheet Page ${pageData.pageNumber} - ${sheetName || 'Planche'}`;
     const filename = `${sheetName || 'sheet'}-page-${pageData.pageNumber}.pdf`;
-    const htmlContent = generateHtmlDocument([pageData], title);
+    const htmlContent = await generateHtmlDocument([pageData], title);
     await downloadPdf(htmlContent, filename);
   }
 

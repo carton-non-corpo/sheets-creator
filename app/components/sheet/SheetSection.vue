@@ -135,7 +135,13 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
       </div>
     </div>
 
-    <SheetDisplay :scale="0.5" :show-landmarks="landmarks" :cards="paginatedCards" :bleed="pageBleed" />
+    <SheetDisplay 
+      :scale="0.5" 
+      :show-landmarks="landmarks" 
+      :show-placeholders="true"
+      :cards="paginatedCards" 
+      :bleed="pageBleed" 
+    />
 
     <Pagination 
       v-if="sheet && totalCards > 0"
