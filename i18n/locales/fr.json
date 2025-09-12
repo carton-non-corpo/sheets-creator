@@ -47,7 +47,8 @@
       "export_all": "Tout exporter",
       "export_current": "Exporter la page actuelle",
       "landmarks": "Repères",
-      "preview": "Prévisualiser"
+      "preview": "Prévisualiser",
+      "preview_and_export": "Prévisualiser et Exporter"
     }
   }
 }

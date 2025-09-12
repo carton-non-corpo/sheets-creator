@@ -47,7 +47,8 @@
       "export_all": "Export all",
       "export_current": "Export current page",
       "landmarks": "Landmarks",
-      "preview": "Preview"
+      "preview": "Preview",
+      "preview_and_export": "Preview and Export"
     }
   }
 }

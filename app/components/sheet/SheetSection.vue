@@ -2,18 +2,69 @@
 import { Switch } from '~/components/ui/switch';
 import { Label } from '~/components/ui/label';
 import { Button } from '~/components/ui/button';
-import { Download, Search } from 'lucide-vue-next';
+import { Search } from 'lucide-vue-next';
 import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext, PaginationEllipsis } from '~/components/ui/pagination';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '~/components/ui/dropdown-menu';
+import { useResizeObserver } from '@vueuse/core';
+
 const sheetStore = useSheetStore();
 const { sheet } = storeToRefs(sheetStore);
-
-const { exportAllPages, exportSinglePage } = usePdfExport();
 
 const landmarks = ref<boolean>(true);
 const currentPage = ref<number>(1);
 const previewDialogOpen = ref<boolean>(false);
 const cardsPerPage = 9; // 3x3 grid
+
+// Template ref for the sheet container
+const sheetContainer = ref<HTMLElement>();
+
+// Reactive container dimensions
+const containerWidth = ref(0);
+const containerHeight = ref(0);
+
+// A4 dimensions in mm
+const A4_WIDTH_MM = 210;
+const A4_HEIGHT_MM = 297;
+
+// Convert mm to pixels (approximately 3.78 pixels per mm at 96 DPI)
+const MM_TO_PX = 3.78;
+
+// Computed scale based on container dimensions
+const responsiveScale = computed(() => {
+  if (!containerWidth.value || !containerHeight.value) {
+    return 0.5; // fallback scale
+  }
+
+  const a4WidthPx = A4_WIDTH_MM * MM_TO_PX;
+  const a4HeightPx = A4_HEIGHT_MM * MM_TO_PX;
+
+  // Calculate scale to fit both width and height with some padding (20px on each side)
+  const padding = 40; // 20px on each side
+  const availableWidth = containerWidth.value - padding;
+  const availableHeight = containerHeight.value - padding;
+
+  const scaleX = availableWidth / a4WidthPx;
+  const scaleY = availableHeight / a4HeightPx;
+
+  // Use the smaller scale to ensure it fits in both dimensions
+  const scale = Math.min(scaleX, scaleY);
+
+  // Clamp between reasonable bounds
+  return Math.max(0.1, Math.min(0.7, scale));
+});
+
+// Resize observer to track container size changes
+const { stop: stopResizeObserver } = useResizeObserver(sheetContainer, entries => {
+  const entry = entries[0];
+  if (entry) {
+    containerWidth.value = entry.contentRect.width;
+    containerHeight.value = entry.contentRect.height;
+  }
+});
+
+// Cleanup on unmount
+onUnmounted(() => {
+  stopResizeObserver();
+});
 
 const totalCards = computed(() => {
   if (!sheet.value) return 0;
@@ -104,44 +155,23 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
       </div>
 
       <div class="flex gap-3">
-        <Button variant="outline" class="cursor-pointer" @click="previewDialogOpen = true">
+        <Button class="cursor-pointer" @click="previewDialogOpen = true">
           <Search />
-          {{ $t('sheet.section.preview') }}
+          {{ $t('sheet.section.preview_and_export') }}
         </Button>
-        <DropdownMenu>
-          <DropdownMenuTrigger as-child>
-            <Button class="cursor-pointer">
-              <Download />
-              {{ $t('sheet.section.export') }}
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent class="w-auto mr-4 mt-1">
-            <DropdownMenuLabel>{{ $t('sheet.section.choose_action') }}</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem class="cursor-pointer" @click="() => exportAllPages(allPages, sheet?.name)">
-              {{ $t('sheet.section.export_all') }}
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              class="cursor-pointer"
-              @click="() => {
-                const currentPageData = allPages[currentPage - 1];
-                if (currentPageData) exportSinglePage(currentPageData, sheet?.name);
-              }"
-            >
-              {{ $t('sheet.section.export_current') }}
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
     </div>
 
-    <SheetDisplay
-      :scale="0.5"
-      :show-landmarks="landmarks"
-      :show-placeholders="true"
-      :cards="paginatedCards"
-      :bleed="pageBleed"
-    />
+    <!-- Sheet container with ref for size tracking -->
+    <div ref="sheetContainer" class="flex-1 flex items-center justify-center min-h-0">
+      <SheetDisplay
+        :scale="responsiveScale"
+        :show-landmarks="landmarks"
+        :show-placeholders="true"
+        :cards="paginatedCards"
+        :bleed="pageBleed"
+      />
+    </div>
 
     <Pagination
       v-if="sheet && totalCards > 0"
