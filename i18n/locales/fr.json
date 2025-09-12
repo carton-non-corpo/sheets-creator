@@ -45,7 +45,9 @@
       "empty_hint": "Ajoutez des cartes pour créer vos planches",
       "export": "Exporter",
       "export_all": "Tout exporter",
+      "export_as_json": "Exporter au format JSON",
       "export_current": "Exporter la page actuelle",
+      "import_from_json": "Importer des planches",
       "landmarks": "Repères",
       "preview": "Prévisualiser",
       "preview_and_export": "Prévisualiser et Exporter"

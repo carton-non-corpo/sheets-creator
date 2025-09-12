@@ -2,12 +2,14 @@
 import { Switch } from '~/components/ui/switch';
 import { Label } from '~/components/ui/label';
 import { Button } from '~/components/ui/button';
-import { Search } from 'lucide-vue-next';
+import { Download, Search, Upload } from 'lucide-vue-next';
 import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext, PaginationEllipsis } from '~/components/ui/pagination';
 import { useResizeObserver } from '@vueuse/core';
 
 const sheetStore = useSheetStore();
 const { sheet } = storeToRefs(sheetStore);
+
+const { exportSheetsAsJson, importSheetsAsJson } = useJsonExport();
 
 const landmarks = ref<boolean>(true);
 const currentPage = ref<number>(1);
@@ -146,15 +148,23 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
 
 <template>
   <div class="h-full flex flex-col gap-4 p-4">
-    <div class="flex justify-between gap-8">
-      <div class="flex items-center gap-6">
+    <div class="flex justify-between gap-3">
+      <div class="flex items-center gap-3">
         <div class="flex items-center space-x-2">
           <Switch id="landmarks" v-model="landmarks" class="cursor-pointer" />
           <Label for="landmarks" class="cursor-pointer">{{ $t('sheet.section.landmarks') }}</Label>
         </div>
+        <Button variant="outline" class="cursor-pointer" @click="importSheetsAsJson">
+          <Upload />
+          {{ $t('sheet.section.import_from_json') }}
+        </Button>
       </div>
 
       <div class="flex gap-3">
+        <Button variant="outline" class="cursor-pointer" @click="exportSheetsAsJson">
+          <Download />
+          {{ $t('sheet.section.export_as_json') }}
+        </Button>
         <Button class="cursor-pointer" @click="previewDialogOpen = true">
           <Search />
           {{ $t('sheet.section.preview_and_export') }}

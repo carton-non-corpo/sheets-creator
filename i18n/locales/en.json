@@ -45,7 +45,9 @@
       "empty_hint": "Add cards to create your sheets",
       "export": "Export",
       "export_all": "Export all",
+      "export_as_json": "Export as Json",
       "export_current": "Export current page",
+      "import_from_json": "Import sheets",
       "landmarks": "Landmarks",
       "preview": "Preview",
       "preview_and_export": "Preview and Export"
