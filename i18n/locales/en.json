@@ -7,6 +7,7 @@
     "bleed": "Bleed",
     "categories_selected": "{count} categories selected",
     "custom": "Custom",
+    "decklist": "Decklist",
     "no_category_found": "No category found.",
     "search_category": "Search for a category...",
     "select_categories": "Select categories...",
@@ -20,6 +21,7 @@
     "brand": "Carton Club",
     "decks": "Decks",
     "discord": "Discord",
+    "github": "Github",
     "language": "Language",
     "sheets": "Sheets"
   },

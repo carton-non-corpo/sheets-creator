@@ -63,9 +63,9 @@ const currentLanguageLabel = computed(() => {
         <span>{{ currentLanguageLabel }}</span>
       </button>
 
-      <NuxtLink to="https://discord.gg/A8uTs4ZXse" class="flex items-center gap-3 px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-gray-200 hover:text-gray-900 transition-colors group">
+      <NuxtLink to="https://github.com/carton-non-corpo/sheets-creator" class="flex items-center gap-3 px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-gray-200 hover:text-gray-900 transition-colors group">
         <Home class="w-5 h-5 text-gray-400 group-hover:text-primary" />
-        <span>{{ $t('nav.discord') }}</span>
+        <span>{{ $t('nav.github') }}</span>
       </NuxtLink>
     </div>
   </nav>

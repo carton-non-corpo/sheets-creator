@@ -14,7 +14,7 @@ definePageMeta({ name: 'Planches', title: 'Planches' });
       direction="horizontal"
       class="w-full"
     >
-      <ResizablePanel :default-size="40" :min-size="24">
+      <ResizablePanel :default-size="40" :min-size="32">
         <CardSearch />
       </ResizablePanel>
       <ResizableHandle with-handle />

@@ -7,6 +7,7 @@
     "bleed": "Fond Perdu",
     "categories_selected": "{count} catégories sélectionnées",
     "custom": "Custom",
+    "decklist": "Decklist",
     "no_category_found": "Aucune catégorie trouvée.",
     "search_category": "Chercher une catégorie...",
     "select_categories": "Sélectionner des catégories...",
@@ -20,6 +21,7 @@
     "brand": "Carton Club",
     "decks": "Decks",
     "discord": "Discord",
+    "github": "Github",
     "language": "Langue",
     "sheets": "Planches"
   },
