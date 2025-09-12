@@ -54,7 +54,8 @@ const cardsForPrint = computed(() => {
 });
 
 const gridStyleByBleed = computed(() => {
-  return `grid-template-columns: repeat(3, calc(63mm + ${props.bleed}mm)); grid-template-rows: repeat(3, calc(88mm + ${props.bleed}mm));`;
+  const bleed = props.bleed || 0;
+  return `grid-template-columns: repeat(3, calc(63mm + ${bleed * 2}mm)); grid-template-rows: repeat(3, calc(88mm + ${bleed * 2}mm));`;
 });
 
 const placeholders = computed(() => 9 - cardsForPrint.value.length);
