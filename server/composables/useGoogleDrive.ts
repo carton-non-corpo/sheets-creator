@@ -1,14 +1,4 @@
-import { google, drive_v3 } from 'googleapis';
-
-/**
- * Response interface for file stream operations
- */
-interface StreamResponse {
-  data: any;
-  status: number;
-  statusText: string;
-  headers: Record<string, string>;
-}
+import { type drive_v3, google, type Auth } from 'googleapis';
 
 /**
  * Configuration interface for Google Drive service
@@ -64,7 +54,7 @@ export class GoogleDriveError extends Error {
     message: string,
     public code: string,
     public status?: number,
-    public cause?: Error
+    public cause?: Error,
   ) {
     super(message);
     this.name = 'GoogleDriveError';
@@ -94,7 +84,7 @@ export class GoogleDriveRateLimitError extends GoogleDriveError {
 class GoogleDriveClient {
   private static instance: GoogleDriveClient;
   private driveClient: drive_v3.Drive | null = null;
-  private authClient: any | null = null;
+  private authClient: Auth.JWT | null = null;
   private config: GoogleDriveConfig | null = null;
   private lastAuthTime: number = 0;
   private readonly AUTH_CACHE_DURATION = 50 * 60 * 1000; // 50 minutes
@@ -152,7 +142,7 @@ class GoogleDriveClient {
       console.error('❌ Failed to initialize Google Drive client:', error);
       throw new GoogleDriveAuthError(
         'Failed to initialize Google Drive client',
-        error as Error
+        error as Error,
       );
     }
   }
@@ -194,7 +184,7 @@ class GoogleDriveClient {
         console.error('❌ Authentication failed:', error);
         throw new GoogleDriveAuthError(
           'Failed to authenticate with Google Drive',
-          error as Error
+          error as Error,
         );
       }
     }
@@ -215,35 +205,53 @@ class GoogleDriveClient {
   /**
    * Handle API errors with proper retry logic
    */
-  private async handleApiError(error: any, operation: string): Promise<never> {
-    console.error(`❌ Google Drive API error during ${operation}:`, error.message);
+  private async handleApiError(error: unknown, operation: string): Promise<never> {
+    const errorMessage = error && typeof error === 'object' && 'message' in error
+      ? String(error.message)
+      : 'Unknown error';
 
-    if (error.code === 401 || error.status === 401) {
+    console.error(`❌ Google Drive API error during ${operation}:`, errorMessage);
+
+    const hasCodeOrStatus = (err: unknown, code: number): boolean => {
+      return !!(err && typeof err === 'object' &&
+        (('code' in err && err.code === code) || ('status' in err && err.status === code)));
+    };
+
+    if (hasCodeOrStatus(error, 401)) {
       throw new GoogleDriveAuthError(`Authentication failed during ${operation}`);
     }
 
-    if (error.code === 429 || error.status === 429) {
-      const retryAfter = error.response?.headers?.['retry-after'];
+    if (hasCodeOrStatus(error, 429)) {
+      const retryAfter = error && typeof error === 'object' && 'response' in error &&
+        error.response && typeof error.response === 'object' && 'headers' in error.response &&
+        error.response.headers && typeof error.response.headers === 'object' && 'retry-after' in error.response.headers
+        ? String(error.response.headers['retry-after'])
+        : undefined;
+
       throw new GoogleDriveRateLimitError(
         `Rate limit exceeded during ${operation}`,
-        retryAfter ? parseInt(retryAfter) * 1000 : undefined
+        retryAfter ? parseInt(retryAfter) * 1000 : undefined,
       );
     }
 
-    if (error.code === 404 || error.status === 404) {
+    if (hasCodeOrStatus(error, 404)) {
       throw new GoogleDriveError(
         `Resource not found during ${operation}`,
         'NOT_FOUND',
         404,
-        error
+        error instanceof Error ? error : undefined,
       );
     }
 
+    const status = error && typeof error === 'object' && 'status' in error && typeof error.status === 'number'
+      ? error.status
+      : 500;
+
     throw new GoogleDriveError(
-      `API error during ${operation}: ${error.message}`,
+      `API error during ${operation}: ${errorMessage}`,
       'API_ERROR',
-      error.status || 500,
-      error
+      status,
+      error instanceof Error ? error : undefined,
     );
   }
 
@@ -252,7 +260,7 @@ class GoogleDriveClient {
    */
   async executeApiCall<T>(
     operation: string,
-    apiCall: () => Promise<T>
+    apiCall: () => Promise<T>,
   ): Promise<T> {
     try {
       return await apiCall();
@@ -289,7 +297,7 @@ export const useGoogleDrive = () => {
 
     if (!credentials) {
       throw new GoogleDriveAuthError(
-        'GOOGLE_APPLICATION_CREDENTIALS environment variable is not set'
+        'GOOGLE_APPLICATION_CREDENTIALS environment variable is not set',
       );
     }
 
@@ -320,14 +328,14 @@ export const useGoogleDrive = () => {
     } catch (error) {
       console.error('❌ Credentials parsing failed:', error);
       throw new GoogleDriveAuthError(
-        `Invalid Google service account configuration: ${(error as Error).message}`
+        `Invalid Google service account configuration: ${(error as Error).message}`,
       );
     }
 
     if (!serviceAccount.client_email || !serviceAccount.private_key) {
       console.error('❌ Missing required fields in service account');
       throw new GoogleDriveAuthError(
-        'Missing client_email or private_key in service account credentials'
+        'Missing client_email or private_key in service account credentials',
       );
     }
 
@@ -344,24 +352,24 @@ export const useGoogleDrive = () => {
     const conditions: string[] = [];
 
     if (options.query) {
-      conditions.push(`name contains '${options.query.replace(/'/g, "\\'")}'`);
+      conditions.push(`name contains '${options.query.replace(/'/g, '\\\'')}'`);
     }
 
     if (options.folderIds && options.folderIds.length > 0) {
       const folderConditions = options.folderIds.map(
-        (id) => `'${id}' in parents`
+        id => `'${id}' in parents`,
       );
       conditions.push(`(${folderConditions.join(' or ')})`);
     }
 
     if (options.mimeTypes && options.mimeTypes.length > 0) {
       const mimeConditions = options.mimeTypes.map(
-        (type) => `mimeType contains '${type}'`
+        type => `mimeType contains '${type}'`,
       );
       conditions.push(`(${mimeConditions.join(' or ')})`);
     } else if (options.includeImages !== false) {
       // Default to images only unless explicitly disabled
-      conditions.push(`mimeType contains 'image/'`);
+      conditions.push('mimeType contains \'image/\'');
     }
 
     // Exclude trashed files
@@ -374,7 +382,7 @@ export const useGoogleDrive = () => {
    * Enhance files with additional URL properties
    */
   const enhanceFiles = (files: drive_v3.Schema$File[]): DriveFileMetadata[] => {
-    return files.map((file) => {
+    return files.map(file => {
       const enhanced: DriveFileMetadata = { ...file };
 
       if (file.id) {
@@ -397,7 +405,7 @@ export const useGoogleDrive = () => {
    */
   const searchFilesInFolder = async (
     folderId: string,
-    options: Omit<DriveSearchOptions, 'folderIds'>
+    options: Omit<DriveSearchOptions, 'folderIds'>,
   ): Promise<{ files: drive_v3.Schema$File[]; query: string }> => {
     const drive = await client.getClient();
 
@@ -425,7 +433,7 @@ export const useGoogleDrive = () => {
             pageToken: nextPageToken,
             orderBy: searchOptions.orderBy,
           });
-        }
+        },
       );
 
       const files = response.data.files || [];
@@ -448,7 +456,7 @@ export const useGoogleDrive = () => {
    * Search for files in Google Drive
    */
   const searchFiles = async (
-    options: DriveSearchOptions = {}
+    options: DriveSearchOptions = {},
   ): Promise<DriveSearchResponse> => {
     await initialize();
 
@@ -460,111 +468,107 @@ export const useGoogleDrive = () => {
       ...options,
     };
 
-    try {
-      // If we have multiple folders, search each one separately and merge results
-      if (searchOptions.folderIds && searchOptions.folderIds.length > 1) {
-        console.log(`🔍 Searching across ${searchOptions.folderIds.length} folders separately`);
+    // If we have multiple folders, search each one separately and merge results
+    if (searchOptions.folderIds && searchOptions.folderIds.length > 1) {
+      console.log(`🔍 Searching across ${searchOptions.folderIds.length} folders separately`);
 
-        const allFiles: drive_v3.Schema$File[] = [];
-        const allQueries: string[] = [];
+      const allFiles: drive_v3.Schema$File[] = [];
+      const allQueries: string[] = [];
 
-        // Search each folder in parallel for better performance
-        const searchPromises = searchOptions.folderIds.map(folderId =>
-          searchFilesInFolder(folderId, {
-            query: searchOptions.query,
-            mimeTypes: searchOptions.mimeTypes,
-            maxResults: searchOptions.maxResults, // Each folder can contribute up to maxResults
-            orderBy: searchOptions.orderBy,
-            fields: searchOptions.fields,
-            includeImages: searchOptions.includeImages,
-          })
-        );
+      // Search each folder in parallel for better performance
+      const searchPromises = searchOptions.folderIds.map(folderId =>
+        searchFilesInFolder(folderId, {
+          query: searchOptions.query,
+          mimeTypes: searchOptions.mimeTypes,
+          maxResults: searchOptions.maxResults, // Each folder can contribute up to maxResults
+          orderBy: searchOptions.orderBy,
+          fields: searchOptions.fields,
+          includeImages: searchOptions.includeImages,
+        }),
+      );
 
-        const results = await Promise.all(searchPromises);
+      const results = await Promise.all(searchPromises);
 
-        // Merge all results
-        for (const result of results) {
-          allFiles.push(...result.files);
-          allQueries.push(result.query);
-        }
-
-        // Remove duplicates based on file ID (in case same file appears in multiple folders)
-        const uniqueFiles = allFiles.filter(
-          (file, index, self) => index === self.findIndex((f) => f.id === file.id)
-        );
-
-        // Sort all files together
-        uniqueFiles.sort((a, b) => {
-          if (!a.name || !b.name) return 0;
-          return a.name.localeCompare(b.name);
-        });
-
-        // Apply maxResults limit to the final merged results
-        const trimmedFiles = searchOptions.maxResults
-          ? uniqueFiles.slice(0, searchOptions.maxResults)
-          : uniqueFiles;
-
-        const enhancedFiles = enhanceFiles(trimmedFiles);
-
-        return {
-          files: enhancedFiles,
-          totalFiles: enhancedFiles.length,
-          searchedFolders: searchOptions.folderIds,
-          queries: allQueries,
-        };
-      } else {
-        // Single folder or no folder specified - use original logic
-        const query = buildSearchQuery(searchOptions);
-        const allFiles: drive_v3.Schema$File[] = [];
-        let nextPageToken: string | undefined;
-        const drive = await client.getClient();
-
-        do {
-          const response = await client.executeApiCall(
-            'searchFiles',
-            async () => {
-              return await drive.files.list({
-                q: query,
-                fields: searchOptions.fields,
-                pageSize: Math.min(searchOptions.maxResults || 1000, 1000),
-                pageToken: nextPageToken,
-                orderBy: searchOptions.orderBy,
-              });
-            }
-          );
-
-          const files = response.data.files || [];
-          allFiles.push(...files);
-          nextPageToken = response.data.nextPageToken || undefined;
-
-          // Respect maxResults limit
-          if (searchOptions.maxResults && allFiles.length >= searchOptions.maxResults) {
-            break;
-          }
-        } while (nextPageToken);
-
-        // Trim to exact maxResults if specified
-        const trimmedFiles = searchOptions.maxResults
-          ? allFiles.slice(0, searchOptions.maxResults)
-          : allFiles;
-
-        // Remove duplicates based on file ID
-        const uniqueFiles = trimmedFiles.filter(
-          (file, index, self) => index === self.findIndex((f) => f.id === file.id)
-        );
-
-        const enhancedFiles = enhanceFiles(uniqueFiles);
-
-        return {
-          files: enhancedFiles,
-          nextPageToken,
-          totalFiles: enhancedFiles.length,
-          searchedFolders: options.folderIds || [],
-          queries: [query],
-        };
+      // Merge all results
+      for (const result of results) {
+        allFiles.push(...result.files);
+        allQueries.push(result.query);
       }
-    } catch (error) {
-      throw error;
+
+      // Remove duplicates based on file ID (in case same file appears in multiple folders)
+      const uniqueFiles = allFiles.filter(
+        (file, index, self) => index === self.findIndex(f => f.id === file.id),
+      );
+
+      // Sort all files together
+      uniqueFiles.sort((a, b) => {
+        if (!a.name || !b.name) return 0;
+        return a.name.localeCompare(b.name);
+      });
+
+      // Apply maxResults limit to the final merged results
+      const trimmedFiles = searchOptions.maxResults
+        ? uniqueFiles.slice(0, searchOptions.maxResults)
+        : uniqueFiles;
+
+      const enhancedFiles = enhanceFiles(trimmedFiles);
+
+      return {
+        files: enhancedFiles,
+        totalFiles: enhancedFiles.length,
+        searchedFolders: searchOptions.folderIds,
+        queries: allQueries,
+      };
+    } else {
+      // Single folder or no folder specified - use original logic
+      const query = buildSearchQuery(searchOptions);
+      const allFiles: drive_v3.Schema$File[] = [];
+      let nextPageToken: string | undefined;
+      const drive = await client.getClient();
+
+      do {
+        const response = await client.executeApiCall(
+          'searchFiles',
+          async () => {
+            return await drive.files.list({
+              q: query,
+              fields: searchOptions.fields,
+              pageSize: Math.min(searchOptions.maxResults || 1000, 1000),
+              pageToken: nextPageToken,
+              orderBy: searchOptions.orderBy,
+            });
+          },
+        );
+
+        const files = response.data.files || [];
+        allFiles.push(...files);
+        nextPageToken = response.data.nextPageToken || undefined;
+
+        // Respect maxResults limit
+        if (searchOptions.maxResults && allFiles.length >= searchOptions.maxResults) {
+          break;
+        }
+      } while (nextPageToken);
+
+      // Trim to exact maxResults if specified
+      const trimmedFiles = searchOptions.maxResults
+        ? allFiles.slice(0, searchOptions.maxResults)
+        : allFiles;
+
+      // Remove duplicates based on file ID
+      const uniqueFiles = trimmedFiles.filter(
+        (file, index, self) => index === self.findIndex(f => f.id === file.id),
+      );
+
+      const enhancedFiles = enhanceFiles(uniqueFiles);
+
+      return {
+        files: enhancedFiles,
+        nextPageToken,
+        totalFiles: enhancedFiles.length,
+        searchedFolders: options.folderIds || [],
+        queries: [query],
+      };
     }
   };
 
@@ -573,48 +577,40 @@ export const useGoogleDrive = () => {
    */
   const getFile = async (
     fileId: string,
-    fields?: string
+    fields?: string,
   ): Promise<DriveFileMetadata> => {
     await initialize();
     const drive = await client.getClient();
 
-    try {
-      const response = await client.executeApiCall(
-        'getFile',
-        async () => {
-          return await drive.files.get({
-            fileId,
-            fields: fields || 'id,name,mimeType,parents,thumbnailLink,webContentLink,webViewLink,size,createdTime,modifiedTime',
-          });
-        }
-      );
+    const response = await client.executeApiCall(
+      'getFile',
+      async () => {
+        return await drive.files.get({
+          fileId,
+          fields: fields || 'id,name,mimeType,parents,thumbnailLink,webContentLink,webViewLink,size,createdTime,modifiedTime',
+        });
+      },
+    );
 
-      return enhanceFiles([response.data])[0];
-    } catch (error) {
-      throw error;
-    }
+    return enhanceFiles([response.data])[0];
   };
 
   /**
    * Get file content as stream
    */
-  const getFileStream = async (fileId: string): Promise<any> => {
+  const getFileStream = async (fileId: string): Promise<unknown> => {
     await initialize();
     const drive = await client.getClient();
 
-    try {
-      return await client.executeApiCall(
-        'getFileStream',
-        async () => {
-          return await drive.files.get({
-            fileId,
-            alt: 'media',
-          }, { responseType: 'stream' });
-        }
-      );
-    } catch (error) {
-      throw error;
-    }
+    return await client.executeApiCall(
+      'getFileStream',
+      async () => {
+        return await drive.files.get({
+          fileId,
+          alt: 'media',
+        }, { responseType: 'stream' });
+      },
+    );
   };
 
   /**
@@ -631,21 +627,17 @@ export const useGoogleDrive = () => {
     await initialize();
     const drive = await client.getClient();
 
-    try {
-      const response = await client.executeApiCall(
-        'getFolder',
-        async () => {
-          return await drive.files.get({
-            fileId: folderId,
-            fields: 'id,name,mimeType,parents,createdTime,modifiedTime',
-          });
-        }
-      );
+    const response = await client.executeApiCall(
+      'getFolder',
+      async () => {
+        return await drive.files.get({
+          fileId: folderId,
+          fields: 'id,name,mimeType,parents,createdTime,modifiedTime',
+        });
+      },
+    );
 
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
+    return response.data;
   };
 
   return {

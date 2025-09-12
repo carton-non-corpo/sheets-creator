@@ -1,4 +1,4 @@
-import type { SheetContentCard } from '~~/common/types/sheet'
+import type { SheetContentCard } from '~~/common/types/sheet';
 
 /**
  * Interface for page data structure used in PDF generation
@@ -143,15 +143,15 @@ export const usePdfExport = () => {
   async function generateLandmarksSvg(bleed: number): Promise<string> {
     let svgPath = '';
     switch (bleed) {
-      case 1:
-        // get /app/assets/landmarks-1mm-bleed.svg content
-        svgPath = '/landmarks-bleed-1mm.svg';
-        break;
-      case 0:
-      default:
-        // get /app/assets/landmarks-no-bleed.svg content
-        svgPath = '/landmarks-bleed-0mm.svg';
-        break;
+    case 1:
+      // get /app/assets/landmarks-1mm-bleed.svg content
+      svgPath = '/landmarks-bleed-1mm.svg';
+      break;
+    case 0:
+    default:
+      // get /app/assets/landmarks-no-bleed.svg content
+      svgPath = '/landmarks-bleed-0mm.svg';
+      break;
     }
 
     const response = await fetch(svgPath);
@@ -171,9 +171,9 @@ export const usePdfExport = () => {
     return `
       <div class="card-slot">
         ${card.imageUrl
-        ? `<img src="${card.imageUrl}" alt="${card.name || 'Card image'}" />`
-        : `<div class="card-placeholder"><span>${card.name || 'No image'}</span></div>`
-      }
+    ? `<img src="${card.imageUrl}" alt="${card.name || 'Card image'}" />`
+    : `<div class="card-placeholder"><span>${card.name || 'No image'}</span></div>`
+}
       </div>
     `;
   }
@@ -185,7 +185,7 @@ export const usePdfExport = () => {
   async function generatePageHtml(pageData: PageData): Promise<string> {
     const emptySlots = CARDS_PER_PAGE - pageData.cards.length;
     const emptySlotsHtml = Array.from({ length: emptySlots }, () =>
-      '<div class="card-slot empty-slot"></div>'
+      '<div class="card-slot empty-slot"></div>',
     ).join('');
 
     const landmarksSvg = await generateLandmarksSvg(pageData.bleed);
@@ -252,7 +252,7 @@ export const usePdfExport = () => {
    * Creates a hidden iframe, renders content, and triggers PDF download
    * Uses browser's native print functionality to generate PDF
    */
-  async function downloadPdf(htmlContent: string, filename: string): Promise<void> {
+  async function downloadPdf(htmlContent: string, _filename: string): Promise<void> {
     try {
       // Create invisible iframe for rendering
       const iframe = document.createElement('iframe');

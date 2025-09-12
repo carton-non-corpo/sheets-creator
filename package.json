@@ -9,13 +9,16 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "deploy": "wrangler pages deploy .output/public",
     "deploy:preview": "wrangler pages deploy .output/public --compatibility-date=2024-08-27",
     "cf:login": "wrangler login",
     "docker:build": "docker build -t nuxt-app .",
     "docker:run": "docker run -p 3000:3000 nuxt-app",
     "download:drive": "node --import tsx/esm server/scripts/driver-downloader/index.ts",
-    "test:drive": "node --import tsx/esm tests/google-drive-test.js"
+    "test:drive": "node --import tsx/esm tests/google-drive-test.js",
+    "prepare": "husky"
   },
   "dependencies": {
     "@nuxt/eslint": "1.8.0",
@@ -47,6 +50,7 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
+    "husky": "^9.1.7",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2"
   },

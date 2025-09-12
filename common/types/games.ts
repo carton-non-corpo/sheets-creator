@@ -19,7 +19,7 @@ export interface GameFoldersOPTCG extends GameFolder {
 }
 
 export interface GameFoldersMTG extends GameFolder {
-  subCategory: "Tokens" | "Lands" | "Backs" | "Alternatives" | "Sideboard" | null;
+  subCategory: 'Tokens' | 'Lands' | 'Backs' | 'Alternatives' | 'Sideboard' | null;
   game: Game.MTG;
 }
 

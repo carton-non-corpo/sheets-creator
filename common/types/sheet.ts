@@ -1,4 +1,4 @@
-import type { EnhancedFile } from './drive'
+import type { EnhancedFile } from './drive';
 
 export interface Sheet {
     id: string;

@@ -35,14 +35,14 @@ function goToWebLink() {
 </script>
 
 <template>
-  <div 
+  <div
     class="group relative h-full w-full min-h-36 cursor-pointer"
     @click="addCard(props.card)"
     @contextmenu.prevent="removeCard(props.card.id)"
   >
     <div v-if="props.card.thumbnailLink" class="w-full h-auto">
-      <img 
-        :src="props.card.thumbnailLink" 
+      <img
+        :src="props.card.thumbnailLink"
         :alt="props.card.name || 'Card image'"
         class="w-full h-full object-cover"
         @error="console.log('Image failed to load:', props.card.thumbnailLink)"
@@ -54,16 +54,16 @@ function goToWebLink() {
 
     <!-- Buttons in top right corner - only show on hover -->
     <div class="absolute top-1 right-1 flex flex-col gap-1">
-      <div 
+      <div
         class="h-7 w-7 items-center justify-center bg-white text-gray-900 text-xs font-bold rounded shadow-lg border-2 border-gray-800"
         :class="quantity === 0 ? 'group-hover:flex hidden' : 'flex'"
       >
         {{ quantity }}
       </div>
 
-      <Button 
-        size="sm" 
-        variant="secondary" 
+      <Button
+        size="sm"
+        variant="secondary"
         class="hidden group-hover:flex h-5 w-5 p-0 ml-auto mr-0.25 rounded shadow-md border-1 border-gray-800 cursor-pointer hover:bg-gray-200"
         :class="quantity === 0 ? 'opacity-50 cursor-not-allowed' : ''"
         @click.stop="decrement"
@@ -71,19 +71,19 @@ function goToWebLink() {
         <Minus class="h-3 w-3" />
       </Button>
 
-      <Button 
-        size="sm" 
-        variant="secondary" 
+      <Button
+        size="sm"
+        variant="secondary"
         class="hidden group-hover:flex h-5 w-5 p-0 ml-auto mr-0.25 rounded shadow-md border-1 border-gray-800 cursor-pointer hover:bg-gray-200"
         @click.stop="increment"
       >
         <Plus class="h-3 w-3" />
       </Button>
 
-      <Button 
+      <Button
         v-if="props.card.imageUrl"
-        size="sm" 
-        variant="secondary" 
+        size="sm"
+        variant="secondary"
         class="hidden group-hover:flex h-5 w-5 p-2 ml-auto mr-0.25 rounded shadow-md border-1 border-gray-800 cursor-pointer hover:bg-gray-200"
         @click.stop="openCardDetails(props.card.imageUrl)"
       >

@@ -8,8 +8,8 @@ import { getGameDisplayName } from '~~/common/utils/games';
 import { Separator } from '~/components/ui/separator';
 import { LoaderCircle } from 'lucide-vue-next';
 
-const gameStore = useGameStore()
-const { selectedGame, currentGameFolders } = storeToRefs(gameStore)
+const gameStore = useGameStore();
+const { selectedGame, currentGameFolders } = storeToRefs(gameStore);
 
 const loading = ref(false);
 const error = ref<string | null>(null);
@@ -28,7 +28,7 @@ const currentPage = ref(0);
 const loadedItems = ref<EnhancedFile[]>([]);
 
 const sortedCards = computed((): EnhancedFile[] => {
-  return files.value.sort((a, b) => a.name.localeCompare(b.name));
+  return [...files.value].sort((a, b) => a.name.localeCompare(b.name));
 });
 
 // Load more items when needed
@@ -36,7 +36,7 @@ const loadItems = (page: number) => {
   const startIndex = page * itemsPerPage;
   const endIndex = Math.min(startIndex + itemsPerPage, sortedCards.value.length);
   const newItems = sortedCards.value.slice(startIndex, endIndex);
-  
+
   if (page === 0) {
     loadedItems.value = newItems;
   } else {
@@ -47,26 +47,26 @@ const loadItems = (page: number) => {
 // Setup intersection observers for infinite scroll
 const { stop: stopTopObserver } = useIntersectionObserver(
   sentinelTop,
-  (entries) => {
+  entries => {
     const [entry] = entries;
     if (entry?.isIntersecting && currentPage.value > 0) {
       // Load previous page (if implementing bidirectional scroll)
       // For now, we'll keep it simple and only implement forward loading
     }
   },
-  { threshold: 0.1 }
+  { threshold: 0.1 },
 );
 
 const { stop: stopBottomObserver } = useIntersectionObserver(
   sentinelBottom,
-  (entries) => {
+  entries => {
     const [entry] = entries;
     if (entry?.isIntersecting && loadedItems.value.length < sortedCards.value.length) {
       currentPage.value++;
       loadItems(currentPage.value);
     }
   },
-  { threshold: 0.1 }
+  { threshold: 0.1 },
 );
 
 // Reset when cards change
@@ -82,14 +82,14 @@ onUnmounted(() => {
 });
 
 const searchText = computed(() => {
-  if (foldersIds.value.length === 0) return 'Selectionner des catégories...'
+  if (foldersIds.value.length === 0) return 'Selectionner des catégories...';
   if (foldersIds.value.length === 1) {
-    const folder = currentGameFolders.value.find(f => f.id === foldersIds.value[0])
-    return `Chercher dans ${folder?.name}...` || 'Erreur'
+    const folder = currentGameFolders.value.find(f => f.id === foldersIds.value[0]);
+    return folder ? `Chercher dans ${folder.name}...` : 'Erreur';
   }
-  if (foldersIds.value.length === currentGameFolders.value.length) return `Chercher dans ${getGameDisplayName(selectedGame.value)}...` 
-  return `Chercher dans les catégories sélectionnées...`
-})
+  if (foldersIds.value.length === currentGameFolders.value.length) return `Chercher dans ${getGameDisplayName(selectedGame.value)}...`;
+  return 'Chercher dans les catégories sélectionnées...';
+});
 
 const debouncedFetchFiles = useDebounceFn(fetchFiles, 400);
 
@@ -111,16 +111,16 @@ async function fetchFiles() {
 
   loading.value = true;
   error.value = null;
-  
+
   try {
-    const ids = getTargettedFolders(); 
+    const ids = getTargettedFolders();
     const params = new URLSearchParams({
       name: searchQuery.value,
-      foldersIds: ids.join(',')
+      foldersIds: ids.join(','),
     });
     const res = await fetch(`/api/v1/drive-files?${params.toString()}`);
     const data = await res.json();
-    
+
     if (data.error) {
       error.value = data.error;
     } else {
@@ -136,8 +136,8 @@ async function fetchFiles() {
 
 function presetFoldersIds() {
   if (currentGameFolders.value.length >= 5) {
-    foldersIds.value = []
-    return
+    foldersIds.value = [];
+    return;
   }
   foldersIds.value = currentGameFolders.value.map(folder => folder.id);
 };
@@ -173,15 +173,15 @@ watch(selectedGame, () => {
       <div v-if="!loading">
         <!-- Top sentinel for future bidirectional scrolling -->
         <div ref="sentinelTop" class="h-1"></div>
-        
+
         <div class="grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-3">
-          <CardSelector 
-            v-for="card in loadedItems" 
-            :key="card.id" 
+          <CardSelector
+            v-for="card in loadedItems"
+            :key="card.id"
             :card="card"
           />
         </div>
-        
+
         <!-- Bottom sentinel for loading more items -->
         <div ref="sentinelBottom" class="h-1"></div>
       </div>

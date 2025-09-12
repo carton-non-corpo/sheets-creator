@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ name: 'Decks', title: 'Decks' })
+definePageMeta({ name: 'Decks', title: 'Decks' });
 </script>
 
 <template>

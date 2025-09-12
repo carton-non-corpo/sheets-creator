@@ -14,7 +14,7 @@ async function testGoogleDriveIntegration() {
 
   try {
     const { initialize, searchFiles } = useGoogleDrive();
-    
+
     // Test 1: Initialize the client
     console.log('1️⃣ Testing initialization...');
     await initialize();
@@ -26,11 +26,11 @@ async function testGoogleDriveIntegration() {
       maxResults: 5,
       includeImages: true,
     });
-    
+
     console.log(`✅ Search successful! Found ${result.totalFiles} files`);
     console.log(`📁 Searched folders: ${result.searchedFolders.join(', ') || 'All accessible'}`);
     console.log(`🔍 Query: ${result.queries.join(', ')}`);
-    
+
     if (result.files.length > 0) {
       console.log('\n📄 Sample files:');
       result.files.slice(0, 3).forEach((file, index) => {
@@ -45,14 +45,14 @@ async function testGoogleDriveIntegration() {
 
   } catch (error) {
     console.error('❌ Test failed:', error.message);
-    
+
     if (error.name === 'GoogleDriveAuthError') {
       console.error('\n🔑 Authentication Issue:');
       console.error('   - Check GOOGLE_APPLICATION_CREDENTIALS environment variable');
       console.error('   - Verify service account has Google Drive API access');
       console.error('   - Ensure private key format is correct');
-      console.error('   - Current value:', process.env.GOOGLE_APPLICATION_CREDENTIALS ? 
-        (process.env.GOOGLE_APPLICATION_CREDENTIALS.startsWith('./') ? 'File path detected' : 'JSON string detected') : 
+      console.error('   - Current value:', process.env.GOOGLE_APPLICATION_CREDENTIALS ?
+        (process.env.GOOGLE_APPLICATION_CREDENTIALS.startsWith('./') ? 'File path detected' : 'JSON string detected') :
         'Not set');
     } else if (error.name === 'GoogleDriveRateLimitError') {
       console.error('\n⏱️  Rate Limit Issue:');
@@ -64,7 +64,7 @@ async function testGoogleDriveIntegration() {
       console.error('   - Verify Google Drive API is enabled in GCP');
       console.error('   - Full error:', error);
     }
-    
+
     process.exit(1);
   }
 }
@@ -72,7 +72,7 @@ async function testGoogleDriveIntegration() {
 // Mock Nuxt runtime config for testing
 if (typeof useRuntimeConfig === 'undefined') {
   global.useRuntimeConfig = () => ({
-    GOOGLE_APPLICATION_CREDENTIALS: process.env.GOOGLE_APPLICATION_CREDENTIALS
+    GOOGLE_APPLICATION_CREDENTIALS: process.env.GOOGLE_APPLICATION_CREDENTIALS,
   });
 }
 

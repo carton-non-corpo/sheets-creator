@@ -31,25 +31,25 @@ const totalUniqueCards = computed(() => {
 // Create pages with bleed breaks
 const allPages = computed(() => {
   if (!sheet.value) return [];
-  
+
   const pages = [];
   const cards = [];
-  
+
   // Expand all cards with their quantities
   for (const card of sheet.value.content) {
     for (let i = 0; i < card.quantity; i++) {
       cards.push({
         ...card,
-        printIndex: cards.length
+        printIndex: cards.length,
       });
     }
   }
-  
+
   if (cards.length === 0) return [];
-  
+
   let currentPage = [];
   let currentBleed = cards[0]?.bleed;
-  
+
   for (const card of cards) {
     // If bleed changes or page is full, start a new page
     if (card.bleed !== currentBleed || currentPage.length >= cardsPerPage) {
@@ -57,25 +57,25 @@ const allPages = computed(() => {
         pages.push({
           pageNumber: pages.length + 1,
           cards: [...currentPage],
-          bleed: currentBleed
+          bleed: currentBleed,
         });
       }
       currentPage = [];
       currentBleed = card.bleed;
     }
-    
+
     currentPage.push(card);
   }
-  
+
   // Add the last page if it has cards
   if (currentPage.length > 0) {
     pages.push({
       pageNumber: pages.length + 1,
       cards: currentPage,
-      bleed: currentBleed
+      bleed: currentBleed,
     });
   }
-  
+
   return pages;
 });
 
@@ -93,7 +93,7 @@ function closeDialog() {
             <DialogTitle class="text-xl font-semibold">{{ $t('sheet.preview.title') }}</DialogTitle>
             <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger asChild class="mt-0.5">
+                <TooltipTrigger as-child class="mt-0.5">
                   <Button variant="ghost" size="sm" class="h-auto w-auto py-1 !px-1">
                     <Info class="w-4 h-4 text-muted-foreground" />
                   </Button>
@@ -106,7 +106,7 @@ function closeDialog() {
           </div>
         </div>
       </DialogHeader>
-      
+
       <ScrollArea class="flex-1 overflow-hidden">
         <div class="p-6 pt-0 space-y-4">
 
@@ -116,7 +116,7 @@ function closeDialog() {
               <span class="text-sm font-medium">{{ totalUniqueCards }}</span>
               <span class="text-xs text-muted-foreground">{{ $t('sheet.preview.unique', totalUniqueCards) }}</span>
             </div>
-            
+
             <div class="flex items-center gap-1.5 px-3 py-1.75 text-foreground bg-muted/50 rounded-md border">
               <Layers class="w-4 h-4 text-muted-foreground mr-0.5" />
               <span class="text-sm font-medium">{{ totalCards }}</span>
@@ -125,12 +125,12 @@ function closeDialog() {
 
             <Button variant="outline" class="cursor-pointer" @click="() => exportAllPages(allPages, sheet?.name)">
               <Download class="w-4 h-4" />
-              Tout exporter 
+              Tout exporter
             </Button>
           </div>
 
-          <div 
-            v-for="page in allPages" 
+          <div
+            v-for="page in allPages"
             :key="page.pageNumber"
             class="border rounded-lg p-4 bg-gray-50"
           >
@@ -141,12 +141,12 @@ function closeDialog() {
                 <Badge variant="outline">{{ page.cards.length }}/{{ cardsPerPage }} {{ $t('sheet.preview.cards', page.cards.length) }}</Badge>
               </div>
             </div>
-            
+
             <div class="flex justify-center overflow-hidden">
               <div class="w-full max-w-md">
-                <SheetDisplay 
-                  :scale="0.25" 
-                  :show-landmarks="true" 
+                <SheetDisplay
+                  :scale="0.25"
+                  :show-landmarks="true"
                   :show-placeholders="false"
                   :bleed="page.bleed"
                   :cards="page.cards"
@@ -154,7 +154,7 @@ function closeDialog() {
               </div>
             </div>
           </div>
-          
+
           <!-- Empty state if no pages -->
           <div v-if="allPages.length === 0" class="text-center py-12 text-gray-500">
             <p class="text-lg">{{ $t('sheet.preview.empty') }}</p>

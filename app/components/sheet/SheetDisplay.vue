@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Minus, Plus } from 'lucide-vue-next';
-import type { SheetContentCard } from '~~/common/types/sheet'
-import type { EnhancedFile } from '~~/common/types/drive'
+import type { SheetContentCard } from '~~/common/types/sheet';
+import type { EnhancedFile } from '~~/common/types/drive';
 
 const props = defineProps<{
   scale: number;
@@ -9,14 +9,14 @@ const props = defineProps<{
   showPlaceholders: boolean;
   cards: Array<SheetContentCard & { printIndex: number }> | undefined;
   bleed: number | undefined;
-}>()
+}>();
 
 const sheetStore = useSheetStore();
 const { sheet } = storeToRefs(sheetStore);
 const { addCard, removeCard } = sheetStore;
 
 function handleCardAddition(card: SheetContentCard & { printIndex: number }) {
-  
+
   // Convert the card back to EnhancedFile format for addCard
   const enhancedFile: EnhancedFile = {
     id: card.id,
@@ -28,9 +28,9 @@ function handleCardAddition(card: SheetContentCard & { printIndex: number }) {
     webViewLink: card.webViewLink,
     imageUrl: card.imageUrl,
     downloadUrl: card.downloadUrl,
-    viewUrl: card.viewUrl
+    viewUrl: card.viewUrl,
   };
-  
+
   addCard(enhancedFile);
 }
 
@@ -38,15 +38,15 @@ const cardsForPrint = computed(() => {
   if (props.cards) {
     return props.cards;
   }
-  
+
   if (!sheet.value) return [];
-  
+
   const cards = [];
   for (const card of sheet.value.content) {
     for (let i = 0; i < card.quantity; i++) {
       cards.push({
         ...card,
-        printIndex: cards.length // Unique identifier for each printed instance
+        printIndex: cards.length, // Unique identifier for each printed instance
       });
     }
   }
@@ -57,35 +57,35 @@ const gridStyleByBleed = computed(() => {
   return `grid-template-columns: repeat(3, calc(63mm + ${props.bleed}mm)); grid-template-rows: repeat(3, calc(88mm + ${props.bleed}mm));`;
 });
 
-const placeholders = computed(() => 9 - cardsForPrint.value.length)
+const placeholders = computed(() => 9 - cardsForPrint.value.length);
 </script>
 
 <template>
   <div class="flex grow justify-center items-center w-full">
-    <div 
-      class="sheet-display-container" 
+    <div
+      class="sheet-display-container"
       :style="`transform: scale(${props.scale}); margin-bottom: calc(-297mm * ${1 - props.scale}); transform-origin: top center; width: 210mm; height: 297mm;`"
     >
       <!-- Actual export content - maintains 210mm x 297mm for PDF export -->
-      <div 
+      <div
         id="to-export"
         class="relative flex flex-col bg-white shadow-xl border border-gray-200 rounded-lg"
         style="width: 210mm; height: 297mm;"
       >
-        <div 
+        <div
           class="grid place-content-center w-full h-full z-1"
           :style="gridStyleByBleed"
         >
-          <div 
-            v-for="card in cardsForPrint" 
-            :key="card.printIndex" 
+          <div
+            v-for="card in cardsForPrint"
+            :key="card.printIndex"
             class="relative border-box overflow-hidden group cursor-pointer"
             @click="handleCardAddition(card)"
             @contextmenu.prevent="removeCard(card.id)"
           >
             <div v-if="card.imageUrl" class="w-full h-full">
-              <img 
-                :src="card.imageUrl" 
+              <img
+                :src="card.imageUrl"
                 :alt="card.name || 'Card image'"
                 class="w-full h-full object-cover"
                 @error="console.log('Image failed to load:', card.imageUrl)"
@@ -100,18 +100,18 @@ const placeholders = computed(() => 9 - cardsForPrint.value.length)
 
             <!-- Buttons in top right corner - only show on hover -->
             <div class="absolute top-2 right-2 flex flex-col gap-1">
-              <Button 
-                size="sm" 
-                variant="secondary" 
+              <Button
+                size="sm"
+                variant="secondary"
                 class="hidden group-hover:flex h-8 w-8 p-0 ml-auto mr-0.25 rounded shadow-md border-1 border-gray-800 cursor-pointer hover:bg-gray-200"
                 @click.stop="removeCard(card.id)"
               >
                 <Minus class="h-5 w-5" />
               </Button>
 
-              <Button 
-                size="sm" 
-                variant="secondary" 
+              <Button
+                size="sm"
+                variant="secondary"
                 class="hidden group-hover:flex h-8 w-8 p-0 ml-auto mr-0.25 rounded shadow-md border-1 border-gray-800 cursor-pointer hover:bg-gray-200"
                 @click.stop="handleCardAddition(card)"
               >
@@ -120,7 +120,7 @@ const placeholders = computed(() => 9 - cardsForPrint.value.length)
             </div>
           </div>
           <template v-if="props.showPlaceholders">
-            <div v-for="placeholder in placeholders" :key="placeholder" class="relative border-box overflow-hidden border border-gray-100" />
+            <div v-for="placeholder in placeholders" :key="placeholder" class="relative border-box overflow-hidden border border-gray-100" ></div>
           </template>
         </div>
 

@@ -1,7 +1,7 @@
 import { useGoogleDrive } from '../../composables/useGoogleDrive';
 import type { DriveSearchOptions } from '../../composables/useGoogleDrive';
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   const query = getQuery(event);
   const nameFilter = query.name as string;
   const foldersIds = query.foldersIds as string || '';
@@ -43,27 +43,33 @@ export default defineEventHandler(async (event) => {
       totalFiles: result.totalFiles,
     };
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ Drive API error:', error);
 
     // Handle specific error types
-    if (error.name === 'GoogleDriveAuthError') {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'Google Drive authentication failed',
-      });
+    if (error && typeof error === 'object' && 'name' in error) {
+      if (error.name === 'GoogleDriveAuthError') {
+        throw createError({
+          statusCode: 401,
+          statusMessage: 'Google Drive authentication failed',
+        });
+      }
+
+      if (error.name === 'GoogleDriveRateLimitError') {
+        throw createError({
+          statusCode: 429,
+          statusMessage: 'Rate limit exceeded. Please try again later.',
+        });
+      }
     }
 
-    if (error.name === 'GoogleDriveRateLimitError') {
-      throw createError({
-        statusCode: 429,
-        statusMessage: 'Rate limit exceeded. Please try again later.',
-      });
-    }
+    const errorMessage = error && typeof error === 'object' && 'message' in error
+      ? String(error.message)
+      : 'Failed to search Google Drive files';
 
     throw createError({
       statusCode: 500,
-      statusMessage: error.message || 'Failed to search Google Drive files',
+      statusMessage: errorMessage,
     });
   }
 });

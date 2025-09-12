@@ -1,22 +1,27 @@
 <script setup lang="ts">
-import Select from '~/components/ui/select/Select.vue'
-import { SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectLabel, SelectValue } from '~/components/ui/select'
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { storeToRefs } from 'pinia'
-import { useGameStore } from '~/stores/game'
-import { Game } from '~~/common/types/games'
-import { getGameDisplayName } from '~~/common/utils/games'
+import Select from '~/components/ui/select/Select.vue';
+import { SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectLabel, SelectValue } from '~/components/ui/select';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { useGameStore } from '~/stores/game';
+import { Game } from '~~/common/types/games';
+import { getGameDisplayName } from '~~/common/utils/games';
 
-const route = useRoute()
+defineOptions({
+  name: 'AppHeader',
+});
 
-const gameStore = useGameStore()
-const { selectedGame } = storeToRefs(gameStore)
+const route = useRoute();
+
+const gameStore = useGameStore();
+const { selectedGame } = storeToRefs(gameStore);
 
 const pageName = computed(() => {
-  if (route.path === '/') return $t('nav.sheets')
-  if (route.path === '/decks') return $t('nav.decks')
-})
+  if (route.path === '/') return $t('nav.sheets');
+  if (route.path === '/decks') return $t('nav.decks');
+  return '';
+});
 </script>
 
 <template>

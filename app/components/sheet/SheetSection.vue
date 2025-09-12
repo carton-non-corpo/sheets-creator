@@ -23,25 +23,25 @@ const totalCards = computed(() => {
 // Create pages with bleed breaks for pagination
 const allPages = computed(() => {
   if (!sheet.value) return [];
-  
+
   const pages = [];
   const cards = [];
-  
+
   // Expand all cards with their quantities
   for (const card of sheet.value.content) {
     for (let i = 0; i < card.quantity; i++) {
       cards.push({
         ...card,
-        printIndex: cards.length
+        printIndex: cards.length,
       });
     }
   }
-  
+
   if (cards.length === 0) return [];
-  
+
   let currentPageCards = [];
   let currentBleed = cards[0]?.bleed;
-  
+
   for (const card of cards) {
     // If bleed changes or page is full, start a new page
     if (card.bleed !== currentBleed || currentPageCards.length >= cardsPerPage) {
@@ -49,25 +49,25 @@ const allPages = computed(() => {
         pages.push({
           pageNumber: pages.length + 1,
           cards: [...currentPageCards],
-          bleed: currentBleed
+          bleed: currentBleed,
         });
       }
       currentPageCards = [];
       currentBleed = card.bleed;
     }
-    
+
     currentPageCards.push(card);
   }
-  
+
   // Add the last page if it has cards
   if (currentPageCards.length > 0) {
     pages.push({
       pageNumber: pages.length + 1,
       cards: currentPageCards,
-      bleed: currentBleed
+      bleed: currentBleed,
     });
   }
-  
+
   return pages;
 });
 
@@ -99,54 +99,53 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
       <div class="flex items-center gap-6">
         <div class="flex items-center space-x-2">
           <Switch id="landmarks" v-model="landmarks" class="cursor-pointer" />
-           <Label for="landmarks" class="cursor-pointer">{{ $t('sheet.section.landmarks') }}</Label>
+          <Label for="landmarks" class="cursor-pointer">{{ $t('sheet.section.landmarks') }}</Label>
         </div>
       </div>
 
       <div class="flex gap-3">
         <Button variant="outline" class="cursor-pointer" @click="previewDialogOpen = true">
           <Search />
-           {{ $t('sheet.section.preview') }}
+          {{ $t('sheet.section.preview') }}
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger as-child>
             <Button class="cursor-pointer">
               <Download />
-               {{ $t('sheet.section.export') }}
+              {{ $t('sheet.section.export') }}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent class="w-auto mr-4 mt-1">
-             <DropdownMenuLabel>{{ $t('sheet.section.choose_action') }}</DropdownMenuLabel>
+            <DropdownMenuLabel>{{ $t('sheet.section.choose_action') }}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem class="cursor-pointer" @click="() => exportAllPages(allPages, sheet?.name)">
-               {{ $t('sheet.section.export_all') }}
+              {{ $t('sheet.section.export_all') }}
             </DropdownMenuItem>
-            <DropdownMenuItem 
-              class="cursor-pointer" 
+            <DropdownMenuItem
+              class="cursor-pointer"
               @click="() => {
                 const currentPageData = allPages[currentPage - 1];
                 if (currentPageData) exportSinglePage(currentPageData, sheet?.name);
               }"
             >
-               {{ $t('sheet.section.export_current') }}
+              {{ $t('sheet.section.export_current') }}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
     </div>
 
-    <SheetDisplay 
-      :scale="0.5" 
-      :show-landmarks="landmarks" 
+    <SheetDisplay
+      :scale="0.5"
+      :show-landmarks="landmarks"
       :show-placeholders="true"
-      :cards="paginatedCards" 
-      :bleed="pageBleed" 
+      :cards="paginatedCards"
+      :bleed="pageBleed"
     />
 
-    <Pagination 
+    <Pagination
       v-if="sheet && totalCards > 0"
-      v-slot="{ page }" 
-      :items-per-page="cardsPerPage" 
+      :items-per-page="cardsPerPage"
       :total="totalPages * cardsPerPage"
       :default-page="currentPage"
       @update:page="currentPage = $event"
@@ -154,7 +153,7 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
       <PaginationContent v-slot="{ items }">
         <PaginationPrevious
           class="cursor-pointer disabled:cursor-default"
-          @click="currentPage = Math.max(1, currentPage - 1)" 
+          @click="currentPage = Math.max(1, currentPage - 1)"
         />
 
         <template v-for="(item, index) in items" :key="index">
@@ -172,7 +171,7 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
 
         <PaginationNext
           class="cursor-pointer disabled:cursor-default"
-          @click="currentPage = Math.min(totalPages, currentPage + 1)" 
+          @click="currentPage = Math.min(totalPages, currentPage + 1)"
         />
       </PaginationContent>
     </Pagination>
@@ -180,8 +179,8 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
     <!-- Empty state -->
     <div v-if="!sheet || totalCards === 0" class="flex items-center justify-center text-center">
       <div class="text-muted-foreground">
-         <p class="text-lg">{{ $t('sheet.section.empty') }}</p>
-         <p class="text-sm mt-2">{{ $t('sheet.section.empty_hint') }}</p>
+        <p class="text-lg">{{ $t('sheet.section.empty') }}</p>
+        <p class="text-sm mt-2">{{ $t('sheet.section.empty_hint') }}</p>
       </div>
     </div>
 

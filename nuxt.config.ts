@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import tailwindcss from '@tailwindcss/vite'
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     // Public keys (exposed to client-side)
     public: {
       GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
-    }
+    },
   },
 
   modules: [
@@ -39,20 +39,20 @@ export default defineNuxtConfig({
   i18n: {
     locales: [
       { code: 'en', language: 'en-US', file: 'en.json' },
-      { code: 'fr', language: 'fr-FR', file: 'fr.json' }
+      { code: 'fr', language: 'fr-FR', file: 'fr.json' },
     ],
     defaultLocale: 'en',
   },
 
   shadcn: {
     prefix: '',
-    componentDir: './app/components/ui'
+    componentDir: './app/components/ui',
   },
 
   nitro: {
     preset: process.env.NITRO_PRESET || 'node-server',
     prerender: {
-      autoSubfolderIndex: false
-    }
-  }
-})
+      autoSubfolderIndex: false,
+    },
+  },
+});

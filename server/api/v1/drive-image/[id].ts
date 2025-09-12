@@ -1,12 +1,12 @@
 import { useGoogleDrive } from '../../../composables/useGoogleDrive';
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   const fileId = getRouterParam(event, 'id');
 
   if (!fileId) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'File ID is required'
+      statusMessage: 'File ID is required',
     });
   }
 
@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
     if (!isImageFile(fileMetadata)) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'File is not an image'
+        statusMessage: 'File is not an image',
       });
     }
 
@@ -33,34 +33,36 @@ export default defineEventHandler(async (event) => {
 
     return sendStream(event, response.data);
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ Drive image proxy error:', error);
 
     // Handle specific error types
-    if (error.name === 'GoogleDriveAuthError') {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'Google Drive authentication failed'
-      });
+    if (error && typeof error === 'object' && 'name' in error) {
+      if (error.name === 'GoogleDriveAuthError') {
+        throw createError({
+          statusCode: 401,
+          statusMessage: 'Google Drive authentication failed',
+        });
+      }
+
+      if (error.name === 'GoogleDriveRateLimitError') {
+        throw createError({
+          statusCode: 429,
+          statusMessage: 'Rate limit exceeded. Please try again later.',
+        });
+      }
     }
 
-    if (error.name === 'GoogleDriveRateLimitError') {
-      throw createError({
-        statusCode: 429,
-        statusMessage: 'Rate limit exceeded. Please try again later.'
-      });
-    }
-
-    if (error.code === 'NOT_FOUND') {
+    if (error && typeof error === 'object' && 'code' in error && error.code === 'NOT_FOUND') {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Image not found in Google Drive'
+        statusMessage: 'Image not found in Google Drive',
       });
     }
 
     throw createError({
       statusCode: 500,
-      statusMessage: 'Failed to fetch image from Google Drive'
+      statusMessage: 'Failed to fetch image from Google Drive',
     });
   }
 });

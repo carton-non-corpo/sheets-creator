@@ -7,7 +7,7 @@ const { openDetailsCardImageUrl } = storeToRefs(cardStore);
 // Prevent flicker by only setting the image URL after the dialog is closed
 const displayImageUrl = ref<string>();
 
-watch(openDetailsCardImageUrl, (url) => {
+watch(openDetailsCardImageUrl, url => {
   if (url) displayImageUrl.value = url;
 }, { immediate: true });
 

@@ -4,7 +4,7 @@ import CardSearch from '~/components/cards/CardSearch.vue';
 import SheetSection from '~/components/sheet/SheetSection.vue';
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '~/components/ui/resizable';
 
-definePageMeta({ name: 'Planches', title: 'Planches' })
+definePageMeta({ name: 'Planches', title: 'Planches' });
 
 </script>
 
