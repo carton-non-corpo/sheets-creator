@@ -33,6 +33,7 @@ export enum MTGSubCategory {
   BACKS = 'Backs',
   ALTERNATIVES = 'Alternatives',
   SIDEBOARD = 'Sideboard',
+  SECRET_LAIR = 'Secret Lair',
 }
 
 export interface GameFoldersMTG extends GameFolder {

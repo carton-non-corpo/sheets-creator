@@ -434,7 +434,7 @@ const mtgFolders: GameFolders[] = [
     author: 'ukuleleaccordi',
     decklist: '',
     origin: SetOrigin.PROXY,
-    subCategory: null,
+    subCategory: MTGSubCategory.SECRET_LAIR,
     game: Game.MTG,
   },
   {
@@ -644,7 +644,7 @@ const mtgFolders: GameFolders[] = [
     author: 'Apcebo',
     decklist: 'https://moxfield.com/decks/eEPgddXQ3UC8sYJU9hzfww',
     origin: SetOrigin.PROXY,
-    subCategory: null,
+    subCategory: MTGSubCategory.DECK,
     game: Game.MTG,
   },
   {
@@ -824,7 +824,7 @@ const mtgFolders: GameFolders[] = [
     author: 'Sakeretsu',
     decklist: '',
     origin: SetOrigin.CUSTOM,
-    subCategory: null,
+    subCategory: MTGSubCategory.SECRET_LAIR,
     game: Game.MTG,
   },
   {
@@ -914,7 +914,7 @@ const mtgFolders: GameFolders[] = [
     author: 'Shei',
     decklist: '',
     origin: SetOrigin.PROXY,
-    subCategory: null,
+    subCategory: MTGSubCategory.SECRET_LAIR,
     game: Game.MTG,
   },
   {
@@ -1104,7 +1104,7 @@ const mtgFolders: GameFolders[] = [
     author: 'N. B. Patenaude',
     decklist: '',
     origin: SetOrigin.PROXY,
-    subCategory: null,
+    subCategory: MTGSubCategory.SECRET_LAIR,
     game: Game.MTG,
   },
   {
@@ -1114,7 +1114,7 @@ const mtgFolders: GameFolders[] = [
     author: 'Tortex',
     decklist: '',
     origin: SetOrigin.PROXY,
-    subCategory: null,
+    subCategory: MTGSubCategory.SECRET_LAIR,
     game: Game.MTG,
   },
   {
