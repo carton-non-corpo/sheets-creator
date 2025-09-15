@@ -9,6 +9,8 @@
     "custom": "Custom",
     "decklist": "Decklist",
     "no_category_found": "No category found.",
+    "official": "Official",
+    "proxy": "Proxy",
     "search_category": "Search for a category...",
     "select_categories": "Select categories...",
     "unknown_category": "Unknown category"

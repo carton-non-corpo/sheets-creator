@@ -5,12 +5,19 @@ export enum Game {
   FFTCG = 'fftcg',
 }
 
+export enum SetOrigin {
+  OFFICIAL = 'official',
+  CUSTOM = 'custom',
+  PROXY = 'proxy',
+}
+
 export interface GameFolder {
   id: string; // https://drive.google.com/drive/folders/${folder_id}
   name: string;
   bleed: number; // In millimeter
   author: string;
   decklist: string;
+  origin: SetOrigin;
 }
 
 export interface GameFoldersOPTCG extends GameFolder {
@@ -18,8 +25,18 @@ export interface GameFoldersOPTCG extends GameFolder {
   game: Game.OPTCG;
 }
 
+export enum MTGSubCategory {
+  FULL_DECK = 'Full Deck',
+  DECK = 'Deck',
+  TOKENS = 'Tokens',
+  LANDS = 'Lands',
+  BACKS = 'Backs',
+  ALTERNATIVES = 'Alternatives',
+  SIDEBOARD = 'Sideboard',
+}
+
 export interface GameFoldersMTG extends GameFolder {
-  subCategory: 'Tokens' | 'Lands' | 'Backs' | 'Alternatives' | 'Sideboard' | null;
+  subCategory: MTGSubCategory | null;
   game: Game.MTG;
 }
 

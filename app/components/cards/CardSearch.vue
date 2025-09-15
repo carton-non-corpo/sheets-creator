@@ -32,10 +32,10 @@ const sortedCards = computed((): EnhancedFile[] => {
 });
 
 const folderDecklistLink = computed(() => {
-  if (foldersIds.value.length !== 1) return null;
+  if (foldersIds.value.length !== 1) return '';
   const folder = currentGameFolders.value.find(f => f.id === foldersIds.value[0]);
-  if (!folder) return null;
-  return folder.decklist || null;
+  if (!folder) return '';
+  return folder.decklist || '';
 });
 
 // Load more items when needed
@@ -170,10 +170,12 @@ onUnmounted(() => {
       <DrivesCombobox v-model="foldersIds" :folders="currentGameFolders" class="w-full" />
 
       <NuxtLink
-        v-if="folderDecklistLink"
+        v-if="foldersIds.length === 1"
         :to="folderDecklistLink"
+        :disabled="!folderDecklistLink"
         target="_blank"
-        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3 cursor-pointer"
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3 cursor-pointer"
+        :class="!folderDecklistLink ? 'cursor-not-allowed pointer-events-none opacity-50' : ''"
       >
         <span>{{ $t('drives.decklist') }}</span>
       </NuxtLink>

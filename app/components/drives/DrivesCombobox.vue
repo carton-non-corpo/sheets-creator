@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { GameFolders } from '~~/common/types/games';
+import { SetOrigin, type GameFolders } from '~~/common/types/games';
 import { ref, computed } from 'vue';
 import { ChevronDown, FolderOpen, Minus } from 'lucide-vue-next';
 import { getGameDisplayName } from '~~/common/utils/games';
@@ -34,18 +34,6 @@ const filteredFolders = computed(() => {
     );
 });
 
-const isSelected = (folderId: string) => {
-  return model.value.includes(folderId);
-};
-
-const toggleFolder = (folderId: string) => {
-  if (isSelected(folderId)) {
-    model.value = model.value.filter(id => id !== folderId);
-  } else {
-    model.value = [...model.value, folderId];
-  }
-};
-
 const selectedText = computed(() => {
   if (model.value.length === 0) return $t('drives.select_categories');
   if (model.value.length === 1) {
@@ -75,6 +63,26 @@ const toggleAllFolders = () => {
     model.value = gameFolders.value.map(folder => folder.id);
   }
 };
+
+const isSelected = (folderId: string) => {
+  return model.value.includes(folderId);
+};
+
+const toggleFolder = (folderId: string) => {
+  if (isSelected(folderId)) {
+    model.value = model.value.filter(id => id !== folderId);
+  } else {
+    model.value = [...model.value, folderId];
+  }
+};
+
+const getFolderSubText = (folder: GameFolders) => {
+  const authorText = folder.author ? folder.author : $t('drives.custom');
+  const originText = folder.origin !== SetOrigin.OFFICIAL && folder.author ? folder.origin === SetOrigin.PROXY ? $t('drives.proxy') : $t('drives.custom') : $t('drives.official');
+  const bleedText = folder.bleed > 0 ? `${$t('drives.bleed')} ${folder.bleed}mm` : '';
+
+  return `${originText ? `${authorText} •` : authorText} ${bleedText ? `${originText} •` : originText} ${bleedText}`.trim();
+};
 </script>
 
 <template>
@@ -91,7 +99,7 @@ const toggleAllFolders = () => {
       </ComboboxTrigger>
     </ComboboxAnchor>
 
-    <ComboboxList class="w-[300px] p-0">
+    <ComboboxList class="w-[360px] p-0">
       <div class="flex items-center gap-3 px-3 py-2 border-b">
         <Checkbox
           :model-value="allFoldersSelected || someFoldersSelected"
@@ -132,13 +140,13 @@ const toggleAllFolders = () => {
                 <span class="text-sm font-medium truncate">{{ folder.name }}</span>
                 <span
                   v-if="folder.subCategory"
-                  class="inline-flex items-center px-1 py-0.25 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200"
+                  class="flex-shrink-0 inline-flex items-center px-1 py-0.25 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200"
                 >
                   {{ folder.subCategory }}
                 </span>
               </div>
               <span class="text-xs text-muted-foreground capitalize truncate">
-                {{ folder.author ? folder.author : $t('drives.custom') }} {{ folder.bleed > 0 ? `• ${$t('drives.bleed')} ${folder.bleed}mm` : '' }}
+                {{ getFolderSubText(folder) }}
               </span>
             </div>
           </ComboboxItem>
