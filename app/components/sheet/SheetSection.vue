@@ -154,13 +154,13 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
           <Switch id="landmarks" v-model="landmarks" class="cursor-pointer" />
           <Label for="landmarks" class="cursor-pointer">{{ $t('sheet.section.landmarks') }}</Label>
         </div>
+      </div>
+
+      <div class="flex gap-3">
         <Button variant="outline" class="cursor-pointer" @click="importSheetsAsJson">
           <Upload />
           {{ $t('sheet.section.import_from_json') }}
         </Button>
-      </div>
-
-      <div class="flex gap-3">
         <Button class="cursor-pointer" @click="previewDialogOpen = true">
           <Search />
           {{ $t('sheet.section.preview_and_export') }}
