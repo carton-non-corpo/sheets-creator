@@ -19,6 +19,8 @@ const { sheet } = storeToRefs(sheetStore);
 
 const { cardsPerPage, exportAllPages } = usePdfExport();
 
+const { exportSheetsAsJson } = useJsonExport();
+
 const totalCards = computed(() => {
   if (!sheet.value) return 0;
   return sheet.value.content.reduce((sum, card) => sum + card.quantity, 0);
@@ -48,7 +50,7 @@ const allPages = computed(() => {
   if (cards.length === 0) return [];
 
   let currentPage = [];
-  let currentBleed = cards[0]?.bleed;
+  let currentBleed = cards[0]?.bleed ?? 0;
 
   for (const card of cards) {
     // If bleed changes or page is full, start a new page
@@ -57,11 +59,11 @@ const allPages = computed(() => {
         pages.push({
           pageNumber: pages.length + 1,
           cards: [...currentPage],
-          bleed: currentBleed,
+          bleed: currentBleed ?? 0,
         });
       }
       currentPage = [];
-      currentBleed = card.bleed;
+      currentBleed = card.bleed ?? 0;
     }
 
     currentPage.push(card);
@@ -72,7 +74,7 @@ const allPages = computed(() => {
     pages.push({
       pageNumber: pages.length + 1,
       cards: currentPage,
-      bleed: currentBleed,
+      bleed: currentBleed ?? 0,
     });
   }
 
@@ -86,7 +88,7 @@ function closeDialog() {
 
 <template>
   <Dialog :open="props.open" @update:open="closeDialog">
-    <DialogContent class="max-w-4xl w-[90vw] h-[85vh] p-0 flex flex-col">
+    <DialogContent class="min-w-xl max-w-4xl w-[90vw] h-[85vh] p-0 flex flex-col">
       <DialogHeader class="p-6 pb-4 border-b flex-shrink-0">
         <div class="flex items-center justify-between">
           <div class="flex gap-1.5">
@@ -123,9 +125,13 @@ function closeDialog() {
               <span class="text-xs text-muted-foreground">{{ $t('sheet.preview.total', totalCards) }}</span>
             </div>
 
+            <Button variant="outline" class="cursor-pointer" @click="exportSheetsAsJson">
+              <Download />
+              {{ $t('sheet.section.export_as_json') }}
+            </Button>
             <Button variant="outline" class="cursor-pointer" @click="() => exportAllPages(allPages, sheet?.name)">
               <Download class="w-4 h-4" />
-              Tout exporter
+              {{ $t('sheet.section.export_all') }}
             </Button>
           </div>
 

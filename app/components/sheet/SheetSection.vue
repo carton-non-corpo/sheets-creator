@@ -2,14 +2,14 @@
 import { Switch } from '~/components/ui/switch';
 import { Label } from '~/components/ui/label';
 import { Button } from '~/components/ui/button';
-import { Download, Search, Upload } from 'lucide-vue-next';
+import { Search, Upload } from 'lucide-vue-next';
 import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext, PaginationEllipsis } from '~/components/ui/pagination';
 import { useResizeObserver } from '@vueuse/core';
 
 const sheetStore = useSheetStore();
 const { sheet } = storeToRefs(sheetStore);
 
-const { exportSheetsAsJson, importSheetsAsJson } = useJsonExport();
+const { importSheetsAsJson } = useJsonExport();
 
 const landmarks = ref<boolean>(true);
 const currentPage = ref<number>(1);
@@ -161,10 +161,6 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
       </div>
 
       <div class="flex gap-3">
-        <Button variant="outline" class="cursor-pointer" @click="exportSheetsAsJson">
-          <Download />
-          {{ $t('sheet.section.export_as_json') }}
-        </Button>
         <Button class="cursor-pointer" @click="previewDialogOpen = true">
           <Search />
           {{ $t('sheet.section.preview_and_export') }}
