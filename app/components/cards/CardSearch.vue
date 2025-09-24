@@ -86,7 +86,7 @@ const searchText = computed(() => {
   return 'Chercher dans les catégories sélectionnées...';
 });
 
-const debouncedFetchFiles = useDebounceFn(fetchFiles, 400);
+const debouncedFetchFiles = useDebounceFn(fetchFiles, 800);
 
 function getTargettedFolders(): string[] {
   // If user is searching by name and no folders are selected, return all folders for the current game
