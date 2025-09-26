@@ -11,12 +11,18 @@
     "no_category_found": "Aucune catégorie trouvée.",
     "proxy": "Proxy",
     "search_category": "Chercher une catégorie...",
+    "search_within_all_categories": "Rechercher dans toutes les catégories ...",
+    "search_within_category": "Rechercher dans {catégorie} ...",
+    "search_within_selected_categories": "Rechercher dans les catégories sélectionnées ...",
     "select_categories": "Sélectionner des catégories...",
     "unknown_category": "Catégorie inconnue"
   },
   "header": {
     "games": "Jeux",
     "select_game": "Sélectionner un jeu"
+  },
+  "meta": {
+    "description": "Carton Camp est l’application idéale pour imprimer des proxys de cartes. Créez et personnalisez facilement des proxys de haute qualité pour plusieurs jeux de cartes."
   },
   "nav": {
     "brand": "Carton Club",

@@ -12,12 +12,18 @@
     "official": "Official",
     "proxy": "Proxy",
     "search_category": "Search for a category...",
+    "search_within_all_categories": "Search within all categories...",
+    "search_within_category": "Search within {category}...",
+    "search_within_selected_categories": "Search within selected categories...",
     "select_categories": "Select categories...",
     "unknown_category": "Unknown category"
   },
   "header": {
     "games": "Games",
     "select_game": "Select a game"
+  },
+  "meta": {
+    "description": "Carton Camp is the ultimate proxy printing app for card game enthusiasts. Easily create and print high-quality proxies across multiple trading card games with customizable layouts and seamless design tools."
   },
   "nav": {
     "brand": "Carton Club",

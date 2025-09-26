@@ -77,13 +77,13 @@ const { stop: stopBottomObserver } = useIntersectionObserver(
 );
 
 const searchText = computed(() => {
-  if (foldersIds.value.length === 0) return 'Selectionner des catégories...';
+  if (foldersIds.value.length === 0) return $t('drives.search_within_all_categories');
   if (foldersIds.value.length === 1) {
     const folder = currentGameFolders.value.find(f => f.id === foldersIds.value[0]);
-    return folder ? `Chercher dans ${folder.name}...` : 'Erreur';
+    return folder ? $t('drives.search_within_category', { category: folder.name }) : 'Erreur';
   }
-  if (foldersIds.value.length === currentGameFolders.value.length) return `Chercher dans ${getGameDisplayName(selectedGame.value)}...`;
-  return 'Chercher dans les catégories sélectionnées...';
+  if (foldersIds.value.length === currentGameFolders.value.length) return  $t('drives.search_within_category', { category: getGameDisplayName(selectedGame.value) });
+  return $t('drives.search_within_selected_categories');
 });
 
 const debouncedFetchFiles = useDebounceFn(fetchFiles, 800);
