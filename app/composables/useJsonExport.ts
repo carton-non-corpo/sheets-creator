@@ -39,7 +39,7 @@ export const useJsonExport = () => {
   }
 
   /**
-   * Imports sheet from JSON file and replaces current sheet
+   * Imports sheet from JSON file and adds cards to current sheet
    */
   function importSheetsAsJson(): void {
     const input = document.createElement('input');
@@ -54,9 +54,19 @@ export const useJsonExport = () => {
       reader.onload = e => {
         try {
           const jsonContent = e.target?.result as string;
-          const sheet = JSON.parse(jsonContent) as Sheet;
+          const importedSheet = JSON.parse(jsonContent) as Sheet;
           const sheetStore = useSheetStore();
-          sheetStore.sheet = sheet;
+
+          // Initialize sheet if it doesn't exist
+          sheetStore.initializeSheet();
+
+          // Add each card from imported sheet to current sheet
+          importedSheet.content.forEach(importedCard => {
+            // Add the card the number of times specified by its quantity
+            for (let i = 0; i < importedCard.quantity; i++) {
+              sheetStore.addCard(importedCard);
+            }
+          });
         } catch {
           alert('Invalid JSON file');
         }
