@@ -74,6 +74,11 @@ export const usePdfExport = () => {
         width: 100%;
         height: 100%;
       }
+
+      .cards-grid-bleed-1mm {
+        grid-template-columns: repeat(3, ${CARD_WIDTH_MM + 2}mm);
+        grid-template-rows: repeat(3, ${CARD_HEIGHT_MM + 2}mm);
+      }
       
       /* Individual card slot styling */
       .card-slot {
@@ -192,7 +197,7 @@ export const usePdfExport = () => {
 
     return `
       <div class="page">
-        <div class="cards-grid">
+        <div class="cards-grid ${pageData.bleed > 0 ? `cards-grid-bleed-${pageData.bleed}mm` : ''}">
           ${pageData.cards.map(card => generateCardHtml(card)).join('')}
           ${emptySlotsHtml}
         </div>
