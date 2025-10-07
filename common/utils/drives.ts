@@ -2427,8 +2427,18 @@ const optcgFolders: GameFolders[] = [
 
 const riftboundFolders: GameFolders[] = [
   {
-    id: '1gkCbbN20nH4ySnt-BfgFus8QcuYzu0SP',
-    name: 'Riftbound Origin',
+    id: '16-BXyrd0lGjy-4CB8K1arj9XeIq0PhSD',
+    name: 'Riftbound Origins',
+    bleed: 0,
+    author: 'Riftbound',
+    decklist: '',
+    origin: SetOrigin.OFFICIAL,
+    subCategory: null,
+    game: Game.RIFTBOUND,
+  },
+  {
+    id: '15X1UAp42k1gBA0_A1EwEtYDcH2iNHqFd',
+    name: 'Riftbound Origins - Proving Grounds',
     bleed: 0,
     author: 'Riftbound',
     decklist: '',
