@@ -74,14 +74,15 @@ function switchLanguage() {
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink
-            to="/decks"
-            class="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium  transition-colors"
+          <a
+            href="/decks"
+            class="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium  transition-colors opacity-50 cursor-not-allowed"
             :class="$route.path === '/decks' ? 'bg-blue-50 text-blue-700' : 'text-gray-600 hover:bg-blue-50 hover:text-blue-900'"
+            disabled
           >
             <Folders class="w-4 h-4" />
             <span>{{ $t('nav.decks') }}</span>
-          </NuxtLink>
+          </a>
         </li>
       </ul>
     </div>

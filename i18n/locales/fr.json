@@ -12,7 +12,7 @@
     "proxy": "Proxy",
     "search_category": "Chercher une catégorie...",
     "search_within_all_categories": "Rechercher dans toutes les catégories ...",
-    "search_within_category": "Rechercher dans {catégorie} ...",
+    "search_within_category": "Rechercher dans {category} ...",
     "search_within_selected_categories": "Rechercher dans les catégories sélectionnées ...",
     "select_categories": "Sélectionner des catégories...",
     "unknown_category": "Catégorie inconnue"

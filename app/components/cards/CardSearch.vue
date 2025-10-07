@@ -170,7 +170,7 @@ onUnmounted(() => {
       <DrivesCombobox v-model="foldersIds" :folders="currentGameFolders" class="w-full" />
 
       <NuxtLink
-        v-if="foldersIds.length === 1"
+        v-if="foldersIds.length === 1 && folderDecklistLink"
         :to="folderDecklistLink"
         :disabled="!folderDecklistLink"
         target="_blank"

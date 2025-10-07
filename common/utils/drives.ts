@@ -1269,7 +1269,7 @@ const mtgFolders: GameFolders[] = [
   },
   {
     id: '1iXqkzhD0yaHDA6G0I4VxZbJJCXPpuLsz',
-    name: 'YuGiOh, The Ur Dragon',
+    name: 'YuGiOh - The Ur Dragon',
     bleed: 1,
     author: 'OctavioPrisca',
     decklist: 'https://docs.google.com/spreadsheets/d/1WnLD3WMFdlkHIH8dRmgK0HqYNcOS80Na1QcGPVQkSlI/edit?gid=0#gid=0',
