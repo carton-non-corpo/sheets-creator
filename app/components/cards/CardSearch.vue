@@ -3,7 +3,7 @@ import { Input } from '~/components/ui/input';
 import { useDebounceFn, useIntersectionObserver } from '@vueuse/core';
 import type { EnhancedFile } from '~~/common/types/drive';
 import { ScrollArea } from '~/components/ui/scroll-area';
-import CardSelector from '~/components/cards/CardSelector.vue';
+import CardShowcase from '~/components/cards/CardShowcase.vue';
 import { getGameDisplayName } from '~~/common/utils/games';
 import { Separator } from '~/components/ui/separator';
 import { LoaderCircle } from 'lucide-vue-next';
@@ -191,11 +191,10 @@ onUnmounted(() => {
 
     <ScrollArea ref="scrollContainer" class="h-[calc(100vh-12.5rem)]">
       <div v-if="!loading">
-        <!-- Top sentinel for future bidirectional scrolling -->
         <div ref="sentinelTop" class="h-1"></div>
 
         <div class="grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-3">
-          <CardSelector
+          <CardShowcase
             v-for="card in loadedItems"
             :key="card.id"
             :card="card"
