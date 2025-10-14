@@ -8,6 +8,15 @@ import { getGameDisplayName } from '~~/common/utils/games';
 import { Separator } from '~/components/ui/separator';
 import { LoaderCircle } from 'lucide-vue-next';
 
+const props = defineProps<{
+  getCardQuantity: (cardId: string) => number
+}>();
+
+const emit = defineEmits<{
+  addCard: [card: EnhancedFile]
+  removeCard: [cardId: string]
+}>();
+
 const gameStore = useGameStore();
 const { selectedGame, currentGameFolders } = storeToRefs(gameStore);
 
@@ -198,6 +207,9 @@ onUnmounted(() => {
             v-for="card in loadedItems"
             :key="card.id"
             :card="card"
+            :quantity="props.getCardQuantity(card.id)"
+            @add-card="emit('addCard', $event)"
+            @remove-card="emit('removeCard', $event)"
           />
         </div>
 
