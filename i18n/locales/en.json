@@ -1,4 +1,22 @@
 {
+  "common": {
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+  "deck": {
+    "create_a_new_deck": "Create a new deck",
+    "delete_confirmation_message": "Are you sure you want to delete {name} ?",
+    "delete_confirmation_title": "Delete deck",
+    "local_decks": "Decks in my browser",
+    "no_carton_club_decks": "Carton Club has no deck for this game.",
+    "no_local_decks": "No decks in the browser for selected game.",
+    "section": {
+      "add_deck_to_sheets": "Add deck to sheets",
+      "deck_name_placeholder": "Name of the deck",
+      "import_from_json": "Import Deck",
+      "no_deck_selected": "No deck selected."
+    }
+  },
   "decks": {
     "content": "Decks page content.",
     "title": "Decks"

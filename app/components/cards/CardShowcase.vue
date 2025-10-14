@@ -6,23 +6,26 @@ import { useCardStore } from '~/stores/card';
 
 const props = defineProps<{
   card: EnhancedFile
+  quantity?: number
 }>();
 
-const sheetStore = useSheetStore();
-const { addCard, removeCard, getCardQuantity } = sheetStore;
+const emit = defineEmits<{
+  addCard: [card: EnhancedFile]
+  removeCard: [cardId: string]
+}>();
 
 const cardStore = useCardStore();
 const { openCardDetails } = cardStore;
 
-const quantity = computed(() => getCardQuantity(props.card.id));
+const quantity = computed(() => props.quantity || 0);
 
 function increment() {
-  addCard(props.card);
+  emit('addCard', props.card);
 }
 
 function decrement() {
   if (quantity.value > 0) {
-    removeCard(props.card.id);
+    emit('removeCard', props.card.id);
   }
 }
 
@@ -37,8 +40,8 @@ function goToWebLink() {
 <template>
   <div
     class="group relative h-full w-full min-h-36 cursor-pointer"
-    @click="addCard(props.card)"
-    @contextmenu.prevent="removeCard(props.card.id)"
+    @click="increment"
+    @contextmenu.prevent="decrement"
   >
     <div v-if="props.card.thumbnailLink" class="w-full h-auto">
       <img
