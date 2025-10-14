@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Home, Folders, Printer, Languages } from 'lucide-vue-next';
+import { Home, Printer, Languages } from 'lucide-vue-next';
 import { storeToRefs } from 'pinia';
 import { useGameStore } from '~/stores/game';
 import { Game } from '~~/common/types/games';
@@ -73,7 +73,7 @@ function switchLanguage() {
             <span>{{ $t('nav.sheets') }}</span>
           </NuxtLink>
         </li>
-        <li>
+        <!-- <li>
           <a
             href="/decks"
             class="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium  transition-colors opacity-50 cursor-not-allowed"
@@ -83,7 +83,7 @@ function switchLanguage() {
             <Folders class="w-4 h-4" />
             <span>{{ $t('nav.decks') }}</span>
           </a>
-        </li>
+        </li> -->
       </ul>
     </div>
 

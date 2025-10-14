@@ -39,7 +39,8 @@
   },
   "sheet": {
     "display": {
-      "no_image": "No image"
+      "no_image": "No image",
+      "no_name": "No name"
     },
     "preview": {
       "cards": "card | card | cards",
@@ -60,7 +61,14 @@
       "import_from_json": "Import sheets",
       "landmarks": "Landmarks",
       "preview": "Preview",
-      "preview_and_export": "Preview and Export"
+      "preview_and_export": "Preview and Export",
+      "table_view": "Table view"
+    },
+    "table": {
+      "actions": "Actions",
+      "image": "Image",
+      "name": "Name",
+      "quantity": "Quantity"
     }
   }
 }

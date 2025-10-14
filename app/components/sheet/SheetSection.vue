@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { Switch } from '~/components/ui/switch';
-import { Label } from '~/components/ui/label';
 import { Button } from '~/components/ui/button';
-import { Search, Upload } from 'lucide-vue-next';
+import { Search, Upload, Grid2X2, TableProperties } from 'lucide-vue-next';
 import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext, PaginationEllipsis } from '~/components/ui/pagination';
 import { useResizeObserver } from '@vueuse/core';
 
@@ -11,10 +9,16 @@ const { sheet } = storeToRefs(sheetStore);
 
 const { importSheetsAsJson } = useJsonExport();
 
-const landmarks = ref<boolean>(true);
+type Layout = 'sheet' | 'table';
+
+const layout = ref<Layout>('sheet');
 const currentPage = ref<number>(1);
 const previewDialogOpen = ref<boolean>(false);
 const cardsPerPage = 9; // 3x3 grid
+
+function setLayout(newLayout: Layout) {
+  layout.value = newLayout;
+}
 
 // Template ref for the sheet container
 const sheetContainer = ref<HTMLElement>();
@@ -147,12 +151,21 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
 </script>
 
 <template>
-  <div class="h-full flex flex-col gap-4 p-4">
+  <div class="h-full flex flex-col gap-8 p-4">
     <div class="flex justify-between gap-3">
       <div class="flex items-center gap-3">
-        <div class="flex items-center space-x-2">
-          <Switch id="landmarks" v-model="landmarks" class="cursor-pointer" />
-          <Label for="landmarks" class="cursor-pointer">{{ $t('sheet.section.landmarks') }}</Label>
+        <div class="flex items-center justify-center gap-0.25">
+          <Button variant="outline" class="cursor-pointer border-r-0 rounded-r-none rounded-l-full" @click="setLayout('sheet')">
+            <Grid2X2 :class="{'opacity-50': layout !== 'sheet'}"/>
+          </Button>
+          <div class="z-1 w-[1px] h-6 -mx-1 bg-foreground/50"></div>
+          <Button
+            variant="outline"
+            class="cursor-pointer border-l-0 rounded-r-full rounded-l-none"
+            @click="setLayout('table')"
+          >
+            <TableProperties :class="{'opacity-50': layout !== 'table'}" />
+          </Button>
         </div>
       </div>
 
@@ -169,18 +182,23 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
     </div>
 
     <!-- Sheet container with ref for size tracking -->
-    <div ref="sheetContainer" class="flex-1 flex items-center justify-center min-h-0">
+    <div v-if="layout === 'sheet'" ref="sheetContainer" class="flex-1 flex items-center justify-center min-h-0">
       <SheetDisplay
         :scale="responsiveScale"
-        :show-landmarks="landmarks"
+        :show-landmarks="true"
         :show-placeholders="true"
         :cards="paginatedCards"
         :bleed="pageBleed"
       />
     </div>
 
+    <!-- Table view -->
+    <div v-else-if="layout === 'table'" class="flex flex-1 min-h-0 px-4 mb-4">
+      <SheetDataTable :cards="sheet?.content || []" />
+    </div>
+
     <Pagination
-      v-if="sheet && totalCards > 0"
+      v-if="sheet && totalCards > 0 && layout === 'sheet'"
       :items-per-page="cardsPerPage"
       :total="totalPages * cardsPerPage"
       :default-page="currentPage"
@@ -213,7 +231,7 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
     </Pagination>
 
     <!-- Empty state -->
-    <div v-if="!sheet || totalCards === 0" class="flex items-center justify-center text-center">
+    <div v-if="(!sheet || totalCards === 0) && layout === 'sheet'" class="flex items-center justify-center text-center">
       <div class="text-muted-foreground">
         <p class="text-lg">{{ $t('sheet.section.empty') }}</p>
         <p class="text-sm mt-2">{{ $t('sheet.section.empty_hint') }}</p>
