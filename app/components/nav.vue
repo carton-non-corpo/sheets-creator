@@ -46,13 +46,18 @@ function switchLanguage() {
     <!-- Game Selector -->
     <div class="p-4">
       <Select v-model="selectedGame">
-        <SelectTrigger class="w-full">
+        <SelectTrigger class="w-full cursor-pointer">
           <SelectValue :placeholder="$t('header.select_game')" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
             <SelectLabel>{{ $t('header.games') }}</SelectLabel>
-            <SelectItem v-for="g in Game" :key="g" :value="g">
+            <SelectItem
+              v-for="g in Game"
+              :key="g"
+              :value="g"
+              class="cursor-pointer"
+            >
               {{ getGameDisplayName(g) }}
             </SelectItem>
           </SelectGroup>

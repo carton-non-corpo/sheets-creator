@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { Button } from '~/components/ui/button';
-import { Search, Upload, Grid2X2, TableProperties } from 'lucide-vue-next';
+import { Search, Upload, Grid2X2, TableProperties, ChevronsUpDown } from 'lucide-vue-next';
 import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext, PaginationEllipsis } from '~/components/ui/pagination';
+import { Combobox, ComboboxAnchor, ComboboxGroup, ComboboxItem, ComboboxList, ComboboxTrigger } from '~/components/ui/combobox';
 import { useResizeObserver } from '@vueuse/core';
 
 const sheetStore = useSheetStore();
@@ -10,14 +11,25 @@ const { sheet } = storeToRefs(sheetStore);
 const { importSheetsAsJson } = useJsonExport();
 
 type Layout = 'sheet' | 'table';
-
 const layout = ref<Layout>('sheet');
+
+type ImportOption = { function: () => void; label: string;};
+const importOptions = [
+  { function: importSheetsAsJson, label: $t('sheet.section.import_from_json') },
+  { function: openDecklistImport, label: $t('sheet.section.import_from_decklist') },
+];
+
 const currentPage = ref<number>(1);
 const previewDialogOpen = ref<boolean>(false);
+const decklistImportDialogOpen = ref<boolean>(false);
 const cardsPerPage = 9; // 3x3 grid
 
 function setLayout(newLayout: Layout) {
   layout.value = newLayout;
+}
+
+function openDecklistImport() {
+  decklistImportDialogOpen.value = true;
 }
 
 // Template ref for the sheet container
@@ -170,10 +182,30 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
       </div>
 
       <div class="flex gap-3">
-        <Button variant="outline" class="cursor-pointer" @click="importSheetsAsJson">
-          <Upload />
-          {{ $t('sheet.section.import_from_json') }}
-        </Button>
+        <Combobox by="label" @update:model-value="(value: any) => (value as ImportOption)?.function?.()">
+          <ComboboxAnchor as-child>
+            <ComboboxTrigger as-child class="w-fit">
+              <Button variant="outline" class="justify-between cursor-pointer">
+                <Upload class="mr-2" />
+                {{ $t('sheet.section.import_sheets') }}
+                <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+            </ComboboxTrigger>
+          </ComboboxAnchor>
+
+          <ComboboxList class="w-fit">
+            <ComboboxGroup>
+              <ComboboxItem
+                v-for="option in importOptions"
+                :key="option.label"
+                :value="option"
+                class="cursor-pointer"
+              >
+                {{ option.label }}
+              </ComboboxItem>
+            </ComboboxGroup>
+          </ComboboxList>
+        </Combobox>
         <Button class="cursor-pointer" @click="previewDialogOpen = true">
           <Search />
           {{ $t('sheet.section.preview_and_export') }}
@@ -240,5 +272,8 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
 
     <!-- Sheet Preview Dialog -->
     <SheetPreview v-model:open="previewDialogOpen" />
+
+    <!-- Decklist Import Dialog -->
+    <SheetDecklistImport v-model:open="decklistImportDialogOpen" />
   </div>
 </template>

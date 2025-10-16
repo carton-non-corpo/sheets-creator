@@ -18,6 +18,12 @@
     "select_categories": "Select categories...",
     "unknown_category": "Unknown category"
   },
+  "global": {
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "decklist": "Decklist",
+    "game": "Game"
+  },
   "header": {
     "games": "Games",
     "select_game": "Select a game"
@@ -58,7 +64,10 @@
       "export_all": "Export all",
       "export_as_json": "Export as Json",
       "export_current": "Export current page",
-      "import_from_json": "Import sheets",
+      "import_from_decklist": "Import from a decklist",
+      "import_from_decklist_description": "Select a game and paste the decklist in the expected format to start the import.",
+      "import_from_json": "Import from JSON file",
+      "import_sheets": "Import sheets",
       "landmarks": "Landmarks",
       "preview": "Preview",
       "preview_and_export": "Preview and Export",
