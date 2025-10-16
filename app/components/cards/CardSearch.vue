@@ -15,7 +15,7 @@ const loading = ref(false);
 const error = ref<string | null>(null);
 const searchQuery = ref('');
 const files = ref<EnhancedFile[]>([]);
-const foldersIds = ref<string[]>([]);
+const folderIds = ref<string[]>([]);
 
 // Viewport-based loading
 const scrollContainer = ref<HTMLElement>();
@@ -32,8 +32,8 @@ const sortedCards = computed((): EnhancedFile[] => {
 });
 
 const folderDecklistLink = computed(() => {
-  if (foldersIds.value.length !== 1) return '';
-  const folder = currentGameFolders.value.find(f => f.id === foldersIds.value[0]);
+  if (folderIds.value.length !== 1) return '';
+  const folder = currentGameFolders.value.find(f => f.id === folderIds.value[0]);
   if (!folder) return '';
   return folder.decklist || '';
 });
@@ -77,12 +77,12 @@ const { stop: stopBottomObserver } = useIntersectionObserver(
 );
 
 const searchText = computed(() => {
-  if (foldersIds.value.length === 0) return $t('drives.search_within_all_categories');
-  if (foldersIds.value.length === 1) {
-    const folder = currentGameFolders.value.find(f => f.id === foldersIds.value[0]);
+  if (folderIds.value.length === 0) return $t('drives.search_within_all_categories');
+  if (folderIds.value.length === 1) {
+    const folder = currentGameFolders.value.find(f => f.id === folderIds.value[0]);
     return folder ? $t('drives.search_within_category', { category: folder.name }) : 'Erreur';
   }
-  if (foldersIds.value.length === currentGameFolders.value.length) return  $t('drives.search_within_category', { category: getGameDisplayName(selectedGame.value) });
+  if (folderIds.value.length === currentGameFolders.value.length) return  $t('drives.search_within_category', { category: getGameDisplayName(selectedGame.value) });
   return $t('drives.search_within_selected_categories');
 });
 
@@ -90,16 +90,16 @@ const debouncedFetchFiles = useDebounceFn(fetchFiles, 800);
 
 function getTargettedFolders(): string[] {
   // If user is searching by name and no folders are selected, return all folders for the current game
-  if (foldersIds.value.length === 0 && searchQuery.value.length >= 3) {
+  if (folderIds.value.length === 0 && searchQuery.value.length >= 3) {
     return currentGameFolders.value.map(folder => folder.id);
   }
-  return foldersIds.value;
+  return folderIds.value;
 }
 
 async function fetchFiles() {
   if (loading.value) return;
 
-  if (!foldersIds.value.length && searchQuery.value.length < 3) {
+  if (!folderIds.value.length && searchQuery.value.length < 3) {
     files.value = [];
     return;
   }
@@ -111,7 +111,7 @@ async function fetchFiles() {
     const ids = getTargettedFolders();
     const params = new URLSearchParams({
       name: searchQuery.value,
-      foldersIds: ids.join(','),
+      folderIds: ids.join(','),
     });
     const res = await fetch(`/api/v1/drive-files?${params.toString()}`);
     const data = await res.json();
@@ -129,15 +129,15 @@ async function fetchFiles() {
   }
 };
 
-function presetFoldersIds() {
+function presetfolderIds() {
   if (currentGameFolders.value.length >= 5) {
-    foldersIds.value = [];
+    folderIds.value = [];
     return;
   }
-  foldersIds.value = currentGameFolders.value.map(folder => folder.id);
+  folderIds.value = currentGameFolders.value.map(folder => folder.id);
 };
 
-watch(foldersIds, () => {
+watch(folderIds, () => {
   nextTick(() => debouncedFetchFiles());
 });
 
@@ -147,7 +147,7 @@ watch(searchQuery, () => {
 
 watch(selectedGame, () => {
   nextTick(() => debouncedFetchFiles());
-  presetFoldersIds();
+  presetfolderIds();
   searchQuery.value = '';
 }, { immediate: true });
 
@@ -167,10 +167,10 @@ onUnmounted(() => {
 <template>
   <div class="flex flex-col gap-2 p-4 h-full">
     <div class="flex items-center gap-3">
-      <DrivesCombobox v-model="foldersIds" :folders="currentGameFolders" class="w-full" />
+      <DrivesCombobox v-model="folderIds" :folders="currentGameFolders" class="w-full" />
 
       <NuxtLink
-        v-if="foldersIds.length === 1 && folderDecklistLink"
+        v-if="folderIds.length === 1 && folderDecklistLink"
         :to="folderDecklistLink"
         :disabled="!folderDecklistLink"
         target="_blank"
