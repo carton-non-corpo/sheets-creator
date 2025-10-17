@@ -14,6 +14,7 @@ type Layout = 'sheet' | 'table';
 const layout = ref<Layout>('sheet');
 
 type ImportOption = { function: () => void; label: string;};
+const selectedImportOption = ref<ImportOption | null>(null);
 const importOptions = [
   { function: importSheetsAsJson, label: $t('sheet.section.import_from_json') },
   { function: openDecklistImport, label: $t('sheet.section.import_from_decklist') },
@@ -30,6 +31,17 @@ function setLayout(newLayout: Layout) {
 
 function openDecklistImport() {
   decklistImportDialogOpen.value = true;
+}
+
+function handleImportOptionSelect(value: unknown) {
+  const option = value as ImportOption | null;
+  if (option?.function) {
+    option.function();
+    // Reset the selection so it can be triggered again
+    nextTick(() => {
+      selectedImportOption.value = null;
+    });
+  }
 }
 
 // Template ref for the sheet container
@@ -182,11 +194,11 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
       </div>
 
       <div class="flex gap-3">
-        <Combobox by="label" @update:model-value="(value: any) => (value as ImportOption)?.function?.()">
+        <Combobox v-model="selectedImportOption" by="label" @update:model-value="handleImportOptionSelect">
           <ComboboxAnchor as-child>
             <ComboboxTrigger as-child class="w-fit">
               <Button variant="outline" class="justify-between cursor-pointer">
-                <Upload class="mr-2" />
+                <Upload />
                 {{ $t('sheet.section.import_sheets') }}
                 <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>

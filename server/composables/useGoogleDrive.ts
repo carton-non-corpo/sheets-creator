@@ -105,7 +105,7 @@ class GoogleDriveClient {
     try {
       this.config = {
         scopes: ['https://www.googleapis.com/auth/drive.readonly'],
-        timeout: 30000,
+        timeout: 15000, // Reduced from 30s to 15s to prevent long hangs
         retryAttempts: 3,
         retryDelay: 1000,
         ...config,
@@ -261,12 +261,40 @@ class GoogleDriveClient {
   async executeApiCall<T>(
     operation: string,
     apiCall: () => Promise<T>,
+    maxRetries: number = 3,
   ): Promise<T> {
-    try {
-      return await apiCall();
-    } catch (error) {
-      return await this.handleApiError(error, operation);
+    let lastError: unknown;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        return await apiCall();
+      } catch (error) {
+        lastError = error;
+
+        // Don't retry on authentication errors
+        if (error && typeof error === 'object' && 'code' in error && error.code === 401) {
+          console.error(`❌ Authentication error on attempt ${attempt}, not retrying`);
+          break;
+        }
+
+        // Don't retry on final attempt
+        if (attempt === maxRetries) {
+          console.error(`❌ Final attempt ${attempt} failed for ${operation}`);
+          break;
+        }
+
+        // Calculate exponential backoff delay
+        const baseDelay = 1000; // 1 second
+        const delay = baseDelay * Math.pow(2, attempt - 1) + Math.random() * 1000; // Add jitter
+
+        console.warn(`⚠️ Attempt ${attempt}/${maxRetries} failed for ${operation}, retrying in ${Math.round(delay)}ms...`);
+        console.warn('⚠️ Error:', error instanceof Error ? error.message : String(error));
+
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
     }
+
+    return await this.handleApiError(lastError, operation);
   }
 }
 
@@ -470,29 +498,47 @@ export const useGoogleDrive = () => {
 
     // If we have multiple folders, search each one separately and merge results
     if (searchOptions.folderIds && searchOptions.folderIds.length > 1) {
-      console.log(`🔍 Searching across ${searchOptions.folderIds.length} folders separately`);
+      console.log(`🔍 Searching across ${searchOptions.folderIds.length} folders with controlled concurrency`);
 
       const allFiles: drive_v3.Schema$File[] = [];
       const allQueries: string[] = [];
 
-      // Search each folder in parallel for better performance
-      const searchPromises = searchOptions.folderIds.map(folderId =>
-        searchFilesInFolder(folderId, {
-          query: searchOptions.query,
-          mimeTypes: searchOptions.mimeTypes,
-          maxResults: searchOptions.maxResults, // Each folder can contribute up to maxResults
-          orderBy: searchOptions.orderBy,
-          fields: searchOptions.fields,
-          includeImages: searchOptions.includeImages,
-        }),
-      );
+      // Process folders in smaller batches to avoid overwhelming the API
+      const folderBatchSize = 10; // Search max 10 folders at once
 
-      const results = await Promise.all(searchPromises);
+      for (let i = 0; i < searchOptions.folderIds.length; i += folderBatchSize) {
+        const folderBatch = searchOptions.folderIds.slice(i, i + folderBatchSize);
+        console.log(`📁 Processing folder batch ${Math.floor(i / folderBatchSize) + 1}/${Math.ceil(searchOptions.folderIds.length / folderBatchSize)} (${folderBatch.length} folders)`);
 
-      // Merge all results
-      for (const result of results) {
-        allFiles.push(...result.files);
-        allQueries.push(result.query);
+        // Search this batch of folders in parallel
+        const batchPromises = folderBatch.map(async folderId => {
+          try {
+            return await searchFilesInFolder(folderId, {
+              query: searchOptions.query,
+              mimeTypes: searchOptions.mimeTypes,
+              maxResults: Math.ceil(searchOptions.maxResults! / searchOptions.folderIds!.length), // Distribute maxResults across folders
+              orderBy: searchOptions.orderBy,
+              fields: searchOptions.fields,
+              includeImages: searchOptions.includeImages,
+            });
+          } catch (error) {
+            console.error(`❌ Failed to search folder ${folderId}:`, error);
+            return { files: [], query: '', totalFiles: 0, searchedFolders: [folderId], queries: [] };
+          }
+        });
+
+        const batchResults = await Promise.all(batchPromises);
+
+        // Merge batch results
+        for (const result of batchResults) {
+          allFiles.push(...result.files);
+          allQueries.push(result.query);
+        }
+
+        // Add delay between folder batches to prevent rate limiting
+        if (i + folderBatchSize < searchOptions.folderIds.length) {
+          await new Promise(resolve => setTimeout(resolve, 200));
+        }
       }
 
       // Remove duplicates based on file ID (in case same file appears in multiple folders)

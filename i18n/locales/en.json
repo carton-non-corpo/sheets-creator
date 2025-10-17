@@ -1,6 +1,12 @@
 {
   "decks": {
     "content": "Decks page content.",
+    "import": {
+      "cards_found": "{count} card found | {count} card found | {count} cards found",
+      "go_to_previous_setp": "Go back",
+      "import_cards": "Import Cards",
+      "no_cards_found": "No cards found"
+    },
     "title": "Decks"
   },
   "drives": {
@@ -65,7 +71,7 @@
       "export_as_json": "Export as Json",
       "export_current": "Export current page",
       "import_from_decklist": "Import from a decklist",
-      "import_from_decklist_description": "Select a game and paste the decklist in the expected format to start the import.",
+      "import_from_decklist_description": "Select a game and paste the decklist in the expected format to start the import. This action takes time.",
       "import_from_json": "Import from JSON file",
       "import_sheets": "Import sheets",
       "landmarks": "Landmarks",
@@ -75,9 +81,10 @@
     },
     "table": {
       "actions": "Actions",
+      "card_suggestions": "Card Suggestions",
       "image": "Image",
       "name": "Name",
-      "quantity": "Quantity"
+      "quantity": "Qty"
     }
   }
 }

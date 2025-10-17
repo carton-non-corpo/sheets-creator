@@ -17,6 +17,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '~/components/ui/tooltip';
+import { Badge } from '~/components/ui/badge';
 
 defineProps<{
   cards: Array<SheetContentCard>;
@@ -65,16 +66,16 @@ function handleCardAddition(card: SheetContentCard) {
             </TableRow>
             <TableRow v-for="card in cards" :key="card.id">
               <TableCell class="font-medium w-[100px]">
-                {{ card.quantity }}
+                <Badge variant="secondary">{{ card.quantity }}</Badge>
               </TableCell>
               <TableCell class="w-[120px]">
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger as-child>
-                      <div class="w-16 h-16 border rounded overflow-hidden">
+                      <div class="h-20 w-16 border rounded">
                         <img
-                          v-if="card.imageUrl"
-                          :src="card.imageUrl"
+                          v-if="card.thumbnailLink"
+                          :src="card.thumbnailLink"
                           :alt="card.name || 'Card image'"
                           class="w-full h-full object-cover"
                           @error="console.log('Image failed to load:', card.imageUrl)"
@@ -88,7 +89,7 @@ function handleCardAddition(card: SheetContentCard) {
                       </div>
                     </TooltipTrigger>
                     <TooltipContent v-if="card.imageUrl" side="right" class="p-2">
-                      <div class="w-36 h-48 rounded overflow-hidden">
+                      <div class="h-50 w-36 rounded overflow-hidden">
                         <img
                           :src="card.imageUrl"
                           :alt="card.name || 'Card image'"
