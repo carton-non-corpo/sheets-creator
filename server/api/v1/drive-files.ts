@@ -4,30 +4,30 @@ import type { DriveSearchOptions } from '../../composables/useGoogleDrive';
 export default defineEventHandler(async event => {
   const query = getQuery(event);
   const nameFilter = query.name as string;
-  const foldersIds = query.foldersIds as string || '';
+  const folderIds = query.folderIds as string || '';
 
   try {
     const { searchFiles } = useGoogleDrive();
 
     // Parse folder IDs from query parameter (comma-separated string)
-    let folderIds: string[] = [];
-    if (foldersIds) {
-      folderIds = foldersIds.split(',').map(id => id.trim()).filter(Boolean);
+    let toSearchFolderIds: string[] = [];
+    if (folderIds) {
+      toSearchFolderIds = folderIds.split(',').map(id => id.trim()).filter(Boolean);
     }
 
     // Remove duplicates
-    folderIds = [...new Set(folderIds)];
+    toSearchFolderIds = [...new Set(toSearchFolderIds)];
 
     // Fallback to default folder if none provided
     const config = useRuntimeConfig();
-    if (folderIds.length === 0 && config.googleDriveFolderId) {
-      folderIds = [config.googleDriveFolderId];
+    if (toSearchFolderIds.length === 0 && config.googleDriveFolderId) {
+      toSearchFolderIds = [config.googleDriveFolderId];
     }
 
     // Build search options
     const searchOptions: DriveSearchOptions = {
       query: nameFilter,
-      folderIds: folderIds.length > 0 ? folderIds : undefined,
+      folderIds: toSearchFolderIds.length > 0 ? toSearchFolderIds : undefined,
       includeImages: true,
       maxResults: 1000,
       orderBy: 'name',

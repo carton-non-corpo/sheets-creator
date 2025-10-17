@@ -109,18 +109,22 @@ async function fetchFiles() {
 
   try {
     const ids = getTargettedFolders();
-    const params = new URLSearchParams({
-      name: searchQuery.value,
-      folderIds: ids.join(','),
-    });
-    const res = await fetch(`/api/v1/drive-files?${params.toString()}`);
-    const data = await res.json();
 
-    if (data.error) {
-      error.value = data.error;
-    } else {
-      files.value = data.files || [];
-    }
+    const data = await $fetch('/api/v1/drive-files', {
+      query: {
+        name: searchQuery.value,
+        folderIds: ids.join(','),
+      },
+    });
+
+    // Filter and map the results to match EnhancedFile type
+    files.value = (data.files || [])
+      .filter(file => file.id && file.name)
+      .map(file => ({
+        ...file,
+        id: file.id!,
+        name: file.name!,
+      }));
   } catch (err) {
     error.value = 'Failed to fetch files';
     console.error('Error fetching files:', err);
