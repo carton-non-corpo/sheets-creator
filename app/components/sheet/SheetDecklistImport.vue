@@ -31,6 +31,16 @@ const isLoadingSuggestions = ref(false);
 const cardSuggestions = ref<CardSuggestion[]>([]);
 const selectedCards = ref<Map<string, string>>(new Map()); // Map cardName -> selectedFileId
 
+const canGoToNextStep = computed(() => {
+  if (toImportFromGame.value !== Game.OPTCG && toImportFromGame.value !== Game.RIFTBOUND) {
+    return false;
+  }
+
+  return dialogStep.value === 'input'
+    ? decklistText.value.trim().length > 0 && !isLoadingSuggestions.value
+    : cardSuggestions.value.length > 0;
+});
+
 const gamePlaceholder = computed(() => {
   switch (toImportFromGame.value) {
   case Game.OPTCG:
@@ -38,7 +48,7 @@ const gamePlaceholder = computed(() => {
   case Game.RIFTBOUND:
     return '2 Primal Strength\n1 Qiyana, Victorious\n12 Calm Rune';
   default:
-    return '';
+    return 'This game is not supported yet.';
   }
 });
 
@@ -192,7 +202,7 @@ watch(() => props.open, newValue => {
         <Button variant="outline" class="cursor-pointer" @click="goToPreviousStep">
           {{ dialogStep === 'input' ? $t('global.cancel') : $t('decks.import.go_to_previous_setp') }}
         </Button>
-        <Button :disabled="dialogStep === 'input' && (!decklistText.trim() || isLoadingSuggestions)" class="cursor-pointer" @click="goToNextStep">
+        <Button :disabled="!canGoToNextStep" class="cursor-pointer" @click="goToNextStep">
           <LoaderCircle v-if="isLoadingSuggestions" class="animate-spin size-4" />
           {{ dialogStep === 'selection' ? $t('decks.import.import_cards') : $t('global.continue')}}
         </Button>
