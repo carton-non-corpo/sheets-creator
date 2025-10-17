@@ -42,6 +42,7 @@ export default defineNuxtConfig({
       { code: 'fr', language: 'fr-FR', file: 'fr.json' },
     ],
     defaultLocale: 'en',
+    strategy: 'no_prefix',
   },
 
   shadcn: {
