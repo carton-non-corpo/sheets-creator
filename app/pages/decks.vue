@@ -5,6 +5,10 @@ import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '~/componen
 
 const { t } = useI18n();
 
+// Deck store logic
+const deckStore = useDeckStore();
+const { addCard, removeCard, getCardQuantity } = deckStore;
+
 useSeoMeta({
   title: `Carton Camp ${t('nav.decks')}`,
   ogTitle: `Carton Camp ${t('nav.decks')}`,
@@ -21,12 +25,19 @@ useSeoMeta({
       direction="horizontal"
       class="w-full"
     >
-      <ResizablePanel :default-size="40" :min-size="32">
-        <CardSearch />
+      <div class="w-fit h-full border-r">
+        <DeckSelection />
+      </div>
+      <ResizablePanel :default-size="40" :min-size="24">
+        <CardSearch
+          :get-card-quantity="getCardQuantity"
+          @add-card="addCard"
+          @remove-card="removeCard"
+        />
       </ResizablePanel>
       <ResizableHandle with-handle />
-      <ResizablePanel :default-size="60" :min-size="40">
-        fezjvbcenikn
+      <ResizablePanel :default-size="60" :min-size="48">
+        <DeckSection />
       </ResizablePanel>
     </ResizablePanelGroup>
 

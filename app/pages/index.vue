@@ -6,6 +6,10 @@ import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '~/componen
 
 const { t } = useI18n();
 
+// Sheet store logic
+const sheetStore = useSheetStore();
+const { addCard, removeCard, getCardQuantity } = sheetStore;
+
 useSeoMeta({
   title: `Carton Camp - ${t('nav.sheets')}`,
   ogTitle: `Carton Camp - ${t('nav.sheets')}`,
@@ -23,7 +27,11 @@ useSeoMeta({
       class="w-full"
     >
       <ResizablePanel :default-size="40" :min-size="32">
-        <CardSearch />
+        <CardSearch
+          :get-card-quantity="getCardQuantity"
+          @add-card="addCard"
+          @remove-card="removeCard"
+        />
       </ResizablePanel>
       <ResizableHandle with-handle />
       <ResizablePanel :default-size="60" :min-size="40">
