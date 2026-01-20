@@ -1888,6 +1888,16 @@ const optcgFolders: GameFolders[] = [
     game: Game.OPTCG,
   },
   {
+    id: "1BcPsD0iJHMrzqqeIEeowdcQ_kzQJElxe",
+    name: "OP14 SPs",
+    bleed: 0,
+    author: "One Piece Card Game",
+    decklist: "",
+    origin: SetOrigin.OFFICIAL,
+    subCategory: null,
+    game: Game.OPTCG,
+  },
+  {
     id: "16SFMaskqpCdAtG7pDiwlz5dbHlNNeW2c",
     name: "OP15",
     bleed: 0,
