@@ -3,6 +3,7 @@ export enum Game {
   MTG = 'mtg',
   RIFTBOUND = 'riftbound',
   FFTCG = 'fftcg',
+  SORCERY = 'sorcery',
 }
 
 export enum SetOrigin {
@@ -51,4 +52,9 @@ export interface GameFoldersFFTCG extends GameFolder {
   game: Game.FFTCG;
 }
 
-export type GameFolders = GameFoldersMTG | GameFoldersRiftbound | GameFoldersOPTCG | GameFoldersFFTCG;
+export interface GameFoldersSorcery extends GameFolder {
+  subCategory: null;
+  game: Game.SORCERY;
+}
+
+export type GameFolders = GameFoldersMTG | GameFoldersRiftbound | GameFoldersOPTCG | GameFoldersFFTCG | GameFoldersSorcery;

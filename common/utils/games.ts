@@ -10,6 +10,8 @@ export function getGameDisplayName(game: Game): string {
     return 'Riftbound';
   case Game.FFTCG:
     return 'Final Fantasy TCG';
+  case Game.SORCERY:
+    return 'Sorcery TCG';
   default:
     return 'Unknown Game';
   }
