@@ -98,7 +98,9 @@
       "rounds_description": "Total de rondes suisses à simuler (typiquement 9-11 pour les régionaux)"
     },
     "deck_name_placeholder": "Nom du deck",
+    "export": "Exporter la configuration",
     "go_to_next_step": "Passer à l'étape suivante",
+    "import": "Importer une configuration",
     "matchup_configuration": {
       "playing_as": "En jouant",
       "tip_description": "Les taux de victoire sont automatiquement inversés. Lorsque vous modifiez un matchup, le matchup opposé se met à jour automatiquement.",

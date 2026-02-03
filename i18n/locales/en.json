@@ -98,7 +98,9 @@
       "rounds_description": "Total Swiss rounds to simulate (typically 9-11 for regionals)"
     },
     "deck_name_placeholder": "Deck name",
+    "export": "Export Configuration",
     "go_to_next_step": "Go To Next Step",
+    "import": "Import Configuration",
     "matchup_configuration": {
       "playing_as": "Playing As",
       "tip_description": "Win rates are automatically mirrored. When you change a matchup, the opposite matchup updates automatically.",

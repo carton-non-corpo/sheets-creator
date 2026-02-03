@@ -1,9 +1,12 @@
 <script lang="ts" setup>
+import { Upload, Download } from 'lucide-vue-next';
 import TournamentSimulationThread from '~/components/tournament-simulation/TournamentSimulationThread.vue';
 import Button from '~/components/ui/button/Button.vue';
 import type { Deck, MatchupWinRates } from '~~/common/types/tournament';
+import type { TournamentSimulationConfig } from '~/composables/useTournamentSimulationExport';
 
 const { t } = useI18n();
+const { exportConfiguration, importConfiguration } = useTournamentSimulationExport();
 
 const currentStep = ref(0);
 
@@ -147,12 +150,47 @@ const nextStep = () => {
     currentStep.value++;
   }
 };
+
+const handleExport = () => {
+  const config: TournamentSimulationConfig = {
+    decks: startingDecks.value,
+    matchupWinRates: matchupWinRates.value,
+    numberOfRounds: numberOfRounds.value,
+    numberOfPlayers: numberOfPlayers.value,
+  };
+  exportConfiguration(config);
+};
+
+const handleImport = () => {
+  importConfiguration(
+    config => {
+      startingDecks.value = config.decks;
+      matchupWinRates.value = config.matchupWinRates;
+      numberOfRounds.value = config.numberOfRounds;
+      numberOfPlayers.value = config.numberOfPlayers;
+    },
+    error => {
+      alert(error);
+    },
+  );
+};
 </script>
 
 <template>
   <NuxtLayout>
     <ClientOnly>
       <div class="flex flex-col p-4 gap-6">
+        <div class="flex justify-end gap-2">
+          <Button variant="outline" size="sm" @click="handleImport">
+            <Upload class="w-4 h-4 mr-2" />
+            {{ t('tournament_simulation.import') }}
+          </Button>
+          <Button variant="outline" size="sm" @click="handleExport">
+            <Download class="w-4 h-4 mr-2" />
+            {{ t('tournament_simulation.export') }}
+          </Button>
+        </div>
+
         <TournamentSimulationThread
           :steps="steps"
           :current-step="currentStep"
