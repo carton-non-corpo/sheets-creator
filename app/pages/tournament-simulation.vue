@@ -1,0 +1,242 @@
+<script lang="ts" setup>
+import TournamentSimulationThread from '~/components/tournament-simulation/TournamentSimulationThread.vue';
+import Button from '~/components/ui/button/Button.vue';
+import type { Deck, MatchupWinRates } from '~~/common/types/tournament';
+
+const { t } = useI18n();
+
+const currentStep = ref(0);
+
+const steps = computed(() => [
+  {
+    key: 'decks',
+    label: t('tournament_simulation.steps.decks_definition'),
+    completed: isDecksStepCompleted.value,
+  },
+  {
+    key: 'matchups_configuration',
+    label: t('tournament_simulation.steps.matchups_configuration'),
+    completed: isMatchupsStepCompleted.value,
+  },
+  {
+    key: 'results',
+    label: t('tournament_simulation.steps.results'),
+    completed: false,
+  },
+]);
+
+const startingDecks = ref<Deck[]>([
+  { name: 'Imu', presence: 22 },
+  { name: 'Ace', presence: 18 },
+  { name: 'ST29', presence: 15 },
+  { name: 'Mihawk', presence: 12 },
+  { name: 'UP Luffy', presence: 11 },
+  { name: 'Boa', presence: 10 },
+  { name: 'Vivi', presence: 7 },
+  { name: 'Croco', presence: 5 },
+]);
+
+const matchupWinRates = ref<MatchupWinRates>({
+  'Imu': {
+    'Ace': 40,
+    'ST29': 55,
+    'Mihawk': 65,
+    'UP Luffy': 50,
+    'Boa': 60,
+    'Vivi': 58,
+    'Croco': 70,
+  },
+  'Ace': {
+    'Imu': 60,
+    'ST29': 45,
+    'Mihawk': 70,
+    'UP Luffy': 55,
+    'Boa': 50,
+    'Vivi': 52,
+    'Croco': 65,
+  },
+  'ST29': {
+    'Imu': 45,
+    'Ace': 55,
+    'Mihawk': 50,
+    'UP Luffy': 52,
+    'Boa': 55,
+    'Vivi': 60,
+    'Croco': 58,
+  },
+  'Mihawk': {
+    'Imu': 35,
+    'Ace': 30,
+    'ST29': 50,
+    'UP Luffy': 40,
+    'Boa': 55,
+    'Vivi': 48,
+    'Croco': 52,
+  },
+  'UP Luffy': {
+    'Imu': 50,
+    'Ace': 45,
+    'ST29': 48,
+    'Mihawk': 60,
+    'Boa': 52,
+    'Vivi': 55,
+    'Croco': 62,
+  },
+  'Boa': {
+    'Imu': 40,
+    'Ace': 50,
+    'ST29': 45,
+    'Mihawk': 45,
+    'UP Luffy': 48,
+    'Vivi': 50,
+    'Croco': 55,
+  },
+  'Vivi': {
+    'Imu': 42,
+    'Ace': 48,
+    'ST29': 40,
+    'Mihawk': 52,
+    'UP Luffy': 45,
+    'Boa': 50,
+    'Croco': 60,
+  },
+  'Croco': {
+    'Imu': 30,
+    'Ace': 35,
+    'ST29': 42,
+    'Mihawk': 48,
+    'UP Luffy': 38,
+    'Boa': 45,
+    'Vivi': 40,
+  },
+});
+
+const numberOfRounds = ref(10);
+const numberOfPlayers = ref(1024);
+
+const isDecksStepCompleted = computed(() => {
+  const totalPresence = startingDecks.value.reduce((sum, deck) => sum + deck.presence, 0);
+  return totalPresence === 100;
+});
+
+const isMatchupsStepCompleted = computed(() => {
+  // Check if all matchups are configured
+  if (startingDecks.value.length === 0) return false;
+
+  for (const deckA of startingDecks.value) {
+    for (const deckB of startingDecks.value) {
+      if (deckA.name !== deckB.name) {
+        if (matchupWinRates.value[deckA.name]?.[deckB.name] === undefined) {
+          return false;
+        }
+      }
+    }
+  }
+
+  return true;
+});
+
+const goToStep = (step: number) => {
+  if (step < currentStep.value || steps.value[currentStep.value]?.completed) {
+    currentStep.value = step;
+  }
+};
+
+const nextStep = () => {
+  if (currentStep.value < steps.value.length - 1 && steps.value[currentStep.value]?.completed) {
+    currentStep.value++;
+  }
+};
+</script>
+
+<template>
+  <NuxtLayout>
+    <ClientOnly>
+      <div class="flex flex-col p-4 gap-6">
+        <TournamentSimulationThread
+          :steps="steps"
+          :current-step="currentStep"
+          @go-to-step="goToStep"
+        />
+
+        <div v-if="currentStep === 0" class="flex flex-col gap-4">
+          <TournamentSimulationDecksDefinition v-model="startingDecks" />
+          <Button class="w-fit" :disabled="!isDecksStepCompleted" @click="nextStep">
+            {{ t('tournament_simulation.go_to_next_step') }}
+          </Button>
+        </div>
+
+        <div v-else-if="currentStep === 1" class="flex flex-col gap-4">
+          <TournamentSimulationMatchupConfiguration
+            v-model="matchupWinRates"
+            :decks="startingDecks"
+          />
+
+          <div class="border rounded-lg p-4 bg-gray-50">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  {{ t('tournament_simulation.configuration.number_of_rounds') }}
+                </label>
+                <div class="flex items-center gap-4">
+                  <input
+                    v-model.number="numberOfRounds"
+                    type="number"
+                    min="1"
+                    max="15"
+                    class="w-24 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                  <span class="text-sm text-gray-600">
+                    {{ t('tournament_simulation.configuration.rounds_description') }}
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  {{ t('tournament_simulation.configuration.number_of_players') }}
+                </label>
+                <div class="flex items-center gap-4">
+                  <input
+                    v-model.number="numberOfPlayers"
+                    type="number"
+                    min="8"
+                    max="1000"
+                    step="8"
+                    class="w-24 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                  <span class="text-sm text-gray-600">
+                    {{ t('tournament_simulation.configuration.players_description') }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-2">
+            <Button variant="outline" @click="currentStep--">
+              {{ t('tournament_simulation.previous_step') }}
+            </Button>
+            <Button class="w-fit" :disabled="!isMatchupsStepCompleted" @click="nextStep">
+              {{ t('tournament_simulation.go_to_next_step') }}
+            </Button>
+          </div>
+        </div>
+
+        <div v-else-if="currentStep === 2" class="flex flex-col gap-4">
+          <TournamentSimulationResults
+            :decks="startingDecks"
+            :matchup-win-rates="matchupWinRates"
+            :number-of-rounds="numberOfRounds"
+            :number-of-players="numberOfPlayers"
+          />
+          <div class="flex gap-2">
+            <Button variant="outline" @click="currentStep--">
+              {{ t('tournament_simulation.previous_step') }}
+            </Button>
+          </div>
+        </div>
+      </div>
+    </ClientOnly>
+  </NuxtLayout>
+</template>

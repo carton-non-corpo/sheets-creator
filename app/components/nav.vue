@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Home, Printer, Languages } from 'lucide-vue-next';
+import { Home, Printer, Languages, GitFork } from 'lucide-vue-next';
 import { storeToRefs } from 'pinia';
 import { useGameStore } from '~/stores/game';
 import { Game } from '~~/common/types/games';
@@ -71,11 +71,21 @@ function switchLanguage() {
         <li>
           <NuxtLink
             to="/"
-            class="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium  transition-colors"
+            class="flex items-center gap-2 px-3 py-2.5 rounded-md text-sm font-medium  transition-colors"
             :class="$route.path === '/' ? 'bg-blue-50 text-blue-700' : 'text-gray-600 hover:bg-blue-50 hover:text-blue-900'"
           >
             <Printer class="w-4 h-4" />
             <span>{{ $t('nav.sheets') }}</span>
+          </NuxtLink>
+        </li>
+        <li>
+          <NuxtLink
+            to="/tournament-simulation"
+            class="flex items-center gap-2 px-3 py-2.5 rounded-md text-sm font-medium  transition-colors"
+            :class="$route.path === '/tournament-simulation' ? 'bg-blue-50 text-blue-700' : 'text-gray-600 hover:bg-blue-50 hover:text-blue-900'"
+          >
+            <GitFork class="w-4 h-4" />
+            <span>{{ $t('nav.tournament_simulation') }}</span>
           </NuxtLink>
         </li>
         <!-- <li>

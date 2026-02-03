@@ -43,7 +43,8 @@
     "discord": "Discord",
     "github": "Github",
     "language": "Langue",
-    "sheets": "Planches"
+    "sheets": "Planches",
+    "tournament_simulation": "Simulteur de tournoi"
   },
   "pagination": {
     "next": "Suivant",
@@ -86,5 +87,65 @@
       "name": "Nom",
       "quantity": "Qté"
     }
+  },
+  "tournament_simulation": {
+    "add_deck": "Ajouter un deck",
+    "coming_soon": "Bientôt disponible",
+    "configuration": {
+      "number_of_players": "Nombre de joueurs",
+      "number_of_rounds": "Nombre de rondes",
+      "players_description": "Total de joueurs dans le tournoi",
+      "rounds_description": "Total de rondes suisses à simuler (typiquement 9-11 pour les régionaux)"
+    },
+    "deck_name_placeholder": "Nom du deck",
+    "go_to_next_step": "Passer à l'étape suivante",
+    "matchup_configuration": {
+      "playing_as": "En jouant",
+      "tip_description": "Les taux de victoire sont automatiquement inversés. Lorsque vous modifiez un matchup, le matchup opposé se met à jour automatiquement.",
+      "tip_title": "Astuce :",
+      "title": "Taux de victoire des matchups"
+    },
+    "presence": "présence",
+    "previous_step": "Étape précédente",
+    "remove_deck": "Supprimer le deck",
+    "results": {
+      "avg_win_rate": "Taux de victoire moy.",
+      "avg_wins": "Victoires moy.",
+      "deck_name": "Deck",
+      "deck_performance": "Aperçu des performances par deck",
+      "description": "Simulation de {rounds} rondes suisses avec {players} joueurs",
+      "players": "Joueurs",
+      "rank": "Rang",
+      "record": "Bilan",
+      "run_new_simulation": "Relancer une simulation",
+      "score_distribution": {
+        "description": "Visualisez la répartition des decks à n'importe quel score pour une ronde spécifique",
+        "no_players": "Aucun joueur à ce score",
+        "percentage": "Pourcentage",
+        "round": "Ronde",
+        "round_number": "Ronde {round}",
+        "title": "Analyse de la Distribution des Scores",
+        "total_players": "{count} joueur à ce score | {count} joueur à ce score | {count} joueurs à ce score",
+        "wins": "Victoires",
+        "wins_number": "{wins} victoire | {wins} victoire | {wins} victoires"
+      },
+      "title": "Résultats du tournoi",
+      "top_8": "Top 8",
+      "top_16": "Top 16",
+      "top_32": "Top 32",
+      "top_64": "Top 64",
+      "top_128": "Top 128",
+      "top_256": "Top 256",
+      "top_standings": "Top 32 du classement",
+      "win_rate": "Taux de victoire"
+    },
+    "steps": {
+      "decks_definition": "Définition des decks",
+      "matchups_configuration": "Configuration des Matchups",
+      "results": "Résultats"
+    },
+    "warning_current": "(Actuel : {total}%)",
+    "warning_duplicate_deck_names": "Tous les decks doivent avoir des noms uniques",
+    "warning_total_not_100": "La présence totale doit être égale à 100%"
   }
 }

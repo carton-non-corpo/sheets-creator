@@ -12,6 +12,7 @@ const route = useRoute();
 const pageName = computed(() => {
   if (route.path === '/') return $t('nav.sheets');
   if (route.path === '/decks') return $t('nav.decks');
+  if (route.path === '/tournament-simulation') return $t('nav.tournament_simulation');
   return '';
 });
 </script>
