@@ -29,90 +29,10 @@ const steps = computed(() => [
 ]);
 
 const startingDecks = ref<Deck[]>([
-  { name: 'Imu', presence: 22 },
-  { name: 'Ace', presence: 18 },
-  { name: 'ST29', presence: 15 },
-  { name: 'Mihawk', presence: 12 },
-  { name: 'UP Luffy', presence: 11 },
-  { name: 'Boa', presence: 10 },
-  { name: 'Vivi', presence: 7 },
-  { name: 'Croco', presence: 5 },
+  { name: 'Deck', presence: 0 },
 ]);
 
-const matchupWinRates = ref<MatchupWinRates>({
-  'Imu': {
-    'Ace': 40,
-    'ST29': 55,
-    'Mihawk': 65,
-    'UP Luffy': 50,
-    'Boa': 60,
-    'Vivi': 58,
-    'Croco': 70,
-  },
-  'Ace': {
-    'Imu': 60,
-    'ST29': 45,
-    'Mihawk': 70,
-    'UP Luffy': 55,
-    'Boa': 50,
-    'Vivi': 52,
-    'Croco': 65,
-  },
-  'ST29': {
-    'Imu': 45,
-    'Ace': 55,
-    'Mihawk': 50,
-    'UP Luffy': 52,
-    'Boa': 55,
-    'Vivi': 60,
-    'Croco': 58,
-  },
-  'Mihawk': {
-    'Imu': 35,
-    'Ace': 30,
-    'ST29': 50,
-    'UP Luffy': 40,
-    'Boa': 55,
-    'Vivi': 48,
-    'Croco': 52,
-  },
-  'UP Luffy': {
-    'Imu': 50,
-    'Ace': 45,
-    'ST29': 48,
-    'Mihawk': 60,
-    'Boa': 52,
-    'Vivi': 55,
-    'Croco': 62,
-  },
-  'Boa': {
-    'Imu': 40,
-    'Ace': 50,
-    'ST29': 45,
-    'Mihawk': 45,
-    'UP Luffy': 48,
-    'Vivi': 50,
-    'Croco': 55,
-  },
-  'Vivi': {
-    'Imu': 42,
-    'Ace': 48,
-    'ST29': 40,
-    'Mihawk': 52,
-    'UP Luffy': 45,
-    'Boa': 50,
-    'Croco': 60,
-  },
-  'Croco': {
-    'Imu': 30,
-    'Ace': 35,
-    'ST29': 42,
-    'Mihawk': 48,
-    'UP Luffy': 38,
-    'Boa': 45,
-    'Vivi': 40,
-  },
-});
+const matchupWinRates = ref<MatchupWinRates>({});
 
 const numberOfRounds = ref(10);
 const numberOfPlayers = ref(1024);
@@ -179,23 +99,26 @@ const handleImport = () => {
 <template>
   <NuxtLayout>
     <ClientOnly>
-      <div class="flex flex-col p-4 gap-6">
-        <div class="flex justify-end gap-2">
-          <Button variant="outline" size="sm" @click="handleImport">
-            <Upload class="w-4 h-4 mr-2" />
-            {{ t('tournament_simulation.import') }}
-          </Button>
-          <Button variant="outline" size="sm" @click="handleExport">
-            <Download class="w-4 h-4 mr-2" />
-            {{ t('tournament_simulation.export') }}
-          </Button>
+      <div class="flex flex-col p-4 gap-4">
+        <div class="flex gap-4 justify-between">
+          <TournamentSimulationThread
+            :steps="steps"
+            :current-step="currentStep"
+            @go-to-step="goToStep"
+          />
+
+          <div class="flex justify-end gap-2">
+            <Button variant="outline" size="sm" @click="handleImport">
+              <Upload class="w-4 h-4 mr-2" />
+              {{ t('tournament_simulation.import') }}
+            </Button>
+            <Button variant="outline" size="sm" @click="handleExport">
+              <Download class="w-4 h-4 mr-2" />
+              {{ t('tournament_simulation.export') }}
+            </Button>
+          </div>
         </div>
 
-        <TournamentSimulationThread
-          :steps="steps"
-          :current-step="currentStep"
-          @go-to-step="goToStep"
-        />
 
         <div v-if="currentStep === 0" class="flex flex-col gap-4">
           <TournamentSimulationDecksDefinition v-model="startingDecks" />
