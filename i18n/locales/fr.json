@@ -92,6 +92,10 @@
     "add_deck": "Ajouter un deck",
     "coming_soon": "Bientôt disponible",
     "configuration": {
+      "best_of_one": "BO1",
+      "best_of_three": "BO3",
+      "match_format": "Format des matchs",
+      "match_format_description": "Le BO3 convertit les taux de victoire des matchups en taux de victoire au meilleur des 3",
       "number_of_players": "Nombre de joueurs",
       "number_of_rounds": "Nombre de rondes",
       "players_description": "Total de joueurs dans le tournoi",

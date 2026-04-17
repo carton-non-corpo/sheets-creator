@@ -20,12 +20,14 @@ const props = defineProps<{
   matchupWinRates: MatchupWinRates
   numberOfRounds?: number
   numberOfPlayers?: number
+  bestOfThree?: boolean
 }>();
 
 const { t } = useI18n();
 
 const numberOfRounds = computed(() => props.numberOfRounds ?? 10);
 const numberOfPlayers = computed(() => props.numberOfPlayers ?? 1024);
+const bestOfThree = computed(() => props.bestOfThree ?? false);
 
 const runSimulation = () => {
   return simulateSwissTournament(
@@ -33,6 +35,7 @@ const runSimulation = () => {
     props.matchupWinRates,
     numberOfRounds.value,
     numberOfPlayers.value,
+    bestOfThree.value,
   );
 };
 
@@ -69,6 +72,7 @@ const getWinRateColor = (winRate: number) => {
         </h2>
         <p class="text-sm text-gray-600 mt-1">
           {{ t('tournament_simulation.results.description', { rounds: numberOfRounds, players: numberOfPlayers }) }}
+          · {{ bestOfThree ? t('tournament_simulation.configuration.best_of_three') : t('tournament_simulation.configuration.best_of_one') }}
         </p>
       </div>
       <Button @click="runNewSimulation">

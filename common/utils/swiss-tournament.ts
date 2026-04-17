@@ -23,6 +23,15 @@ export interface SwissRoundResults {
 }
 
 /**
+ * Converts a single-game win rate (%) into a BO3 match win rate (%).
+ * Formula: p² · (3 − 2p) — probability of winning 2 games before the opponent does.
+ */
+function bo3MatchWinRate(gameWinRatePercent: number): number {
+  const p = gameWinRatePercent / 100;
+  return (p * p * (3 - 2 * p)) * 100;
+}
+
+/**
  * Simulates a Swiss-style tournament based on deck presence and matchup win rates
  */
 export function simulateSwissTournament(
@@ -30,6 +39,7 @@ export function simulateSwissTournament(
   matchupWinRates: MatchupWinRates,
   numberOfRounds: number = 10,
   playersPerDeck: number = 1024,
+  bestOfThree: boolean = false,
 ): SwissRoundResults {
   // Generate player pool based on deck presence
   const players: PlayerEntry[] = [];
@@ -133,7 +143,8 @@ export function simulateSwissTournament(
 
     // Simulate matches
     roundMatches.forEach(([player1, player2]) => {
-      const winRate = matchupWinRates[player1.deckName]?.[player2.deckName] ?? 50;
+      const gameWinRate = matchupWinRates[player1.deckName]?.[player2.deckName] ?? 50;
+      const winRate = bestOfThree ? bo3MatchWinRate(gameWinRate) : gameWinRate;
       const player1Wins = Math.random() * 100 < winRate;
 
       if (player1Wins) {

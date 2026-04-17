@@ -2,6 +2,7 @@
 import { Upload, Download } from 'lucide-vue-next';
 import TournamentSimulationThread from '~/components/tournament-simulation/TournamentSimulationThread.vue';
 import Button from '~/components/ui/button/Button.vue';
+import { Switch } from '~/components/ui/switch';
 import type { Deck, MatchupWinRates } from '~~/common/types/tournament';
 import type { TournamentSimulationConfig } from '~/composables/useTournamentSimulationExport';
 
@@ -36,6 +37,7 @@ const matchupWinRates = ref<MatchupWinRates>({});
 
 const numberOfRounds = ref(10);
 const numberOfPlayers = ref(1024);
+const bestOfThree = ref(false);
 
 const isDecksStepCompleted = computed(() => {
   const totalPresence = startingDecks.value.reduce((sum, deck) => sum + deck.presence, 0);
@@ -77,6 +79,7 @@ const handleExport = () => {
     matchupWinRates: matchupWinRates.value,
     numberOfRounds: numberOfRounds.value,
     numberOfPlayers: numberOfPlayers.value,
+    bestOfThree: bestOfThree.value,
   };
   exportConfiguration(config);
 };
@@ -88,6 +91,7 @@ const handleImport = () => {
       matchupWinRates.value = config.matchupWinRates;
       numberOfRounds.value = config.numberOfRounds;
       numberOfPlayers.value = config.numberOfPlayers;
+      bestOfThree.value = config.bestOfThree;
     },
     error => {
       alert(error);
@@ -171,6 +175,32 @@ const handleImport = () => {
                   </span>
                 </div>
               </div>
+
+              <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  {{ t('tournament_simulation.configuration.match_format') }}
+                </label>
+                <div class="flex items-center gap-4">
+                  <div class="flex items-center gap-2">
+                    <span
+                      class="text-sm font-medium"
+                      :class="bestOfThree ? 'text-gray-400' : 'text-gray-900'"
+                    >
+                      {{ t('tournament_simulation.configuration.best_of_one') }}
+                    </span>
+                    <Switch v-model="bestOfThree" />
+                    <span
+                      class="text-sm font-medium"
+                      :class="bestOfThree ? 'text-gray-900' : 'text-gray-400'"
+                    >
+                      {{ t('tournament_simulation.configuration.best_of_three') }}
+                    </span>
+                  </div>
+                  <span class="text-sm text-gray-600">
+                    {{ t('tournament_simulation.configuration.match_format_description') }}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -190,6 +220,7 @@ const handleImport = () => {
             :matchup-win-rates="matchupWinRates"
             :number-of-rounds="numberOfRounds"
             :number-of-players="numberOfPlayers"
+            :best-of-three="bestOfThree"
           />
           <div class="flex gap-2">
             <Button variant="outline" @click="currentStep--">

@@ -92,6 +92,10 @@
     "add_deck": "Add Deck",
     "coming_soon": "Coming soon",
     "configuration": {
+      "best_of_one": "BO1",
+      "best_of_three": "BO3",
+      "match_format": "Match Format",
+      "match_format_description": "BO3 converts matchup win rates into best-of-three match win rates",
       "number_of_players": "Number of Players",
       "number_of_rounds": "Number of Rounds",
       "players_description": "Total players in the tournament",

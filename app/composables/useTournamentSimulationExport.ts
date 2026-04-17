@@ -8,6 +8,7 @@ export interface TournamentSimulationConfig {
   matchupWinRates: MatchupWinRates;
   numberOfRounds: number;
   numberOfPlayers: number;
+  bestOfThree: boolean;
   version?: string; // For future compatibility
 }
 
@@ -42,6 +43,13 @@ export const useTournamentSimulationExport = () => {
     if (!obj.matchupWinRates || typeof obj.matchupWinRates !== 'object') return false;
     if (typeof obj.numberOfRounds !== 'number') return false;
     if (typeof obj.numberOfPlayers !== 'number') return false;
+
+    // Default older exports (pre-BO3) to BO1
+    if (obj.bestOfThree === undefined) {
+      obj.bestOfThree = false;
+    } else if (typeof obj.bestOfThree !== 'boolean') {
+      return false;
+    }
 
     // Validate deck structure
     for (const deck of obj.decks) {
