@@ -1494,6 +1494,17 @@ const mtgFolders: GameFolders[] = [
     subCategory: MTGSubCategory.FULL_DECK,
     game: Game.MTG,
   },
+  {
+    id: '1UMJLdIkkKWsZjc571IkJ13lo9xGa5Fi8',
+    name: 'Senji\'s Folder',
+    bleed: 1,
+    author: 'Senji',
+    decklist: '',
+    origin: SetOrigin.PROXY,
+    subCategory: null,
+    game: Game.MTG,
+  },
+
 ];
 
 const optcgFolders: GameFolders[] = [
@@ -1908,6 +1919,37 @@ const optcgFolders: GameFolders[] = [
     subCategory: null,
     game: Game.OPTCG,
   },
+  {
+    id: '1Tt4ne-ZTZrERn0_xSw324Md9EC5frOFB',
+    name: 'OP15 Alts',
+    bleed: 0,
+    author: 'One Piece Card Game',
+    decklist: '',
+    origin: SetOrigin.OFFICIAL,
+    subCategory: null,
+    game: Game.OPTCG,
+  },
+  {
+    id: '1VkpfTUX7kFRPBH3phLBtqvBiFqTX5aDc',
+    name: 'OP16',
+    bleed: 0,
+    author: 'One Piece Card Game',
+    decklist: '',
+    origin: SetOrigin.OFFICIAL,
+    subCategory: null,
+    game: Game.OPTCG,
+  },
+  {
+    id: '1qT7eushOA3NvPMHcPVkjXQwl7pJUw6du',
+    name: 'OP17',
+    bleed: 0,
+    author: 'One Piece Card Game',
+    decklist: '',
+    origin: SetOrigin.OFFICIAL,
+    subCategory: null,
+    game: Game.OPTCG,
+  },
+
 
   // Sub Sets
   {
@@ -2443,7 +2485,7 @@ const optcgFolders: GameFolders[] = [
     game: Game.OPTCG,
   },
   {
-    id: '1dYrWB8PEqbrsbw6hDxVEj6eJP31wN7Za',
+    id: '1Mw1yEGHShEYTPrN8yi4s2BKHrFIiwDcq',
     name: 'ST21',
     bleed: 0,
     author: 'One Piece Card Game',
@@ -2453,7 +2495,7 @@ const optcgFolders: GameFolders[] = [
     game: Game.OPTCG,
   },
   {
-    id: '10puThJtSgrb4qrA1M6GVBwAah3TIeqZG',
+    id: '1-n--f-7kJXq3j321HLWi7NJCr97xHwnG',
     name: 'ST21 Alts',
     bleed: 0,
     author: 'One Piece Card Game',
@@ -2535,6 +2577,36 @@ const optcgFolders: GameFolders[] = [
   {
     id: '1Y3U20ykH9FzmcbSGmkCZ_eluq_Daa1gZ',
     name: 'ST28',
+    bleed: 0,
+    author: 'One Piece Card Game',
+    decklist: '',
+    origin: SetOrigin.OFFICIAL,
+    subCategory: null,
+    game: Game.OPTCG,
+  },
+  {
+    id: '17Apsoi3XCrMlZIWKA8bH7GKgIT1gb0wM',
+    name: 'ST29',
+    bleed: 0,
+    author: 'One Piece Card Game',
+    decklist: '',
+    origin: SetOrigin.OFFICIAL,
+    subCategory: null,
+    game: Game.OPTCG,
+  },
+  {
+    id: '1C7CMisufccbPhJdMCW8lXcRQ8P5jD2OW',
+    name: 'ST29 Alts',
+    bleed: 0,
+    author: 'One Piece Card Game',
+    decklist: '',
+    origin: SetOrigin.OFFICIAL,
+    subCategory: null,
+    game: Game.OPTCG,
+  },
+  {
+    id: '1PkIi1KnzbNTo7WWYpzcbOXBhms_vYmMh',
+    name: 'ST30',
     bleed: 0,
     author: 'One Piece Card Game',
     decklist: '',
