@@ -6,7 +6,7 @@ import { Select, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectLa
 import { Textarea } from '~/components/ui/textarea';
 import { LoaderCircle, Upload } from 'lucide-vue-next';
 import { Game } from '~~/common/types/games';
-import { getGameDisplayName } from '~~/common/utils/games';
+import { getGameDisplayName, DECKLIST_SUPPORTED_GAMES } from '~~/common/utils/games';
 import type { CardSuggestion, DecklistImportResponse } from '~~/common/types/decklist-import';
 import SheetDecklistCardSelection from '~/components/sheet/SheetDecklistCardSelection.vue';
 
@@ -25,14 +25,17 @@ const sheetStore = useSheetStore();
 const { addCard } = sheetStore;
 
 const decklistText = ref('');
-const toImportFromGame = ref<Game | null>(selectedGame.value);
+const toImportFromGame = ref<Game | null>(
+  DECKLIST_SUPPORTED_GAMES.includes(selectedGame.value) ? selectedGame.value : null,
+);
 const dialogStep = ref<'input' | 'selection'>('input');
 const isLoadingSuggestions = ref(false);
 const cardSuggestions = ref<CardSuggestion[]>([]);
 const selectedCards = ref<Map<string, string>>(new Map()); // Map cardName -> selectedFileId
+const importError = ref<string | null>(null);
 
 const canGoToNextStep = computed(() => {
-  if (toImportFromGame.value !== Game.OPTCG && toImportFromGame.value !== Game.RIFTBOUND) {
+  if (!toImportFromGame.value || !DECKLIST_SUPPORTED_GAMES.includes(toImportFromGame.value)) {
     return false;
   }
 
@@ -58,6 +61,7 @@ async function loadCardSuggestions() {
   }
 
   isLoadingSuggestions.value = true;
+  importError.value = null;
 
   try {
     const response = await $fetch<DecklistImportResponse>('/api/v1/decklist-import', {
@@ -72,7 +76,7 @@ async function loadCardSuggestions() {
     cardSuggestions.value = response.suggestions;
   } catch (error) {
     console.error('Failed to parse decklist:', error);
-    // TODO: Show error message to user
+    importError.value = 'Failed to import decklist. Please try again.';
   } finally {
     isLoadingSuggestions.value = false;
   }
@@ -83,6 +87,8 @@ async function goToNextStep() {
     await loadCardSuggestions();
     if (cardSuggestions.value.length > 0) {
       dialogStep.value = 'selection';
+    } else if (!importError.value) {
+      importError.value = 'No cards found for the given decklist.';
     }
   } else if (dialogStep.value === 'selection') {
     // Add selected cards to sheet and close dialog
@@ -128,6 +134,8 @@ function resetDialog() {
   cardSuggestions.value = [];
   selectedCards.value.clear();
   isLoadingSuggestions.value = false;
+  importError.value = null;
+  toImportFromGame.value = DECKLIST_SUPPORTED_GAMES.includes(selectedGame.value) ? selectedGame.value : null;
 }
 
 function closeDialog() {
@@ -168,7 +176,7 @@ watch(() => props.open, newValue => {
               <SelectGroup>
                 <SelectLabel>{{ $t('header.games') }}</SelectLabel>
                 <SelectItem
-                  v-for="g in Game"
+                  v-for="g in DECKLIST_SUPPORTED_GAMES"
                   :key="g"
                   :value="g"
                   class="cursor-pointer"
@@ -188,6 +196,8 @@ watch(() => props.open, newValue => {
             :placeholder="gamePlaceholder"
           />
         </div>
+
+        <p v-if="importError" class="text-sm text-destructive">{{ importError }}</p>
       </div>
 
       <div v-else-if="dialogStep === 'selection'" class="max-h-[50vh] overflow-hidden">

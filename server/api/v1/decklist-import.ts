@@ -4,6 +4,7 @@ import type { CardSuggestion, DecklistImportPayload, DecklistImportResponse } fr
 import { Game } from '~~/common/types/games';
 import { useGoogleDrive } from '../../composables/useGoogleDrive';
 import { gameFolders } from '~~/common/utils/drives';
+import { DECKLIST_SUPPORTED_GAMES } from '~~/common/utils/games';
 
 export default defineEventHandler(async (event): Promise<DecklistImportResponse> => {
   if (event.method !== 'POST') {
@@ -19,6 +20,13 @@ export default defineEventHandler(async (event): Promise<DecklistImportResponse>
     throw createError({
       statusCode: 400,
       statusMessage: 'Missing game or decklist',
+    });
+  }
+
+  if (!DECKLIST_SUPPORTED_GAMES.includes(body.game)) {
+    throw createError({
+      statusCode: 422,
+      statusMessage: `Decklist import is not supported for ${body.game}`,
     });
   }
 
@@ -136,7 +144,8 @@ async function parseDecklist(game: Game, decklist: string): Promise<CardSuggesti
   case Game.RIFTBOUND:
     return parseRiftboundDecklist(decklist);
   default:
-    throw new Error(`Unsupported game: ${game}`);
+    // Should never be reached — unsupported games are rejected before the try block
+    throw new Error(`parseDecklist called with unsupported game: ${game}`);
   }
 }
 

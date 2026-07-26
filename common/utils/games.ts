@@ -1,5 +1,7 @@
 import { Game } from '../types/games';
 
+export const DECKLIST_SUPPORTED_GAMES: readonly Game[] = [Game.OPTCG, Game.RIFTBOUND];
+
 export function getGameDisplayName(game: Game): string {
   switch (game) {
   case Game.OPTCG:
