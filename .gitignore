@@ -28,3 +28,5 @@ logs
 
 # Google API credentials
 application_default_credentials.json
+# Local image payloads for the Drive uploader (not tracked)
+server/scripts/drive-uploader/input/

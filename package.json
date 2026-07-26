@@ -17,6 +17,7 @@
     "docker:build": "docker build -t nuxt-app .",
     "docker:run": "docker run -p 3000:3000 nuxt-app",
     "download:drive": "node --import tsx/esm server/scripts/drive-downloader/index.ts",
+    "upload:drive": "node --import tsx/esm server/scripts/drive-uploader/index.ts",
     "test:drive": "node --import tsx/esm tests/google-drive-test.js",
     "prepare": "husky"
   },
