@@ -3,6 +3,7 @@ import {
   MTGSubCategory,
   SetOrigin,
   type GameFolders,
+  type GameFoldersCyberpunkTCG,
 } from '../types/games';
 
 const mtgFolders: GameFolders[] = [
@@ -2780,10 +2781,24 @@ const sorceryFolders: GameFolders[] = [
   },
 ];
 
+const cyberpunkFolders: GameFoldersCyberpunkTCG[] = [
+  {
+    id: '1fz7KSi6hvjoApT9STu-1qOtG09U1IXRs',
+    name: 'Welcome to Night City',
+    bleed: 0,
+    author: 'Cyberpunk TCG',
+    decklist: '',
+    origin: SetOrigin.OFFICIAL,
+    subCategory: null,
+    game: Game.CYBERPUNK_TCG,
+  },
+];
+
 export const gameFolders: GameFolders[] = [
   ...mtgFolders,
   ...optcgFolders,
   ...riftboundFolders,
   ...finalfantasyFolders,
   ...sorceryFolders,
+  ...cyberpunkFolders,
 ];

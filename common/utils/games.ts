@@ -12,7 +12,11 @@ export function getGameDisplayName(game: Game): string {
     return 'Final Fantasy TCG';
   case Game.SORCERY:
     return 'Sorcery TCG';
-  default:
-    return 'Unknown Game';
+  case Game.CYBERPUNK_TCG:
+    return 'Cyberpunk TCG';
+  default: {
+    const exhaustiveCheck: never = game;
+    throw new Error(`Unhandled game in getGameDisplayName: ${exhaustiveCheck}`);
+  }
   }
 }

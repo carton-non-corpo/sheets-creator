@@ -4,6 +4,7 @@ export enum Game {
   RIFTBOUND = 'riftbound',
   FFTCG = 'fftcg',
   SORCERY = 'sorcery',
+  CYBERPUNK_TCG = 'cyberpunk_tcg',
 }
 
 export enum SetOrigin {
@@ -57,4 +58,9 @@ export interface GameFoldersSorcery extends GameFolder {
   game: Game.SORCERY;
 }
 
-export type GameFolders = GameFoldersMTG | GameFoldersRiftbound | GameFoldersOPTCG | GameFoldersFFTCG | GameFoldersSorcery;
+export interface GameFoldersCyberpunkTCG extends GameFolder {
+  subCategory: null;
+  game: Game.CYBERPUNK_TCG;
+}
+
+export type GameFolders = GameFoldersMTG | GameFoldersRiftbound | GameFoldersOPTCG | GameFoldersFFTCG | GameFoldersSorcery | GameFoldersCyberpunkTCG;
