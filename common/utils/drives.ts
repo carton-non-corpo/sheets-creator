@@ -2866,6 +2866,19 @@ const cyberpunkFolders: GameFoldersCyberpunkTCG[] = [
   },
 ];
 
+const narutoFolders: GameFolders[] = [
+  {
+    id: '16IsC9ww7-nUm6QhXT6hbBRQL6F68VyDj',
+    name: 'N01',
+    bleed: 0,
+    author: 'Bandai',
+    decklist: '',
+    origin: SetOrigin.OFFICIAL,
+    subCategory: null,
+    game: Game.NARUTO_TCG,
+  },
+];
+
 export const gameFolders: GameFolders[] = [
   ...mtgFolders,
   ...optcgFolders,
@@ -2873,4 +2886,5 @@ export const gameFolders: GameFolders[] = [
   ...finalfantasyFolders,
   ...sorceryFolders,
   ...cyberpunkFolders,
+  ...narutoFolders,
 ];

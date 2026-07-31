@@ -16,6 +16,8 @@ export function getGameDisplayName(game: Game): string {
     return 'Sorcery TCG';
   case Game.CYBERPUNK_TCG:
     return 'Cyberpunk TCG';
+  case Game.NARUTO_TCG:
+    return 'Naruto TCG';
   default: {
     const exhaustiveCheck: never = game;
     throw new Error(`Unhandled game in getGameDisplayName: ${exhaustiveCheck}`);
