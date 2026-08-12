@@ -37,7 +37,7 @@ function switchLanguage() {
 </script>
 
 <template>
-  <nav class="h-screen w-64 bg-white border-r border-gray-200 flex flex-col">
+  <nav class="h-screen w-56 bg-white border-r border-gray-200 flex flex-col">
     <!-- Brand -->
     <div class="p-6 border-b border-gray-100">
       <h1 class="font-bold text-lg text-gray-900">{{ $t('nav.brand') }}</h1>
