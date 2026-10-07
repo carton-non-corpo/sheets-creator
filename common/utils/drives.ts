@@ -1949,6 +1949,16 @@ const optcgFolders: GameFolders[] = [
     subCategory: null,
     game: Game.OPTCG,
   },
+  {
+    id: '1ceIKJ_c0CplcfcnDlrYRrpdipH-LzMgx',
+    name: 'OP18',
+    bleed: 0,
+    author: 'One Piece Card Game',
+    decklist: '',
+    origin: SetOrigin.OFFICIAL,
+    subCategory: null,
+    game: Game.OPTCG,
+  },
 
 
   // Sub Sets
@@ -2055,6 +2065,16 @@ const optcgFolders: GameFolders[] = [
   {
     id: '1AV2t8CA5do1S7xra7ORrJ4jZ38QsfmX1',
     name: 'EB04 Alts',
+    bleed: 0,
+    author: 'One Piece Card Game',
+    decklist: '',
+    origin: SetOrigin.OFFICIAL,
+    subCategory: null,
+    game: Game.OPTCG,
+  },
+  {
+    id: '1CQNXgPp6gKZAnmJzrNa-FYw53_4Us4cN',
+    name: 'EB05',
     bleed: 0,
     author: 'One Piece Card Game',
     decklist: '',
@@ -2818,6 +2838,26 @@ const riftboundFolders: GameFolders[] = [
   {
     id: '1IuvTkuxyK2nu1VuX_-gL2qVcuicjVL-D',
     name: 'Spiritforged',
+    bleed: 0,
+    author: 'Riftbound',
+    decklist: '',
+    origin: SetOrigin.OFFICIAL,
+    subCategory: null,
+    game: Game.RIFTBOUND,
+  },
+  {
+    id: '1X8LfFizj3it3JqjYzdHcTS5WHDKS6QLT',
+    name: 'Unleashed',
+    bleed: 0,
+    author: 'Riftbound',
+    decklist: '',
+    origin: SetOrigin.OFFICIAL,
+    subCategory: null,
+    game: Game.RIFTBOUND,
+  },
+  {
+    id: '1GalqD0T7ykaijKgy4su3ng0DwXEs1yeZ',
+    name: 'Vendetta',
     bleed: 0,
     author: 'Riftbound',
     decklist: '',
