@@ -2775,8 +2775,8 @@ const optcgFolders: GameFolders[] = [
 
   // Artworks
   {
-    id: '1zGyFa7_GRb_4NXyFW3S2pzd3I1ph5Rd6',
-    name: OPTCGSubCategory.ARTWORKS,
+    id: '1e2eiu0bIQTCNV1fRZrm21OK9rne1HgJ6',
+    name: 'Sunohara',
     bleed: 0,
     author: 'One Piece Card Game',
     decklist: '',
