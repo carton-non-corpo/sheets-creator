@@ -1,6 +1,8 @@
 import {
+  CardFormat,
   Game,
   MTGSubCategory,
+  OPTCGSubCategory,
   SetOrigin,
   type GameFolders,
   type GameFoldersCyberpunkTCG,
@@ -2769,6 +2771,19 @@ const optcgFolders: GameFolders[] = [
     origin: SetOrigin.OFFICIAL,
     subCategory: null,
     game: Game.OPTCG,
+  },
+
+  // Artworks
+  {
+    id: '1zGyFa7_GRb_4NXyFW3S2pzd3I1ph5Rd6',
+    name: OPTCGSubCategory.ARTWORKS,
+    bleed: 0,
+    author: 'One Piece Card Game',
+    decklist: '',
+    origin: SetOrigin.OFFICIAL,
+    subCategory: OPTCGSubCategory.ARTWORKS,
+    game: Game.OPTCG,
+    format: CardFormat.ARTWORK,
   },
 
   // Custom folders

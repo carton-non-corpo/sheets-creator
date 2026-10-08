@@ -5,6 +5,7 @@ import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
 import { Download, GalleryHorizontalEnd, Layers, Info } from 'lucide-vue-next';
+import { getCardsPerPage } from '~~/common/utils/card-formats';
 
 const props = defineProps<{
   open: boolean;
@@ -15,9 +16,9 @@ const emit = defineEmits<{
 }>();
 
 const sheetStore = useSheetStore();
-const { sheet } = storeToRefs(sheetStore);
+const { sheet, pages: allPages } = storeToRefs(sheetStore);
 
-const { cardsPerPage, exportAllPages } = usePdfExport();
+const { exportAllPages } = usePdfExport();
 
 const { exportSheetsAsJson } = useJsonExport();
 
@@ -28,57 +29,6 @@ const totalCards = computed(() => {
 
 const totalUniqueCards = computed(() => {
   return sheet.value?.content.length || 0;
-});
-
-// Create pages with bleed breaks
-const allPages = computed(() => {
-  if (!sheet.value) return [];
-
-  const pages = [];
-  const cards = [];
-
-  // Expand all cards with their quantities
-  for (const card of sheet.value.content) {
-    for (let i = 0; i < card.quantity; i++) {
-      cards.push({
-        ...card,
-        printIndex: cards.length,
-      });
-    }
-  }
-
-  if (cards.length === 0) return [];
-
-  let currentPage = [];
-  let currentBleed = cards[0]?.bleed ?? 0;
-
-  for (const card of cards) {
-    // If bleed changes or page is full, start a new page
-    if (card.bleed !== currentBleed || currentPage.length >= cardsPerPage) {
-      if (currentPage.length > 0) {
-        pages.push({
-          pageNumber: pages.length + 1,
-          cards: [...currentPage],
-          bleed: currentBleed ?? 0,
-        });
-      }
-      currentPage = [];
-      currentBleed = card.bleed ?? 0;
-    }
-
-    currentPage.push(card);
-  }
-
-  // Add the last page if it has cards
-  if (currentPage.length > 0) {
-    pages.push({
-      pageNumber: pages.length + 1,
-      cards: currentPage,
-      bleed: currentBleed ?? 0,
-    });
-  }
-
-  return pages;
 });
 
 function closeDialog() {
@@ -144,7 +94,7 @@ function closeDialog() {
               <h3 class="text-lg font-medium text-foreground">Page {{ page.pageNumber }}</h3>
               <div class="flex items-center gap-2">
                 <Badge variant="secondary">{{ page.bleed }}mm bleed</Badge>
-                <Badge variant="outline">{{ page.cards.length }}/{{ cardsPerPage }} {{ $t('sheet.preview.cards', page.cards.length) }}</Badge>
+                <Badge variant="outline">{{ page.cards.length }}/{{ getCardsPerPage(page.format) }} {{ $t('sheet.preview.cards', page.cards.length) }}</Badge>
               </div>
             </div>
 
@@ -155,6 +105,7 @@ function closeDialog() {
                   :show-landmarks="true"
                   :show-placeholders="false"
                   :bleed="page.bleed"
+                  :format="page.format"
                   :cards="page.cards"
                 />
               </div>

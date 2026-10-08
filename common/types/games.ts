@@ -14,6 +14,11 @@ export enum SetOrigin {
   PROXY = 'proxy',
 }
 
+export enum CardFormat {
+  STANDARD = 'standard', // 63 × 88 mm
+  ARTWORK = 'artwork', // 69 × 94 mm, sized to fit binder pockets
+}
+
 export interface GameFolder {
   id: string; // https://drive.google.com/drive/folders/${folder_id}
   name: string;
@@ -21,10 +26,15 @@ export interface GameFolder {
   author: string;
   decklist: string;
   origin: SetOrigin;
+  format?: CardFormat; // Defaults to CardFormat.STANDARD
+}
+
+export enum OPTCGSubCategory {
+  ARTWORKS = 'Artworks',
 }
 
 export interface GameFoldersOPTCG extends GameFolder {
-  subCategory: null;
+  subCategory: OPTCGSubCategory | null;
   game: Game.OPTCG;
 }
 

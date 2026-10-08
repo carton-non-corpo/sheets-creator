@@ -4,9 +4,11 @@ import { Search, Upload, Grid2X2, TableProperties, ChevronsUpDown } from 'lucide
 import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext, PaginationEllipsis } from '~/components/ui/pagination';
 import { Combobox, ComboboxAnchor, ComboboxGroup, ComboboxItem, ComboboxList, ComboboxTrigger } from '~/components/ui/combobox';
 import { useResizeObserver } from '@vueuse/core';
+import { CardFormat } from '~~/common/types/games';
+import { CARD_FORMAT_LAYOUTS } from '~~/common/utils/card-formats';
 
 const sheetStore = useSheetStore();
-const { sheet } = storeToRefs(sheetStore);
+const { sheet, pages: allPages } = storeToRefs(sheetStore);
 
 const { importSheetsAsJson } = useJsonExport();
 
@@ -23,7 +25,6 @@ const importOptions = [
 const currentPage = ref<number>(1);
 const previewDialogOpen = ref<boolean>(false);
 const decklistImportDialogOpen = ref<boolean>(false);
-const cardsPerPage = 9; // 3x3 grid
 
 function setLayout(newLayout: Layout) {
   layout.value = newLayout;
@@ -51,10 +52,6 @@ const sheetContainer = ref<HTMLElement>();
 const containerWidth = ref(0);
 const containerHeight = ref(0);
 
-// A4 dimensions in mm
-const A4_WIDTH_MM = 210;
-const A4_HEIGHT_MM = 297;
-
 // Convert mm to pixels (approximately 3.78 pixels per mm at 96 DPI)
 const MM_TO_PX = 3.78;
 
@@ -64,16 +61,17 @@ const responsiveScale = computed(() => {
     return 0.5; // fallback scale
   }
 
-  const a4WidthPx = A4_WIDTH_MM * MM_TO_PX;
-  const a4HeightPx = A4_HEIGHT_MM * MM_TO_PX;
+  const { pageWidth, pageHeight } = CARD_FORMAT_LAYOUTS[pageFormat.value];
+  const pageWidthPx = pageWidth * MM_TO_PX;
+  const pageHeightPx = pageHeight * MM_TO_PX;
 
   // Calculate scale to fit both width and height with some padding (20px on each side)
   const padding = 40; // 20px on each side
   const availableWidth = containerWidth.value - padding;
   const availableHeight = containerHeight.value - padding;
 
-  const scaleX = availableWidth / a4WidthPx;
-  const scaleY = availableHeight / a4HeightPx;
+  const scaleX = availableWidth / pageWidthPx;
+  const scaleY = availableHeight / pageHeightPx;
 
   // Use the smaller scale to ensure it fits in both dimensions
   const scale = Math.min(scaleX, scaleY);
@@ -101,57 +99,6 @@ const totalCards = computed(() => {
   return sheet.value.content.reduce((sum, card) => sum + card.quantity, 0);
 });
 
-// Create pages with bleed breaks for pagination
-const allPages = computed(() => {
-  if (!sheet.value) return [];
-
-  const pages = [];
-  const cards = [];
-
-  // Expand all cards with their quantities
-  for (const card of sheet.value.content) {
-    for (let i = 0; i < card.quantity; i++) {
-      cards.push({
-        ...card,
-        printIndex: cards.length,
-      });
-    }
-  }
-
-  if (cards.length === 0) return [];
-
-  let currentPageCards = [];
-  let currentBleed = cards[0]?.bleed;
-
-  for (const card of cards) {
-    // If bleed changes or page is full, start a new page
-    if (card.bleed !== currentBleed || currentPageCards.length >= cardsPerPage) {
-      if (currentPageCards.length > 0) {
-        pages.push({
-          pageNumber: pages.length + 1,
-          cards: [...currentPageCards],
-          bleed: currentBleed,
-        });
-      }
-      currentPageCards = [];
-      currentBleed = card.bleed;
-    }
-
-    currentPageCards.push(card);
-  }
-
-  // Add the last page if it has cards
-  if (currentPageCards.length > 0) {
-    pages.push({
-      pageNumber: pages.length + 1,
-      cards: currentPageCards,
-      bleed: currentBleed,
-    });
-  }
-
-  return pages;
-});
-
 const totalPages = computed(() => {
   return Math.max(1, allPages.value.length);
 });
@@ -164,6 +111,11 @@ const paginatedCards = computed(() => {
 const pageBleed = computed(() => {
   const currentPageData = allPages.value[currentPage.value - 1];
   return currentPageData ? currentPageData.bleed : 0;
+});
+
+const pageFormat = computed(() => {
+  const currentPageData = allPages.value[currentPage.value - 1];
+  return currentPageData ? currentPageData.format : CardFormat.STANDARD;
 });
 
 // Watch for changes in totalPages and adjust currentPage if needed
@@ -233,6 +185,7 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
         :show-placeholders="true"
         :cards="paginatedCards"
         :bleed="pageBleed"
+        :format="pageFormat"
       />
     </div>
 
@@ -243,8 +196,8 @@ watch(totalPages, (newTotalPages, oldTotalPages) => {
 
     <Pagination
       v-if="sheet && totalCards > 0 && layout === 'sheet'"
-      :items-per-page="cardsPerPage"
-      :total="totalPages * cardsPerPage"
+      :items-per-page="1"
+      :total="totalPages"
       :default-page="currentPage"
       @update:page="currentPage = $event"
     >

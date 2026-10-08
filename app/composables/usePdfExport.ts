@@ -1,36 +1,33 @@
-import type { SheetContentCard } from '~~/common/types/sheet';
-
-/**
- * Interface for page data structure used in PDF generation
- */
-interface PageData {
-  pageNumber: number;
-  cards: Array<SheetContentCard & { printIndex: number }>;
-  bleed: number; // in mm, e.g., 0 or 1
-}
+import type { SheetContentCard, SheetPage } from '~~/common/types/sheet';
+import type { CardFormat } from '~~/common/types/games';
+import { CARD_FORMAT_LAYOUTS, getCardsPerPage, getLandmarksUrl } from '~~/common/utils/card-formats';
 
 /**
  * Composable for exporting strip board pages to PDF
  * Uses browser's native print functionality to generate PDFs without external libraries
  */
 export const usePdfExport = () => {
-  // Constants
-  const CARDS_PER_PAGE = 9; // 3x3 grid layout
-  const A4_WIDTH_MM = 210;
-  const A4_HEIGHT_MM = 297;
-  const CARD_WIDTH_MM = 63;
-  const CARD_HEIGHT_MM = 88;
-
   /**
    * Generates CSS styles for PDF pages
    * Includes A4 sizing, grid layout, and print-specific styles
+   * Page and grid sizes depend on the card format and are set inline on each page
    */
   function generatePageStyles(): string {
     return `
       /* A4 page setup with no margins */
       @page {
-        size: A4;
+        size: A4 portrait;
         margin: 0;
+      }
+
+      /* Named page so landscape pages can be mixed with portrait ones */
+      @page landscape {
+        size: A4 landscape;
+        margin: 0;
+      }
+
+      .page-landscape {
+        page: landscape;
       }
       
       /* Reset body styles for consistent rendering */
@@ -40,10 +37,8 @@ export const usePdfExport = () => {
         font-family: system-ui, -apple-system, sans-serif;
       }
       
-      /* Page container with A4 dimensions */
+      /* Page container */
       .page {
-        width: ${A4_WIDTH_MM}mm;
-        height: ${A4_HEIGHT_MM}mm;
         display: flex;
         flex-direction: column;
         background: white;
@@ -59,25 +54,19 @@ export const usePdfExport = () => {
         page-break-after: never;
       }
       
-      /* Prevent browser from adding extra space */
+      /* Prevent browser from adding extra space, without clipping landscape pages wider than the first page */
       html, body {
         height: auto;
-        overflow: hidden;
+        overflow-x: visible;
+        overflow-y: clip;
       }
       
-      /* 3x3 grid layout for cards */
+      /* Cards grid, columns and rows are set per page */
       .cards-grid {
         display: grid;
-        grid-template-columns: repeat(3, ${CARD_WIDTH_MM}mm);
-        grid-template-rows: repeat(3, ${CARD_HEIGHT_MM}mm);
         place-content: center;
         width: 100%;
         height: 100%;
-      }
-
-      .cards-grid-bleed-1mm {
-        grid-template-columns: repeat(3, ${CARD_WIDTH_MM + 2}mm);
-        grid-template-rows: repeat(3, ${CARD_HEIGHT_MM + 2}mm);
       }
       
       /* Individual card slot styling */
@@ -145,21 +134,8 @@ export const usePdfExport = () => {
    * Generates SVG cutting guidelines (landmarks) for professional printing
    * These lines help with precise cutting of the printed cards
    */
-  async function generateLandmarksSvg(bleed: number): Promise<string> {
-    let svgPath = '';
-    switch (bleed) {
-    case 1:
-      // get /app/assets/landmarks-1mm-bleed.svg content
-      svgPath = '/landmarks-bleed-1mm.svg';
-      break;
-    case 0:
-    default:
-      // get /app/assets/landmarks-no-bleed.svg content
-      svgPath = '/landmarks-bleed-0mm.svg';
-      break;
-    }
-
-    const response = await fetch(svgPath);
+  async function generateLandmarksSvg(format: CardFormat, bleed: number): Promise<string> {
+    const response = await fetch(getLandmarksUrl(format, bleed));
     if (!response.ok) {
       throw new Error(`Failed to load SVG: ${response.status}`);
     }
@@ -185,19 +161,23 @@ export const usePdfExport = () => {
 
   /**
    * Generates HTML for a complete page with cards and cutting guidelines
-   * Fills empty slots to maintain 3x3 grid layout
+   * Fills empty slots to maintain the grid layout of the page format
    */
-  async function generatePageHtml(pageData: PageData): Promise<string> {
-    const emptySlots = CARDS_PER_PAGE - pageData.cards.length;
+  async function generatePageHtml(pageData: SheetPage): Promise<string> {
+    const { cardWidth, cardHeight, columns, rows, pageWidth, pageHeight } = CARD_FORMAT_LAYOUTS[pageData.format];
+    const emptySlots = getCardsPerPage(pageData.format) - pageData.cards.length;
     const emptySlotsHtml = Array.from({ length: emptySlots }, () =>
       '<div class="card-slot empty-slot"></div>',
     ).join('');
 
-    const landmarksSvg = await generateLandmarksSvg(pageData.bleed);
+    const landmarksSvg = await generateLandmarksSvg(pageData.format, pageData.bleed);
+
+    const pageStyle = `width: ${pageWidth}mm; height: ${pageHeight}mm;`;
+    const gridStyle = `grid-template-columns: repeat(${columns}, ${cardWidth + pageData.bleed * 2}mm); grid-template-rows: repeat(${rows}, ${cardHeight + pageData.bleed * 2}mm);`;
 
     return `
-      <div class="page">
-        <div class="cards-grid ${pageData.bleed > 0 ? `cards-grid-bleed-${pageData.bleed}mm` : ''}">
+      <div class="page ${pageWidth > pageHeight ? 'page-landscape' : ''}" style="${pageStyle}">
+        <div class="cards-grid" style="${gridStyle}">
           ${pageData.cards.map(card => generateCardHtml(card)).join('')}
           ${emptySlotsHtml}
         </div>
@@ -212,7 +192,7 @@ export const usePdfExport = () => {
    * Generates complete HTML document for PDF export
    * Includes all necessary styles and page content
    */
-  async function generateHtmlDocument(pages: PageData[], title: string): Promise<string> {
+  async function generateHtmlDocument(pages: SheetPage[], title: string): Promise<string> {
     const pageHtmlPromises = pages.map(page => generatePageHtml(page));
     const pagesHtml = await Promise.all(pageHtmlPromises);
 
@@ -263,8 +243,8 @@ export const usePdfExport = () => {
       const iframe = document.createElement('iframe');
       iframe.style.position = 'absolute';
       iframe.style.left = '-9999px'; // Move off-screen
-      iframe.style.width = `${A4_WIDTH_MM}mm`;
-      iframe.style.height = `${A4_HEIGHT_MM}mm`;
+      iframe.style.width = '210mm';
+      iframe.style.height = '297mm';
       document.body.appendChild(iframe);
 
       // Get iframe document for content manipulation
@@ -302,7 +282,7 @@ export const usePdfExport = () => {
   /**
    * Exports all pages as a single PDF document
    */
-  async function exportAllPages(pages: PageData[], sheetName?: string): Promise<void> {
+  async function exportAllPages(pages: SheetPage[], sheetName?: string): Promise<void> {
     const title = `Carton Club - ${sheetName || 'Planches'}`;
     const filename = `${sheetName || 'sheet'}-all-pages.pdf`;
     const htmlContent = await generateHtmlDocument(pages, title);
@@ -312,7 +292,7 @@ export const usePdfExport = () => {
   /**
    * Exports a single page as a PDF document
    */
-  async function exportSinglePage(pageData: PageData, sheetName?: string): Promise<void> {
+  async function exportSinglePage(pageData: SheetPage, sheetName?: string): Promise<void> {
     const title = `Sheet Page ${pageData.pageNumber} - ${sheetName || 'Planche'}`;
     const filename = `${sheetName || 'sheet'}-page-${pageData.pageNumber}.pdf`;
     const htmlContent = await generateHtmlDocument([pageData], title);
@@ -321,7 +301,6 @@ export const usePdfExport = () => {
 
   // Public API
   return {
-    cardsPerPage: CARDS_PER_PAGE,
     exportAllPages,
     exportSinglePage,
   };

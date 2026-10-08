@@ -2,6 +2,8 @@
 import { Minus, Plus } from 'lucide-vue-next';
 import type { SheetContentCard } from '~~/common/types/sheet';
 import type { EnhancedFile } from '~~/common/types/drive';
+import type { CardFormat } from '~~/common/types/games';
+import { CARD_FORMAT_LAYOUTS, getCardsPerPage, getLandmarksUrl } from '~~/common/utils/card-formats';
 
 const props = defineProps<{
   scale: number;
@@ -9,6 +11,7 @@ const props = defineProps<{
   showPlaceholders: boolean;
   cards: Array<SheetContentCard & { printIndex: number }> | undefined;
   bleed: number | undefined;
+  format: CardFormat;
 }>();
 
 const sheetStore = useSheetStore();
@@ -53,29 +56,36 @@ const cardsForPrint = computed(() => {
   return cards;
 });
 
-const gridStyleByBleed = computed(() => {
+const layout = computed(() => CARD_FORMAT_LAYOUTS[props.format]);
+
+const pageStyle = computed(() => `width: ${layout.value.pageWidth}mm; height: ${layout.value.pageHeight}mm;`);
+
+const gridStyle = computed(() => {
   const bleed = props.bleed || 0;
-  return `grid-template-columns: repeat(3, calc(63mm + ${bleed * 2}mm)); grid-template-rows: repeat(3, calc(88mm + ${bleed * 2}mm));`;
+  const { columns, rows, cardWidth, cardHeight } = layout.value;
+  return `grid-template-columns: repeat(${columns}, calc(${cardWidth}mm + ${bleed * 2}mm)); grid-template-rows: repeat(${rows}, calc(${cardHeight}mm + ${bleed * 2}mm));`;
 });
 
-const placeholders = computed(() => 9 - cardsForPrint.value.length);
+const landmarksUrl = computed(() => getLandmarksUrl(props.format, props.bleed || 0));
+
+const placeholders = computed(() => getCardsPerPage(props.format) - cardsForPrint.value.length);
 </script>
 
 <template>
   <div class="flex grow justify-center items-center w-full">
     <div
       class="sheet-display-container"
-      :style="`transform: scale(${props.scale}); margin-bottom: calc(-297mm * ${1 - props.scale}); transform-origin: top center; width: 210mm; height: 297mm;`"
+      :style="`transform: scale(${props.scale}); margin-bottom: calc(-${layout.pageHeight}mm * ${1 - props.scale}); margin-inline: calc(-${layout.pageWidth}mm * ${(1 - props.scale) / 2}); transform-origin: top center; ${pageStyle}`"
     >
-      <!-- Actual export content - maintains 210mm x 297mm for PDF export -->
+      <!-- Actual export content - maintains the real page size in mm for PDF export -->
       <div
         id="to-export"
         class="relative flex flex-col bg-white shadow-xl border border-gray-200 rounded-lg"
-        style="width: 210mm; height: 297mm;"
+        :style="pageStyle"
       >
         <div
           class="grid place-content-center w-full h-full z-1"
-          :style="gridStyleByBleed"
+          :style="gridStyle"
         >
           <div
             v-for="card in cardsForPrint"
@@ -130,7 +140,7 @@ const placeholders = computed(() => 9 - cardsForPrint.value.length);
           class="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
         >
           <img
-            :src="`/landmarks-bleed-${props.bleed}mm.svg`"
+            :src="landmarksUrl"
             :alt="`Landmarks with ${props.bleed}mm bleed`"
             class="max-w-full max-h-full"
           />
@@ -145,7 +155,7 @@ const placeholders = computed(() => 9 - cardsForPrint.value.length);
 @media print {
   .sheet-display-container {
     transform: none !important;
-    margin-bottom: 0 !important;
+    margin: 0 !important;
   }
 }
 </style>
